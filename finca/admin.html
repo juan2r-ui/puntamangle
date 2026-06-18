@@ -233,6 +233,7 @@ document.querySelectorAll('.tab').forEach(t=>{
   t.onclick=()=>{
     document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
     const k=t.dataset.tab;
+    if(k==='usr'){ location.href='usuarios.html'; return; }
     if(k==='emp'){ document.getElementById('view-emp').style.display=''; document.getElementById('view-otros').style.display='none'; }
     else{ document.getElementById('view-emp').style.display='none'; document.getElementById('view-otros').style.display=''; document.getElementById('phtxt').textContent=otros[k]; }
   };
@@ -251,7 +252,8 @@ document.getElementById('logout').onclick=cerrarSesion;
 
 /* Arranque: exigir sesión y cargar desde la central */
 requireAuth(function(user){
-  document.getElementById('who').textContent = user.email||'';
+  document.getElementById('who').textContent = (user.email||'') + (user.rol ? ' · ' + (user.rol==='admin'?'Administrador':'Oficina') : '');
+  if(user.rol!=='admin'){ const ut=document.querySelector('.tab[data-tab="usr"]'); if(ut) ut.style.display='none'; }
   renderChips();
   iniciarDatos();
 });

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E5631">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Usuarios y accesos · FINCA BURICA</title>
+<style>
+  :root{--verde:#1E5631;--verde2:#2E7D32;--verde-claro:#EDF5E9;--verde-borde:#C8E6C9;--txt:#1b2a1f;--gris:#6b7c6f;--bg:#f4f7f3}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt);padding-bottom:30px}
+  header{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 14px 12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .htop{display:flex;align-items:center;gap:10px}
+  .htop img{height:34px;background:#fff;border-radius:8px;padding:3px}
+  .htop .h1{font-size:16px;font-weight:700}
+  .htop .back{margin-left:auto;color:#fff;text-decoration:none;font-size:13px;background:rgba(255,255,255,.18);padding:6px 11px;border-radius:8px}
+  .wrap{max-width:680px;margin:0 auto;padding:14px}
+  .note{background:var(--verde-claro);border:1px solid var(--verde-borde);color:var(--verde2);border-radius:10px;padding:10px 12px;font-size:12.5px;margin-bottom:12px;line-height:1.5}
+  .addb{width:100%;background:var(--verde2);color:#fff;border:none;border-radius:11px;font-weight:800;font-size:15px;padding:14px;cursor:pointer;margin-bottom:14px}
+  .u{background:#fff;border:1px solid var(--verde-borde);border-radius:12px;padding:12px 13px;margin-bottom:9px;display:flex;align-items:center;gap:11px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .u .av{width:40px;height:40px;flex:0 0 auto;border-radius:50%;background:var(--verde-claro);color:var(--verde);display:flex;align-items:center;justify-content:center;font-weight:800}
+  .u .info{flex:1;min-width:0}
+  .u .nm{font-size:15px;font-weight:700}
+  .u .em{font-size:12.5px;color:var(--gris);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block}
+  .b-admin{background:#ffe0e0;color:#c0392b}
+  .b-ofi{background:#e3f0ff;color:#1d6fd6}
+  .b-fijo{background:var(--verde-claro);color:var(--verde2)}
+  .u .acts{display:flex;gap:4px;flex:0 0 auto}
+  .iconb{border:none;background:transparent;font-size:17px;padding:5px 7px;border-radius:8px;cursor:pointer}
+  .iconb:active{background:#eee}
+  .fixed{opacity:.85}
+  .ph{text-align:center;color:var(--gris);padding:30px 10px;font-size:14px}
+  .ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
+  .ov.show{display:flex}
+  .modal{background:#fff;width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:18px;max-height:92vh;overflow:auto}
+  .modal h2{margin:0 0 14px;font-size:18px;color:var(--verde)}
+  .modal label{display:block;font-size:12px;color:var(--gris);font-weight:600;margin:10px 2px 4px}
+  .modal input,.modal select{width:100%;padding:11px;font-size:16px;border:1.5px solid #cdddcf;border-radius:10px;background:#fff}
+  .modal input:focus,.modal select:focus{outline:none;border-color:var(--verde2);box-shadow:0 0 0 3px #2e7d3222}
+  .modal .hint{font-size:11.5px;color:var(--gris);margin-top:4px}
+  .mbtns{display:flex;gap:10px;margin-top:18px}
+  .mbtns button{flex:1;padding:13px;font-size:15px;font-weight:700;border-radius:11px;border:none;cursor:pointer}
+  .b-cancel{background:#fff;color:#777;border:1.5px solid #ccc}
+  .b-save{background:var(--verde2);color:#fff}
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <img src="logo.png" alt="">
+    <div class="h1">Usuarios y accesos</div>
+    <a class="back" href="admin.html">‹ Admin</a>
+  </div>
+</header>
+<div class="wrap">
+  <div class="note">👥 Acá das acceso a la gente. Agregás su <b>correo</b> y su <b>rol</b>, y esa persona ya puede entrar (con ese mismo correo en Google). Para quitarle el acceso, la borrás o la marcás inactiva.</div>
+  <button class="addb" id="add">＋ Agregar usuario</button>
+  <div id="lista"></div>
+</div>
+
+<div class="ov" id="ov">
+  <div class="modal">
+    <h2 id="mtitle">Nuevo usuario</h2>
+    <input type="hidden" id="m-orig">
+    <label>Nombre</label>
+    <input type="text" id="m-nombre" autocomplete="off" placeholder="Nombre y apellido">
+    <label>Correo (el de su cuenta de Google)</label>
+    <input type="email" id="m-email" autocomplete="off" placeholder="persona@gmail.com">
+    <div class="hint" id="emailhint">Tiene que ser el correo con el que va a entrar.</div>
+    <label>Rol</label>
+    <select id="m-rol">
+      <option value="oficina">Oficina / Secretaría (mantiene catálogos y ve reportes)</option>
+      <option value="admin">Administrador (todo, incluye gestionar usuarios)</option>
+    </select>
+    <label>Estado</label>
+    <select id="m-activo">
+      <option value="si">Activo (puede entrar)</option>
+      <option value="no">Inactivo (sin acceso)</option>
+    </select>
+    <div class="mbtns">
+      <button class="b-cancel" id="cancel">Cancelar</button>
+      <button class="b-save" id="save">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<script>
+const colUsr = fbDB.collection('usuarios');
+const listaEl=document.getElementById('lista');
+const ROL={admin:['Administrador','b-admin'], oficina:['Oficina / Secretaría','b-ofi']};
+function ini(n){ return (String(n||'?').trim()[0]||'?').toUpperCase(); }
+
+function pintar(users){
+  listaEl.innerHTML='';
+  // super-admin fijo
+  const sa=document.createElement('div'); sa.className='u fixed';
+  sa.innerHTML=`<div class="av">A</div><div class="info"><div class="nm">Administrador principal</div><div class="em">${SUPER_ADMIN}</div><span class="badge b-fijo">Siempre admin · no se puede quitar</span></div>`;
+  listaEl.appendChild(sa);
+  users.sort((a,b)=>String(a.nombre||a.id).localeCompare(String(b.nombre||b.id))).forEach(u=>{
+    const r=ROL[u.rol]||['—','b-ofi'];
+    const card=document.createElement('div'); card.className='u'+(u.activo===false?' fixed':'');
+    card.innerHTML=`<div class="av">${ini(u.nombre||u.id)}</div>
+      <div class="info"><div class="nm">${u.nombre||u.id}</div><div class="em">${u.id}</div>
+        <span class="badge ${r[1]}">${r[0]}</span>${u.activo===false?' <span class="badge b-fijo">Inactivo</span>':''}</div>
+      <div class="acts"><button class="iconb" title="Editar">✏️</button><button class="iconb" title="Quitar">🗑️</button></div>`;
+    const b=card.querySelectorAll('.iconb');
+    b[0].onclick=()=>abrir(u);
+    b[1].onclick=()=>{ if(confirm('¿Quitar el acceso de '+(u.nombre||u.id)+'?')){ colUsr.doc(u.id).delete().catch(e=>alert('No se pudo: '+e.message)); } };
+    listaEl.appendChild(card);
+  });
+  if(!users.length){ const d=document.createElement('div'); d.className='ph'; d.textContent='Todavía no agregaste a nadie. Tocá "Agregar usuario".'; listaEl.appendChild(d); }
+}
+
+const ov=document.getElementById('ov');
+const fOrig=document.getElementById('m-orig'), fNom=document.getElementById('m-nombre'), fEm=document.getElementById('m-email'), fRol=document.getElementById('m-rol'), fAct=document.getElementById('m-activo');
+function abrir(u){
+  document.getElementById('mtitle').textContent=u?'Editar usuario':'Nuevo usuario';
+  fOrig.value=u?u.id:''; fNom.value=u?(u.nombre||''):''; fEm.value=u?u.id:''; fRol.value=u?(u.rol||'oficina'):'oficina';
+  fAct.value=(u&&u.activo===false)?'no':'si';
+  fEm.readOnly=!!u; document.getElementById('emailhint').textContent = u? 'El correo no se cambia; si te equivocaste, borralo y creá uno nuevo.' : 'Tiene que ser el correo con el que va a entrar.';
+  ov.classList.add('show');
+}
+document.getElementById('add').onclick=()=>abrir(null);
+document.getElementById('cancel').onclick=()=>ov.classList.remove('show');
+ov.onclick=e=>{ if(e.target===ov) ov.classList.remove('show'); };
+document.getElementById('save').onclick=function(){
+  const nom=fNom.value.trim(), em=fEm.value.trim().toLowerCase();
+  if(!nom){ alert('Escribí el nombre.'); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert('Escribí un correo válido.'); return; }
+  if(em===SUPER_ADMIN){ alert('Esa cuenta ya es el administrador principal.'); return; }
+  const reg={nombre:nom, rol:fRol.value, activo:fAct.value==='si'};
+  colUsr.doc(em).set(reg).then(()=>ov.classList.remove('show')).catch(e=>alert('No se pudo guardar: '+e.message));
+};
+
+/* arranque: solo el ADMIN puede gestionar usuarios */
+requireAuth(function(u){
+  if(!esAdminActual()){
+    alert('Esta sección es solo para el administrador.');
+    location.href='admin.html'; return;
+  }
+  colUsr.onSnapshot(function(snap){
+    pintar(snap.docs.map(d=>{ const o=d.data(); o.id=d.id; return o; }));
+  }, function(err){ listaEl.innerHTML='<div class="ph">No se pudo leer: '+err.message+'</div>'; });
+});
+</script>
+</body>
+</html>

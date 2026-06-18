@@ -76,15 +76,14 @@ function showMsg(t,type){ msg.textContent=t; msg.className='msg '+(type||'err');
 function clearMsg(){ msg.className='msg'; msg.textContent=''; }
 
 function entrarOk(user){
-  if(esAutorizado(user)){ location.href='index.html'; }
-  else{
-    showMsg('La cuenta '+(user.email||'')+' no está autorizada todavía. Avisale al administrador.','err');
+  resolverAcceso(user, function(){ location.href='index.html'; }, function(email){
+    showMsg('La cuenta '+email+' no tiene acceso todavía. Pedile al administrador que te autorice.','err');
     fbAuth.signOut();
-  }
+  });
 }
 
 /* si ya hay sesión válida, pasar directo */
-fbAuth.onAuthStateChanged(function(user){ if(user && esAutorizado(user)) location.href='index.html'; });
+fbAuth.onAuthStateChanged(function(user){ if(user) resolverAcceso(user, function(){ location.href='index.html'; }, function(){}); });
 
 /* Google */
 document.getElementById('gbtn').addEventListener('click',function(){
