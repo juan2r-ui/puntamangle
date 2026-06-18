@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E5631">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Entrar · FINCA BURICA</title>
+<style>
+  :root{--verde:#1E5631;--verde2:#2E7D32;--verde-claro:#EDF5E9;--verde-borde:#C8E6C9;--txt:#1b2a1f;--gris:#6b7c6f;--bg:#f4f7f3}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:linear-gradient(160deg,#dff0e2,var(--bg));color:var(--txt);display:flex;align-items:center;justify-content:center;padding:18px}
+  .box{width:100%;max-width:380px}
+  .top{text-align:center;margin-bottom:18px}
+  .top .logocard{display:inline-block;background:#fff;border-radius:18px;padding:14px 24px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+  .top .logocard img{height:66px;display:block}
+  .top h1{margin:14px 0 0;font-size:21px;letter-spacing:2px;font-weight:800;color:var(--verde)}
+  .card{background:#fff;border:1px solid var(--verde-borde);border-radius:16px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+  .card h2{margin:0 0 16px;font-size:17px;color:var(--txt);text-align:center}
+  .gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;font-size:15px;font-weight:700;
+    background:#fff;border:1.5px solid #dadce0;border-radius:11px;cursor:pointer;color:#3c4043}
+  .gbtn:active{background:#f5f5f5}
+  .gbtn img{height:19px}
+  .sep{display:flex;align-items:center;gap:10px;color:#aaa;font-size:12px;margin:16px 0}
+  .sep::before,.sep::after{content:"";flex:1;height:1px;background:#e3e3e3}
+  label{display:block;font-size:12px;color:var(--gris);font-weight:600;margin:0 0 4px 2px}
+  input{width:100%;padding:12px;font-size:16px;border:1.5px solid #cdddcf;border-radius:10px;margin-bottom:11px}
+  input:focus{outline:none;border-color:var(--verde2);box-shadow:0 0 0 3px #2e7d3222}
+  .ebtn{width:100%;padding:13px;font-size:15px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--verde),var(--verde2));border:none;border-radius:11px;cursor:pointer}
+  .ebtn:active{filter:brightness(.95)}
+  .ebtn:disabled{opacity:.6}
+  .link{display:block;text-align:center;margin-top:14px;color:var(--verde2);font-size:13px;text-decoration:none;cursor:pointer}
+  .msg{margin-top:12px;font-size:13px;padding:9px 11px;border-radius:9px;display:none}
+  .msg.err{display:block;background:#fdecea;border:1px solid #f5c6c0;color:#a33}
+  .msg.ok{display:block;background:var(--verde-claro);border:1px solid var(--verde-borde);color:var(--verde2)}
+  .foot{text-align:center;font-size:11px;color:var(--gris);margin-top:16px}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="top">
+    <div class="logocard"><img src="logo.png" alt="Finca Burica"></div>
+    <h1>FINCA BURICA</h1>
+  </div>
+  <div class="card">
+    <h2>Iniciar sesión</h2>
+
+    <button class="gbtn" id="gbtn">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+      Entrar con Google
+    </button>
+
+    <div class="sep">o con correo</div>
+
+    <label>Correo</label>
+    <input type="email" id="email" placeholder="tucorreo@ejemplo.com" autocomplete="username">
+    <label>Contraseña</label>
+    <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password">
+    <button class="ebtn" id="ebtn">Entrar</button>
+
+    <a class="link" id="reset">¿Olvidaste tu contraseña?</a>
+    <div class="msg" id="msg"></div>
+  </div>
+  <div class="foot">Acceso solo para personal autorizado.</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<script>
+const msg=document.getElementById('msg');
+function showMsg(t,type){ msg.textContent=t; msg.className='msg '+(type||'err'); }
+function clearMsg(){ msg.className='msg'; msg.textContent=''; }
+
+function entrarOk(user){
+  if(esAutorizado(user)){ location.href='index.html'; }
+  else{
+    showMsg('La cuenta '+(user.email||'')+' no está autorizada todavía. Avisale al administrador.','err');
+    fbAuth.signOut();
+  }
+}
+
+/* si ya hay sesión válida, pasar directo */
+fbAuth.onAuthStateChanged(function(user){ if(user && esAutorizado(user)) location.href='index.html'; });
+
+/* Google */
+document.getElementById('gbtn').addEventListener('click',function(){
+  clearMsg();
+  const prov=new firebase.auth.GoogleAuthProvider();
+  fbAuth.signInWithPopup(prov).then(function(res){ entrarOk(res.user); })
+    .catch(function(e){ showMsg(traducir(e),'err'); });
+});
+
+/* Correo + contraseña */
+document.getElementById('ebtn').addEventListener('click',function(){
+  clearMsg();
+  const em=document.getElementById('email').value.trim(), pw=document.getElementById('pass').value;
+  if(!em || !pw){ showMsg('Escribí correo y contraseña.','err'); return; }
+  const b=this; b.disabled=true; b.textContent='Entrando…';
+  fbAuth.signInWithEmailAndPassword(em,pw).then(function(res){ entrarOk(res.user); })
+    .catch(function(e){ showMsg(traducir(e),'err'); b.disabled=false; b.textContent='Entrar'; });
+});
+
+/* Recuperar contraseña */
+document.getElementById('reset').addEventListener('click',function(){
+  clearMsg();
+  const em=document.getElementById('email').value.trim();
+  if(!em){ showMsg('Escribí tu correo arriba y volvé a tocar "¿Olvidaste tu contraseña?".','err'); return; }
+  fbAuth.sendPasswordResetEmail(em).then(function(){
+    showMsg('Te enviamos un correo a '+em+' para restablecer la contraseña. Revisá tu bandeja (y spam).','ok');
+  }).catch(function(e){ showMsg(traducir(e),'err'); });
+});
+
+function traducir(e){
+  const c=(e&&e.code)||'';
+  if(c.indexOf('wrong-password')>=0 || c.indexOf('invalid-credential')>=0) return 'Correo o contraseña incorrectos.';
+  if(c.indexOf('user-not-found')>=0) return 'No existe una cuenta con ese correo.';
+  if(c.indexOf('invalid-email')>=0) return 'El correo no es válido.';
+  if(c.indexOf('too-many-requests')>=0) return 'Demasiados intentos. Esperá un momento.';
+  if(c.indexOf('popup-closed')>=0 || c.indexOf('cancelled-popup')>=0) return 'Se cerró la ventana de Google antes de terminar.';
+  if(c.indexOf('network')>=0) return 'Sin conexión. Revisá tu internet.';
+  return 'No se pudo entrar: '+(e&&e.message?e.message:c);
+}
+</script>
+</body>
+</html>

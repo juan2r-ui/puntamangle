@@ -80,7 +80,8 @@
 </header>
 
 <div class="wrap">
-  <div class="note">🧪 Vista de prueba: los cambios se guardan <b>solo en este navegador</b> hasta que conectemos la base de datos central (Firebase).</div>
+  <div class="note">☁️ Conectado a la central — lo que cambies se guarda para todos. · <span id="who"></span> · <a id="logout" style="color:#a33;cursor:pointer;font-weight:700">Salir</a></div>
+  <button class="addb" id="seedbtn" style="display:none;width:100%;margin-bottom:12px;padding:13px">📥 Importar catálogo inicial (65 empleados)</button>
 
   <div id="view-emp">
     <div class="toolbar">
@@ -135,14 +136,23 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
 <script>
 const SEED = [{"Estado":"ACTIVO","Nombre":"ABDIEL ORTEGA","Cedula":"4-748-2225","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ALBERTO ABREGO ABREGO","Cedula":"12-707-2255","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"ALDO ENIL MORA GARCIA","Cedula":"9-0144-0260","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ALEXANDER MORA","Cedula":"6-0365-0467","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ALEXIS SANTOS GONZALES","Cedula":"12-724-1634","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"ALISON TELLO","Cedula":"4-832-1942","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ANTHONY AUSTIN ABREGO GUERA","Cedula":"12-738-1620","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ARIEL SEQUEIRA","Cedula":"603-131096-0000J","Depto":"PLANTACION","Clasif":"CAPATAZ_CHEQUEADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ARRET BARRIA","Cedula":"4-747-1105","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"BERNARDA AMADOR","Cedula":"605-200584-1000D","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"DENELI SERRACIN","Cedula":"4-765-409","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"DIONICIO VILLARREAL","Cedula":"4-735-70","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"DORIAN ELIOTH TEMPLE SIU","Cedula":"601-220890-1000A","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"INACTIVO","Nombre":"EDWAR RENE IBARRA","Cedula":"4-751-269","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ELI MITRE","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ELVIN ANTONIO CASTRO","Cedula":"619-061298-1000L","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ENRIQUE MORALES GUERRA","Cedula":"12-721-1718","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"FERMIN SANTO SALINA","Cedula":"4-794-1707","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"FERMIN ZURDO AMADOR","Cedula":"4-269-755","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"FERNANDO GUERRA","Cedula":"1-719-1241","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"FINCA BURICA","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"ESPECIAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"FRANKLIN ABDIEL ESPINOZA GUERRA","Cedula":"4-741-1806","Depto":"PLANTACION","Clasif":"CAPATAZ_CHEQUEADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"GABRIEL LOPEZ SANTOS","Cedula":"12-751-1799","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"GUILLERMO GUERRA MORALES","Cedula":"12-730-2324","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"HECTOR JAVIER CAMPOS VALDES","Cedula":"7-118-920","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"HERIBERTO VEGA","Cedula":"4-835-2006","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"ISRAEL PERALTA CASTRO","Cedula":"624-260889-0001D","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"JASON SEGURA","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"ESPECIAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"JOVANI ALEXIS  GONZALEZ GUADAMUZ","Cedula":"4-803-390","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"INACTIVO","Nombre":"JUAN CARLOS PERALTA CASTRO","Cedula":"624-200194-0001T","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"JUAN CARLOS SEQUEIRA","Cedula":"603-080992-0000N","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"JUAN DANIEL RAMIREZ","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"ESPECIAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"KELIER DAVID AMADOR","Cedula":"603-100805-1004A","Depto":"PUNTA MANGLE","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"LEONARDO EZEQUIEL AMADOR","Cedula":"603-121197-0001J","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"LOS MADEROS","Cedula":null,"Depto":"TERCEROS","Clasif":"PROVEEDOR","Tipo":"TERCERO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"LUCINIO GUERRA","Cedula":"12-708-1","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"LUIS ALFREDO CUBILLA","Cedula":"4-762-2248","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"MARICRUZ BERROCAL ARAYA","Cedula":"2-0589-0731","Depto":"PLANTACION","Clasif":"ADMINISTRATIVO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"MARIO FRANCISCO VELASQUEZ RODRIGUEZ","Cedula":"603-190194-0001A","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"MARLENI GUERRERO GIRÓN","Cedula":"12-726-2261","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"MARTIN MONTERO ABREGO","Cedula":"1-708-698","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"MARTINA GUERRA","Cedula":"12-717-2292","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"MARVIN MENDOZA","Cedula":"12-732-588","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"MIRIAN PALACIO","Cedula":"603-200206-1002A","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"MYNOR ANIBAL CUXUM TECU","Cedula":"2677 06944 1615","Depto":"PLANTACION","Clasif":"ADMINISTRATIVO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"NICOLAS CORREA","Cedula":"4-784-396","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"NICOLAS SANTOS PRADO","Cedula":"4-794-1761","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"OFELIO QUINTERO ABREGO","Cedula":"12-708-1317","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"OSCAR PALACIO PALACIO","Cedula":"1-752-2109","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"PEDRO PRADO RODRIGUEZ","Cedula":"4-798-884","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"RAMIRO ABREGO MORALES","Cedula":"1-732-2441","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"RAMIRO LOZADA","Cedula":"4-283-376","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"RODERICK IVAN PALACIO MENDOZA","Cedula":"4-775-2260","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"RONALD  BRENES COTO","Cedula":"3-0313-0324","Depto":"PLANTACION","Clasif":"ADMINISTRATIVO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ROY ELIAS HERNANDEZ FRANCO","Cedula":"7-0216-0849","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"SELENA ARGUELLO","Cedula":"604-220999-1000K","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"SIXTO YUMIR TELLO","Cedula":"4-781-1779","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"VICENTE ANTONIO BRENES","Cedula":"603-080886-0001C","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"VICTOR SANTO PALACIO","Cedula":"1-735-2329","Depto":"PLANTACION","Clasif":"CAPATAZ_CHEQUEADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"WALTER CASTILLO MORALES","Cedula":"12-703-1616","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"INACTIVO","Nombre":"WILBER DANIEL LIZONDRO VILLARREAL","Cedula":"4-808-1011","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"WILFREDO TORUÑO OBANDO","Cedula":"155855553329","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ZORAIDA SOLIS","Cedula":"603-291287-0002H","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"INACTIVO","Nombre":"ZULEYCA BONILLA","Cedula":"12-721-619","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"JAVIER EDUARDO JIMENEZ","Cedula":"4-838-1104","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null}];
 const CLAS = {OPERARIO:['Operario','b-operario'],OPERADOR:['Operador','b-operador'],CAPATAZ_CHEQUEADOR:['Capataz/Chequeador','b-capataz'],ADMINISTRATIVO:['Administrativo','b-admin'],PROVEEDOR:['Proveedor','b-prov']};
 function norm(e){ return {id:e.id||(e.Nombre+'|'+(e.Cedula||'')), Nombre:e.Nombre||'', Cedula:e.Cedula||'', Clasif:e.Clasif||'OPERARIO', Tipo:e.Tipo||'FIJO', Estado:e.Estado||'ACTIVO', Cortador:!!(e.Cortador && e.Cortador!==''), Coyolero:!!(e.Coyolero && e.Coyolero!=='')}; }
-let data;
-try{ const s=JSON.parse(localStorage.getItem('finca_empleados')); data = (s&&s.length)? s : SEED.map(norm); }
-catch(e){ data = SEED.map(norm); }
-function save(){ try{ localStorage.setItem('finca_empleados', JSON.stringify(data)); }catch(e){} }
+let data=[];
+const colEmp = fbDB.collection('empleados');
+function iniciarDatos(){
+  colEmp.onSnapshot(function(snap){
+    data = snap.docs.map(function(d){ const o=d.data(); o.id=d.id; o.Cortador=!!o.Cortador; o.Coyolero=!!o.Coyolero; return o; });
+    renderList();
+    document.getElementById('seedbtn').style.display = data.length ? 'none' : '';
+  }, function(err){ document.getElementById('lista').innerHTML='<div class="ph">No se pudo leer la central: '+err.message+'</div>'; });
+}
 
 let filtro='TODOS', busca='';
 const FILTROS=[['TODOS','Todos'],['OPERARIO','Operarios'],['OPERADOR','Operadores'],['CAPATAZ_CHEQUEADOR','Capataz'],['ADMINISTRATIVO','Admin.'],['CORTADOR','Cortadores'],['COYOLERO','Coyoleros'],['INACTIVO','Inactivos']];
@@ -189,7 +199,7 @@ function renderList(){
       </div>`;
     const btns=card.querySelectorAll('.iconb');
     btns[0].onclick=()=>abrir(e);
-    btns[1].onclick=()=>{ if(confirm('¿Quitar a '+e.Nombre+'?')){ data=data.filter(x=>x.id!==e.id); save(); renderList(); } };
+    btns[1].onclick=()=>{ if(confirm('¿Quitar a '+e.Nombre+'?')){ colEmp.doc(e.id).delete().catch(er=>alert('No se pudo quitar: '+er.message)); } };
     listaEl.appendChild(card);
   });
   if(!arr.length){ listaEl.innerHTML='<div class="ph">No hay empleados con ese filtro.</div>'; }
@@ -212,10 +222,9 @@ document.getElementById('cancel').onclick=()=>ov.classList.remove('show');
 ov.onclick=e=>{ if(e.target===ov) ov.classList.remove('show'); };
 document.getElementById('save').onclick=()=>{
   const nom=fNom.value.trim(); if(!nom){ alert('Escribí el nombre.'); return; }
-  const reg={id:fId.value||(nom+'|'+fCed.value.trim()+'|'+Math.random().toString(36).slice(2,7)),
-    Nombre:nom, Cedula:fCed.value.trim(), Clasif:fCla.value, Tipo:fTip.value, Estado:fEst.value, Cortador:fCor.checked, Coyolero:fCoy.checked};
-  if(fId.value){ data=data.map(x=>x.id===fId.value?reg:x); } else { data.push(reg); }
-  save(); ov.classList.remove('show'); renderList();
+  const reg={Nombre:nom, Cedula:fCed.value.trim(), Clasif:fCla.value, Tipo:fTip.value, Estado:fEst.value, Cortador:fCor.checked, Coyolero:fCoy.checked};
+  const op = fId.value ? colEmp.doc(fId.value).set(reg) : colEmp.add(reg);
+  op.then(()=>{ ov.classList.remove('show'); }).catch(er=>alert('No se pudo guardar: '+er.message));
 };
 
 /* tabs */
@@ -229,7 +238,23 @@ document.querySelectorAll('.tab').forEach(t=>{
   };
 });
 
-renderChips(); renderList();
+/* Importar catálogo inicial (los 65 embebidos) — solo si la central está vacía */
+document.getElementById('seedbtn').onclick=function(){
+  if(!confirm('¿Cargar los 65 empleados a la central?\n(Esto se hace una sola vez, la primera.)')) return;
+  const b=this; b.disabled=true; b.textContent='Cargando…';
+  const batch=fbDB.batch();
+  SEED.forEach(function(e){ const n=norm(e); delete n.id; batch.set(colEmp.doc(), n); });
+  batch.commit().then(function(){ alert('Catálogo cargado ✅ (65 empleados)'); })
+    .catch(function(er){ alert('No se pudo cargar: '+er.message); b.disabled=false; b.textContent='📥 Importar catálogo inicial (65 empleados)'; });
+};
+document.getElementById('logout').onclick=cerrarSesion;
+
+/* Arranque: exigir sesión y cargar desde la central */
+requireAuth(function(user){
+  document.getElementById('who').textContent = user.email||'';
+  renderChips();
+  iniciarDatos();
+});
 </script>
 </body>
 </html>
