@@ -3,7 +3,7 @@
    IMPORTANTE: si actualizás index.html, subí también este archivo
    cambiando la versión de abajo (palmas-v1 -> palmas-v2, etc.)
    para que los celulares descarguen la versión nueva. */
-const CACHE = 'palmas-v1';
+const CACHE = 'palmas-v2';
 const ASSETS = ['./', './index.html'];
 
 self.addEventListener('install', e => {
