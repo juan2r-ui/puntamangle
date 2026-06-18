@@ -2,3 +2,4 @@
 # La app interna de FINCA BURICA no debe aparecer en buscadores.
 User-agent: *
 Disallow: /palmas/
+Disallow: /finca/

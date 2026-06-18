@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E5631">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Panel de Administración · FINCA BURICA</title>
+<style>
+  :root{--verde:#1E5631;--verde2:#2E7D32;--verde-claro:#EDF5E9;--verde-borde:#C8E6C9;--txt:#1b2a1f;--gris:#6b7c6f;--bg:#f4f7f3;--naranja:#c8631a}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt);padding-bottom:30px}
+  header{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 14px 12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .htop{display:flex;align-items:center;gap:10px}
+  .htop img{height:34px;background:#fff;border-radius:8px;padding:3px}
+  .htop .h1{font-size:16px;font-weight:700}
+  .htop .back{margin-left:auto;color:#fff;text-decoration:none;font-size:13px;background:rgba(255,255,255,.18);padding:6px 11px;border-radius:8px}
+  .tabs{display:flex;gap:7px;margin-top:11px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tab{font-size:13px;font-weight:600;color:#fff;background:rgba(255,255,255,.15);border:none;padding:7px 13px;border-radius:20px;white-space:nowrap;cursor:pointer}
+  .tab.active{background:#fff;color:var(--verde)}
+  .wrap{max-width:760px;margin:0 auto;padding:14px}
+  .note{background:#fff7e6;border:1px solid #ffe0a3;color:#8a5a00;border-radius:10px;padding:9px 12px;font-size:12px;margin-bottom:12px}
+  .toolbar{display:flex;gap:9px;margin-bottom:10px}
+  .toolbar input{flex:1;padding:11px;font-size:15px;border:1.5px solid #cdddcf;border-radius:10px}
+  .toolbar input:focus{outline:none;border-color:var(--verde2);box-shadow:0 0 0 3px #2e7d3222}
+  .addb{background:var(--verde2);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;padding:0 14px;cursor:pointer;white-space:nowrap}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+  .fchip{font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:20px;border:1.5px solid var(--verde-borde);background:#fff;color:var(--gris);cursor:pointer}
+  .fchip.on{background:var(--verde);color:#fff;border-color:var(--verde)}
+  .count{font-size:12.5px;color:var(--gris);margin:2px 2px 10px}
+  .emp{background:#fff;border:1px solid var(--verde-borde);border-radius:12px;padding:11px 13px;margin-bottom:9px;display:flex;align-items:center;gap:11px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .emp.inact{opacity:.55}
+  .emp .av{width:38px;height:38px;flex:0 0 auto;border-radius:50%;background:var(--verde-claro);color:var(--verde);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+  .emp .info{flex:1;min-width:0}
+  .emp .nm{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .emp .meta{font-size:12px;color:var(--gris);margin-top:2px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px}
+  .b-operario{background:#e3f0ff;color:#1d6fd6}
+  .b-operador{background:#e7e0ff;color:#6a3fd6}
+  .b-capataz{background:#fff0d6;color:#b3791a}
+  .b-admin{background:#ffe0e0;color:#c0392b}
+  .b-prov{background:#e0e0e0;color:#555}
+  .tag{font-size:10.5px;padding:2px 7px;border-radius:20px;background:var(--verde-claro);color:var(--verde2);font-weight:600}
+  .emp .acts{display:flex;gap:4px;flex:0 0 auto}
+  .iconb{border:none;background:transparent;font-size:17px;padding:5px 7px;border-radius:8px;cursor:pointer}
+  .iconb:active{background:#eee}
+  .ph{text-align:center;color:var(--gris);padding:40px 10px;font-size:14px}
+  /* modal */
+  .ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
+  .ov.show{display:flex}
+  .modal{background:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:18px;max-height:92vh;overflow:auto}
+  .modal h2{margin:0 0 14px;font-size:18px;color:var(--verde)}
+  .modal label{display:block;font-size:12px;color:var(--gris);font-weight:600;margin:10px 2px 4px}
+  .modal input,.modal select{width:100%;padding:11px;font-size:16px;border:1.5px solid #cdddcf;border-radius:10px;background:#fff}
+  .modal input:focus,.modal select:focus{outline:none;border-color:var(--verde2);box-shadow:0 0 0 3px #2e7d3222}
+  .checks{display:flex;gap:18px;margin-top:12px}
+  .checks label{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--txt);font-weight:600;margin:0}
+  .checks input{width:auto}
+  .mbtns{display:flex;gap:10px;margin-top:18px}
+  .mbtns button{flex:1;padding:13px;font-size:15px;font-weight:700;border-radius:11px;border:none;cursor:pointer}
+  .b-cancel{background:#fff;color:#777;border:1.5px solid #ccc}
+  .b-save{background:var(--verde2);color:#fff}
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <img src="logo.png" alt="">
+    <div class="h1">Panel de Administración</div>
+    <a class="back" href="index.html">‹ Menú</a>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="emp">👥 Empleados</button>
+    <button class="tab" data-tab="equ">🚜 Equipos</button>
+    <button class="tab" data-tab="lab">🏷️ Labores</button>
+    <button class="tab" data-tab="usr">🔑 Usuarios</button>
+    <button class="tab" data-tab="rep">📊 Reportes</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="note">🧪 Vista de prueba: los cambios se guardan <b>solo en este navegador</b> hasta que conectemos la base de datos central (Firebase).</div>
+
+  <div id="view-emp">
+    <div class="toolbar">
+      <input type="text" id="buscar" placeholder="Buscar por nombre…" autocomplete="off">
+      <button class="addb" id="add">＋ Agregar</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="count" id="count"></div>
+    <div id="lista"></div>
+  </div>
+
+  <div id="view-otros" style="display:none"><div class="ph" id="phtxt"></div></div>
+</div>
+
+<!-- Modal alta/edición -->
+<div class="ov" id="ov">
+  <div class="modal">
+    <h2 id="mtitle">Nuevo empleado</h2>
+    <input type="hidden" id="m-id">
+    <label>Nombre y apellidos</label>
+    <input type="text" id="m-nombre" autocomplete="off">
+    <label>Cédula / documento</label>
+    <input type="text" id="m-cedula" autocomplete="off">
+    <label>Clasificación</label>
+    <select id="m-clasif">
+      <option value="OPERARIO">Operario</option>
+      <option value="OPERADOR">Operador</option>
+      <option value="CAPATAZ_CHEQUEADOR">Capataz / Chequeador</option>
+      <option value="ADMINISTRATIVO">Administrativo</option>
+      <option value="PROVEEDOR">Proveedor</option>
+    </select>
+    <label>Tipo</label>
+    <select id="m-tipo">
+      <option value="FIJO">Fijo</option>
+      <option value="OCASIONAL">Ocasional</option>
+      <option value="ESPECIAL">Especial</option>
+      <option value="TERCERO">Tercero</option>
+    </select>
+    <label>Estado</label>
+    <select id="m-estado">
+      <option value="ACTIVO">Activo</option>
+      <option value="INACTIVO">Inactivo</option>
+    </select>
+    <div class="checks">
+      <label><input type="checkbox" id="m-cortador"> 🌴 Cortador</label>
+      <label><input type="checkbox" id="m-coyolero"> Coyolero</label>
+    </div>
+    <div class="mbtns">
+      <button class="b-cancel" id="cancel">Cancelar</button>
+      <button class="b-save" id="save">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SEED = [{"Estado":"ACTIVO","Nombre":"ABDIEL ORTEGA","Cedula":"4-748-2225","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ALBERTO ABREGO ABREGO","Cedula":"12-707-2255","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"ALDO ENIL MORA GARCIA","Cedula":"9-0144-0260","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ALEXANDER MORA","Cedula":"6-0365-0467","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ALEXIS SANTOS GONZALES","Cedula":"12-724-1634","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"ALISON TELLO","Cedula":"4-832-1942","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ANTHONY AUSTIN ABREGO GUERA","Cedula":"12-738-1620","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ARIEL SEQUEIRA","Cedula":"603-131096-0000J","Depto":"PLANTACION","Clasif":"CAPATAZ_CHEQUEADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ARRET BARRIA","Cedula":"4-747-1105","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"BERNARDA AMADOR","Cedula":"605-200584-1000D","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"DENELI SERRACIN","Cedula":"4-765-409","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"DIONICIO VILLARREAL","Cedula":"4-735-70","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"DORIAN ELIOTH TEMPLE SIU","Cedula":"601-220890-1000A","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"INACTIVO","Nombre":"EDWAR RENE IBARRA","Cedula":"4-751-269","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ELI MITRE","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ELVIN ANTONIO CASTRO","Cedula":"619-061298-1000L","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ENRIQUE MORALES GUERRA","Cedula":"12-721-1718","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"FERMIN SANTO SALINA","Cedula":"4-794-1707","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"FERMIN ZURDO AMADOR","Cedula":"4-269-755","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"FERNANDO GUERRA","Cedula":"1-719-1241","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"FINCA BURICA","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"ESPECIAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"FRANKLIN ABDIEL ESPINOZA GUERRA","Cedula":"4-741-1806","Depto":"PLANTACION","Clasif":"CAPATAZ_CHEQUEADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"GABRIEL LOPEZ SANTOS","Cedula":"12-751-1799","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"GUILLERMO GUERRA MORALES","Cedula":"12-730-2324","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"HECTOR JAVIER CAMPOS VALDES","Cedula":"7-118-920","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"HERIBERTO VEGA","Cedula":"4-835-2006","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"ISRAEL PERALTA CASTRO","Cedula":"624-260889-0001D","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"JASON SEGURA","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"ESPECIAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"JOVANI ALEXIS  GONZALEZ GUADAMUZ","Cedula":"4-803-390","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"INACTIVO","Nombre":"JUAN CARLOS PERALTA CASTRO","Cedula":"624-200194-0001T","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"JUAN CARLOS SEQUEIRA","Cedula":"603-080992-0000N","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"JUAN DANIEL RAMIREZ","Cedula":null,"Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"ESPECIAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"KELIER DAVID AMADOR","Cedula":"603-100805-1004A","Depto":"PUNTA MANGLE","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"LEONARDO EZEQUIEL AMADOR","Cedula":"603-121197-0001J","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"LOS MADEROS","Cedula":null,"Depto":"TERCEROS","Clasif":"PROVEEDOR","Tipo":"TERCERO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"LUCINIO GUERRA","Cedula":"12-708-1","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"LUIS ALFREDO CUBILLA","Cedula":"4-762-2248","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"MARICRUZ BERROCAL ARAYA","Cedula":"2-0589-0731","Depto":"PLANTACION","Clasif":"ADMINISTRATIVO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"MARIO FRANCISCO VELASQUEZ RODRIGUEZ","Cedula":"603-190194-0001A","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"MARLENI GUERRERO GIRÓN","Cedula":"12-726-2261","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"MARTIN MONTERO ABREGO","Cedula":"1-708-698","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"MARTINA GUERRA","Cedula":"12-717-2292","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"MARVIN MENDOZA","Cedula":"12-732-588","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"MIRIAN PALACIO","Cedula":"603-200206-1002A","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"MYNOR ANIBAL CUXUM TECU","Cedula":"2677 06944 1615","Depto":"PLANTACION","Clasif":"ADMINISTRATIVO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"NICOLAS CORREA","Cedula":"4-784-396","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"NICOLAS SANTOS PRADO","Cedula":"4-794-1761","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"OFELIO QUINTERO ABREGO","Cedula":"12-708-1317","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"OSCAR PALACIO PALACIO","Cedula":"1-752-2109","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"PEDRO PRADO RODRIGUEZ","Cedula":"4-798-884","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"RAMIRO ABREGO MORALES","Cedula":"1-732-2441","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"RAMIRO LOZADA","Cedula":"4-283-376","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"RODERICK IVAN PALACIO MENDOZA","Cedula":"4-775-2260","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"RONALD  BRENES COTO","Cedula":"3-0313-0324","Depto":"PLANTACION","Clasif":"ADMINISTRATIVO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"ROY ELIAS HERNANDEZ FRANCO","Cedula":"7-0216-0849","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"SELENA ARGUELLO","Cedula":"604-220999-1000K","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"OCASIONAL","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"SIXTO YUMIR TELLO","Cedula":"4-781-1779","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"VICENTE ANTONIO BRENES","Cedula":"603-080886-0001C","Depto":"PLANTACION","Clasif":"OPERADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"VICTOR SANTO PALACIO","Cedula":"1-735-2329","Depto":"PLANTACION","Clasif":"CAPATAZ_CHEQUEADOR","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"ACTIVO","Nombre":"WALTER CASTILLO MORALES","Cedula":"12-703-1616","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"INACTIVO","Nombre":"WILBER DANIEL LIZONDRO VILLARREAL","Cedula":"4-808-1011","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"WILFREDO TORUÑO OBANDO","Cedula":"155855553329","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null},{"Estado":"ACTIVO","Nombre":"ZORAIDA SOLIS","Cedula":"603-291287-0002H","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":null},{"Estado":"INACTIVO","Nombre":"ZULEYCA BONILLA","Cedula":"12-721-619","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":null,"Coyolero":"SÍ"},{"Estado":"ACTIVO","Nombre":"JAVIER EDUARDO JIMENEZ","Cedula":"4-838-1104","Depto":"PLANTACION","Clasif":"OPERARIO","Tipo":"FIJO","Cortador":"SÍ","Coyolero":null}];
+const CLAS = {OPERARIO:['Operario','b-operario'],OPERADOR:['Operador','b-operador'],CAPATAZ_CHEQUEADOR:['Capataz/Chequeador','b-capataz'],ADMINISTRATIVO:['Administrativo','b-admin'],PROVEEDOR:['Proveedor','b-prov']};
+function norm(e){ return {id:e.id||(e.Nombre+'|'+(e.Cedula||'')), Nombre:e.Nombre||'', Cedula:e.Cedula||'', Clasif:e.Clasif||'OPERARIO', Tipo:e.Tipo||'FIJO', Estado:e.Estado||'ACTIVO', Cortador:!!(e.Cortador && e.Cortador!==''), Coyolero:!!(e.Coyolero && e.Coyolero!=='')}; }
+let data;
+try{ const s=JSON.parse(localStorage.getItem('finca_empleados')); data = (s&&s.length)? s : SEED.map(norm); }
+catch(e){ data = SEED.map(norm); }
+function save(){ try{ localStorage.setItem('finca_empleados', JSON.stringify(data)); }catch(e){} }
+
+let filtro='TODOS', busca='';
+const FILTROS=[['TODOS','Todos'],['OPERARIO','Operarios'],['OPERADOR','Operadores'],['CAPATAZ_CHEQUEADOR','Capataz'],['ADMINISTRATIVO','Admin.'],['CORTADOR','Cortadores'],['COYOLERO','Coyoleros'],['INACTIVO','Inactivos']];
+const chipsEl=document.getElementById('chips');
+function renderChips(){
+  chipsEl.innerHTML='';
+  FILTROS.forEach(([k,lbl])=>{
+    const b=document.createElement('button'); b.className='fchip'+(filtro===k?' on':''); b.textContent=lbl;
+    b.onclick=()=>{ filtro=k; renderChips(); renderList(); };
+    chipsEl.appendChild(b);
+  });
+}
+function pasa(e){
+  if(busca && !e.Nombre.toLowerCase().includes(busca)) return false;
+  if(filtro==='TODOS') return e.Estado==='ACTIVO';
+  if(filtro==='INACTIVO') return e.Estado==='INACTIVO';
+  if(filtro==='CORTADOR') return e.Estado==='ACTIVO' && e.Cortador;
+  if(filtro==='COYOLERO') return e.Estado==='ACTIVO' && e.Coyolero;
+  return e.Estado==='ACTIVO' && e.Clasif===filtro;
+}
+const listaEl=document.getElementById('lista'), countEl=document.getElementById('count');
+function ini(n){ return (n.trim()[0]||'?').toUpperCase(); }
+function renderList(){
+  const arr=data.filter(pasa).sort((a,b)=>a.Nombre.localeCompare(b.Nombre));
+  countEl.textContent = arr.length+' empleado'+(arr.length===1?'':'s');
+  listaEl.innerHTML='';
+  arr.forEach(e=>{
+    const cl=CLAS[e.Clasif]||['—','b-prov'];
+    const card=document.createElement('div'); card.className='emp'+(e.Estado==='INACTIVO'?' inact':'');
+    card.innerHTML=`<div class="av">${ini(e.Nombre)}</div>
+      <div class="info">
+        <div class="nm">${e.Nombre}</div>
+        <div class="meta">
+          <span class="badge ${cl[1]}">${cl[0]}</span>
+          ${e.Cedula?`<span>${e.Cedula}</span>`:''}
+          ${e.Cortador?'<span class="tag">🌴 Cortador</span>':''}
+          ${e.Coyolero?'<span class="tag">Coyolero</span>':''}
+          ${e.Estado==='INACTIVO'?'<span class="badge b-prov">Inactivo</span>':''}
+        </div>
+      </div>
+      <div class="acts">
+        <button class="iconb" title="Editar">✏️</button>
+        <button class="iconb" title="Quitar">🗑️</button>
+      </div>`;
+    const btns=card.querySelectorAll('.iconb');
+    btns[0].onclick=()=>abrir(e);
+    btns[1].onclick=()=>{ if(confirm('¿Quitar a '+e.Nombre+'?')){ data=data.filter(x=>x.id!==e.id); save(); renderList(); } };
+    listaEl.appendChild(card);
+  });
+  if(!arr.length){ listaEl.innerHTML='<div class="ph">No hay empleados con ese filtro.</div>'; }
+}
+document.getElementById('buscar').addEventListener('input',e=>{ busca=e.target.value.toLowerCase().trim(); renderList(); });
+
+/* modal */
+const ov=document.getElementById('ov');
+const fId=document.getElementById('m-id'), fNom=document.getElementById('m-nombre'), fCed=document.getElementById('m-cedula'),
+      fCla=document.getElementById('m-clasif'), fTip=document.getElementById('m-tipo'), fEst=document.getElementById('m-estado'),
+      fCor=document.getElementById('m-cortador'), fCoy=document.getElementById('m-coyolero');
+function abrir(e){
+  document.getElementById('mtitle').textContent = e? 'Editar empleado':'Nuevo empleado';
+  fId.value=e?e.id:''; fNom.value=e?e.Nombre:''; fCed.value=e?e.Cedula:''; fCla.value=e?e.Clasif:'OPERARIO';
+  fTip.value=e?e.Tipo:'FIJO'; fEst.value=e?e.Estado:'ACTIVO'; fCor.checked=e?e.Cortador:false; fCoy.checked=e?e.Coyolero:false;
+  ov.classList.add('show');
+}
+document.getElementById('add').onclick=()=>abrir(null);
+document.getElementById('cancel').onclick=()=>ov.classList.remove('show');
+ov.onclick=e=>{ if(e.target===ov) ov.classList.remove('show'); };
+document.getElementById('save').onclick=()=>{
+  const nom=fNom.value.trim(); if(!nom){ alert('Escribí el nombre.'); return; }
+  const reg={id:fId.value||(nom+'|'+fCed.value.trim()+'|'+Math.random().toString(36).slice(2,7)),
+    Nombre:nom, Cedula:fCed.value.trim(), Clasif:fCla.value, Tipo:fTip.value, Estado:fEst.value, Cortador:fCor.checked, Coyolero:fCoy.checked};
+  if(fId.value){ data=data.map(x=>x.id===fId.value?reg:x); } else { data.push(reg); }
+  save(); ov.classList.remove('show'); renderList();
+};
+
+/* tabs */
+const otros={equ:'🚜 Catálogo de equipos / máquinas — próximamente',lab:'🏷️ Catálogo de labores (las 14) — próximamente',usr:'🔑 Usuarios y roles — próximamente',rep:'📊 Reportes y tableros — próximamente'};
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+    const k=t.dataset.tab;
+    if(k==='emp'){ document.getElementById('view-emp').style.display=''; document.getElementById('view-otros').style.display='none'; }
+    else{ document.getElementById('view-emp').style.display='none'; document.getElementById('view-otros').style.display=''; document.getElementById('phtxt').textContent=otros[k]; }
+  };
+});
+
+renderChips(); renderList();
+</script>
+</body>
+</html>
