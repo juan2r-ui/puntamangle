@@ -28,7 +28,8 @@
   .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
   .chip{font-size:12px;background:var(--verde-claro);color:var(--verde);padding:4px 10px;border-radius:20px;font-weight:600}
   .muted{font-size:12.5px;color:var(--gris);margin-top:8px}
-  .centro{background:#fff;border:1px solid var(--verde-borde);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  /* tarjeta editable */
+  .centro{background:#fff;border:1.5px solid var(--verde2);border-radius:14px;margin-bottom:11px;overflow:hidden;box-shadow:0 1px 6px rgba(46,125,50,.12)}
   .centro .ct{display:flex;align-items:center;justify-content:space-between;background:var(--verde-claro);padding:8px 12px;border-bottom:1px solid var(--verde-borde)}
   .centro .ct b{color:var(--verde);font-size:13.5px}
   .centro .del{border:none;background:transparent;color:#a33;font-size:19px;padding:2px 8px;border-radius:8px;cursor:pointer}
@@ -36,14 +37,19 @@
   label{display:block;font-size:12px;color:var(--gris);font-weight:600;margin:0 0 4px 2px}
   select,input{width:100%;padding:11px;font-size:16px;border:1.5px solid #cdddcf;border-radius:10px;background:#fff;color:var(--txt)}
   select:focus,input:focus{outline:none;border-color:var(--verde2);box-shadow:0 0 0 3px #2e7d3222}
-  .row2{display:flex;gap:10px;margin-bottom:6px}
+  .row2{display:flex;gap:10px}
   .row2 .f{flex:1}
-  .prow{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #eef3ee}
-  .prow .pn{flex:1;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .prow input{width:78px;text-align:center;padding:8px}
-  .prow .u{font-size:12px;color:var(--gris)}
-  .csub{text-align:right;font-size:12.5px;color:var(--gris);margin-top:8px}
-  .csub b{color:var(--verde)}
+  .field{margin-bottom:10px}
+  .saveb{width:100%;margin-top:4px;padding:12px;font-size:15px;font-weight:800;color:#fff;background:var(--verde2);border:none;border-radius:11px;cursor:pointer}
+  .saveb:active{filter:brightness(.95)}
+  /* fila guardada (colapsada) */
+  .done{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--verde-borde);border-radius:11px;padding:9px 12px;margin-bottom:8px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .done .ok{color:var(--verde2);font-size:16px;flex:0 0 auto}
+  .done .info{flex:1;min-width:0;font-size:13.5px}
+  .done .info b{color:var(--verde)}
+  .done .info .r{color:var(--gris);font-size:12.5px}
+  .done .acts{display:flex;gap:2px}
+  .done .acts button{border:none;background:transparent;font-size:15px;padding:5px 7px;border-radius:7px;cursor:pointer}
   .addbtn{width:100%;padding:14px;font-size:15px;font-weight:700;color:var(--verde);background:#fff;border:2px dashed var(--verde2);border-radius:12px;cursor:pointer}
   .addbtn:active{background:var(--verde-claro)}
   .addbtn:disabled{opacity:.5;border-style:solid}
@@ -55,11 +61,11 @@
   .totalcard .l{font-size:13px;opacity:.92;font-weight:700}
   .totalcard .big{font-size:30px;font-weight:800;margin:3px 0}
   .totalcard .s{font-size:12.5px;opacity:.92}
-  .savebtn{width:100%;padding:15px;font-size:16px;font-weight:800;color:#fff;background:linear-gradient(135deg,#b35414,#d9691a);border:none;border-radius:12px;cursor:pointer;box-shadow:0 3px 10px rgba(179,84,20,.3)}
-  .savebtn:active{filter:brightness(.93)}
-  .savebtn:disabled{opacity:.6}
+  .pdfbtn{width:100%;padding:15px;font-size:16px;font-weight:800;color:#fff;background:linear-gradient(135deg,#b35414,#d9691a);border:none;border-radius:12px;cursor:pointer;box-shadow:0 3px 10px rgba(179,84,20,.3)}
+  .pdfbtn:active{filter:brightness(.93)}
   .gate{max-width:420px;margin:60px auto;text-align:center;padding:0 20px;color:var(--gris)}
-  /* modal cuadrilla */
+  .sech{font-size:13px;font-weight:700;color:var(--gris);margin:4px 2px 8px;text-transform:uppercase;letter-spacing:.5px}
+  /* modal */
   .ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
   .ov.show{display:flex}
   .modal{background:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;max-height:90vh;display:flex;flex-direction:column}
@@ -94,38 +100,39 @@
 
   <div class="card">
     <div class="cuad-top">
-      <div class="t">👷 Cuadrilla del día</div>
+      <div class="t">✂️ Cortadores del día</div>
       <button class="btn-sm" id="selCuad">Seleccionar</button>
     </div>
     <div class="chips" id="cuadChips"></div>
-    <div class="muted" id="cuadMuted">Todavía no elegiste a nadie. Tocá "Seleccionar" para armar la cuadrilla.</div>
+    <div class="muted" id="cuadMuted">Opcional: elegí los cortadores que trabajan hoy para acortar la lista. Si no, aparecen todos.</div>
   </div>
 
-  <div id="centros"></div>
-  <button class="addbtn" id="add" disabled>＋ Agregar centro frutero</button>
+  <div id="guardados"></div>
+  <div id="encurso"></div>
+  <button class="addbtn" id="add">＋ Agregar centro</button>
 
   <div class="totalcard">
-    <div class="l">TOTAL RACIMOS CORTADOS</div>
+    <div class="l">TOTAL DEL DÍA (guardado)</div>
     <div class="big" id="tRac">0</div>
-    <div class="s"><span id="tCentros">0</span> centros · <span id="tCuad">0</span> personas</div>
+    <div class="s"><span id="tCentros">0</span> centros · racimos cortados</div>
   </div>
 
   <div class="card">
-    <div style="font-size:12px;color:var(--gris);font-weight:600;margin:0 0 6px 2px">🖊️ Firma del responsable</div>
+    <div style="font-size:12px;color:var(--gris);font-weight:600;margin:0 0 6px 2px">🖊️ Firma del responsable (para el PDF)</div>
     <div class="sigwrap"><canvas id="sig"></canvas><div class="sighint" id="sighint">✍️ Firmá aquí con el dedo</div></div>
     <button class="clearb" id="sigclear">Borrar firma</button>
   </div>
 
-  <button class="savebtn" id="save">💾 Guardar y generar PDF</button>
+  <button class="pdfbtn" id="pdf">📄 Generar PDF del día</button>
 </div>
 
 <div class="gate" id="gate" style="display:none"></div>
 
-<!-- Modal cuadrilla -->
+<!-- Modal cortadores -->
 <div class="ov" id="ov">
   <div class="modal">
-    <h2>Elegí la cuadrilla del día</h2>
-    <div class="msearch"><input type="text" id="mbuscar" placeholder="Buscar operario…" autocomplete="off"></div>
+    <h2>Cortadores que trabajan hoy</h2>
+    <div class="msearch"><input type="text" id="mbuscar" placeholder="Buscar…" autocomplete="off"></div>
     <div class="mlist" id="mlist"></div>
     <div class="mbtns">
       <button class="b-cancel" id="mcancel">Cancelar</button>
@@ -147,14 +154,17 @@ const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'
 function fechaHoy(){ const d=new Date(); return {larga:`${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`, corta:`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`}; }
 const fI = n => n.toLocaleString('es-ES');
 
-/* Inventario: centros por lote (los centros van del 1 al N). De la calculadora. */
+/* Centros por lote (1..N) — del inventario de la calculadora */
 const LOTES_CENTROS={A:31,B:45,C:32,D:20,E:33,F:37,G:36,H:36,I:59,J:59,AL:15,BL:32,FB:128,CM:41,TD:74,IS:23,ES:35,TI:72,PT:72,GA:168,CB:50,AV:29,MJ:150,FFB:13,CCM:16};
 const LOTES=Object.keys(LOTES_CENTROS);
+const FHOY=fechaHoy();
 
-let operarios=[];   // {id, Nombre}
-let cuadrilla=[];   // {id, nombre}
-let centros=[];     // {id, lote, centro, rac:{opId:val}}
+let cortadores=[];   // {id, Nombre}
+let cuadrilla=[];    // {id, nombre}
+let guardados=[];    // {docId, lote, centro, cortadorId, cortadorNombre, racimos}
+let encurso=[];      // {id, lote, centro, cortadorId, racimos}
 let idSeq=0;
+const colCorte=fbDB.collection('corte');
 
 document.getElementById('logout').onclick=cerrarSesion;
 
@@ -165,39 +175,39 @@ requireAuth(function(u){
     document.getElementById('gate').innerHTML='Este módulo es para el <b>Capataz</b>.<br>Tu rol ('+(u.rol||'—')+') no tiene acceso.<br><br><a href="index.html">‹ Volver al menú</a>';
     return;
   }
-  document.getElementById('fechaTxt').textContent=fechaHoy().larga;
+  document.getElementById('fechaTxt').textContent=FHOY.larga;
   document.getElementById('who').textContent=u.nombre||u.email;
-  document.getElementById('sub').textContent='Racimos cortados por operario y centro';
-  cargarOperarios();
+  document.getElementById('sub').textContent='Racimos cortados por cortador y centro';
+  cargar();
 });
 
 function ini(n){ return (n.trim()[0]||'?').toUpperCase(); }
 
-function cargarOperarios(){
-  fbDB.collection('empleados').get().then(function(snap){
-    operarios = snap.docs.map(d=>{ const o=d.data(); o.id=d.id; return o; })
-      .filter(e => e.Estado!=='INACTIVO' && e.Clasif==='OPERARIO')
+function cargar(){
+  Promise.all([ fbDB.collection('empleados').get(), colCorte.where('fecha','==',FHOY.corta).get() ])
+  .then(function(res){
+    cortadores = res[0].docs.map(d=>{ const o=d.data(); o.id=d.id; return o; })
+      .filter(e => e.Estado!=='INACTIVO' && e.Cortador)
       .sort((a,b)=> a.Nombre.localeCompare(b.Nombre));
+    const myEmail=(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||'';
+    guardados = res[1].docs.filter(d=>d.data().responsableEmail===myEmail).map(d=>{ const o=d.data(); return {docId:d.id, lote:o.lote, centro:o.centro, cortadorId:o.cortadorId, cortadorNombre:o.cortadorNombre, racimos:o.racimos}; });
     document.getElementById('wrap').style.display='';
-    setupSig();
+    encurso.push({id:++idSeq, lote:'', centro:'', cortadorId:'', racimos:''});
+    renderGuardados(); renderEncurso(); pintarTotal(); setupSig();
   }).catch(function(e){
     document.getElementById('sub').textContent='Error al leer la central';
-    document.getElementById('gate').style.display=''; document.getElementById('gate').textContent='No se pudo leer el catálogo: '+e.message;
+    document.getElementById('gate').style.display=''; document.getElementById('gate').textContent='No se pudo leer la central: '+e.message;
   });
 }
 
-/* ===== Modal cuadrilla ===== */
-const ov=document.getElementById('ov');
-let selTmp={};
-document.getElementById('selCuad').onclick=function(){
-  selTmp={}; cuadrilla.forEach(c=>selTmp[c.id]=true);
-  document.getElementById('mbuscar').value=''; renderModal(''); ov.classList.add('show');
-};
+/* ===== Cortadores del día (modal) ===== */
+const ov=document.getElementById('ov'); let selTmp={};
+document.getElementById('selCuad').onclick=function(){ selTmp={}; cuadrilla.forEach(c=>selTmp[c.id]=true); document.getElementById('mbuscar').value=''; renderModal(''); ov.classList.add('show'); };
 document.getElementById('mcancel').onclick=()=>ov.classList.remove('show');
 document.getElementById('mbuscar').addEventListener('input',function(){ renderModal(this.value.toLowerCase().trim()); });
 function renderModal(b){
   const l=document.getElementById('mlist'); l.innerHTML='';
-  operarios.filter(e=>!b||e.Nombre.toLowerCase().includes(b)).forEach(e=>{
+  cortadores.filter(e=>!b||e.Nombre.toLowerCase().includes(b)).forEach(e=>{
     const row=document.createElement('label'); row.className='mrow';
     row.innerHTML=`<input type="checkbox" ${selTmp[e.id]?'checked':''}><span class="mn">${e.Nombre}</span>`;
     row.querySelector('input').onchange=function(){ if(this.checked) selTmp[e.id]=true; else delete selTmp[e.id]; document.getElementById('mcount').textContent=Object.keys(selTmp).length; };
@@ -206,66 +216,100 @@ function renderModal(b){
   document.getElementById('mcount').textContent=Object.keys(selTmp).length;
 }
 document.getElementById('mok').onclick=function(){
-  cuadrilla = operarios.filter(e=>selTmp[e.id]).map(e=>({id:e.id,nombre:e.Nombre}));
-  ov.classList.remove('show');
-  renderCuadrilla(); renderCentros(); pintarTotal();
-  document.getElementById('add').disabled = cuadrilla.length===0;
+  cuadrilla = cortadores.filter(e=>selTmp[e.id]).map(e=>({id:e.id,nombre:e.Nombre}));
+  ov.classList.remove('show'); renderCuad(); renderEncurso();
 };
-function renderCuadrilla(){
+function renderCuad(){
   const c=document.getElementById('cuadChips'); c.innerHTML='';
   cuadrilla.forEach(p=>{ const s=document.createElement('span'); s.className='chip'; s.textContent=p.nombre; c.appendChild(s); });
   document.getElementById('cuadMuted').style.display = cuadrilla.length? 'none':'';
   if(cuadrilla.length) document.getElementById('selCuad').textContent='Cambiar ('+cuadrilla.length+')';
 }
+function candidatos(){ return cuadrilla.length? cuadrilla : cortadores.map(e=>({id:e.id,nombre:e.Nombre})); }
+function nombreCort(id){ const c=candidatos().find(x=>x.id===id)||cortadores.find(x=>x.id===id); return c?(c.nombre||c.Nombre):id; }
 
-/* ===== Centros ===== */
+/* ===== Centros en curso ===== */
 function opcLotes(sel){ let h='<option value="">— lote —</option>'; LOTES.forEach(L=>h+=`<option ${L===sel?'selected':''}>${L}</option>`); return h; }
 function opcCentros(lote,sel){ let h='<option value="">— centro —</option>'; if(lote){ for(let i=1;i<=LOTES_CENTROS[lote];i++) h+=`<option ${String(i)===String(sel)?'selected':''}>${i}</option>`; } return h; }
-document.getElementById('add').addEventListener('click',()=>{ centros.push({id:++idSeq,lote:'',centro:'',rac:{}}); renderCentros(); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); });
+function opcCort(sel){ let h='<option value="">— cortador —</option>'; candidatos().forEach(c=>h+=`<option value="${c.id}" ${c.id===sel?'selected':''}>${c.nombre}</option>`); return h; }
 
-function renderCentros(){
-  const cont=document.getElementById('centros'); cont.innerHTML='';
-  centros.forEach((c,i)=>{
+document.getElementById('add').addEventListener('click',()=>{ encurso.push({id:++idSeq,lote:'',centro:'',cortadorId:'',racimos:''}); renderEncurso(); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); });
+
+function renderEncurso(){
+  const cont=document.getElementById('encurso'); cont.innerHTML='';
+  encurso.forEach((c,i)=>{
     const card=document.createElement('div'); card.className='centro';
-    let pr='';
-    cuadrilla.forEach(p=>{ pr+=`<div class="prow"><div class="pn">${p.nombre}</div><input type="number" inputmode="numeric" min="0" step="1" placeholder="0" data-c="${c.id}" data-p="${p.id}" value="${c.rac[p.id]!==undefined?c.rac[p.id]:''}"><span class="u">racimos</span></div>`; });
-    card.innerHTML=`<div class="ct"><b>Centro ${i+1}</b><button class="del" data-del="${c.id}">✕</button></div>
+    card.innerHTML=`<div class="ct"><b>Nuevo centro</b>${encurso.length>1?`<button class="del" data-del="${c.id}">✕</button>`:''}</div>
       <div class="cb">
-        <div class="row2">
-          <div class="f"><label>Lote</label><select data-c="${c.id}" data-k="lote">${opcLotes(c.lote)}</select></div>
-          <div class="f"><label>Centro frutero</label><select data-c="${c.id}" data-k="centro">${opcCentros(c.lote,c.centro)}</select></div>
+        <div class="row2" style="margin-bottom:10px">
+          <div class="f"><label>Lote</label><select data-id="${c.id}" data-k="lote">${opcLotes(c.lote)}</select></div>
+          <div class="f"><label>Centro</label><select data-id="${c.id}" data-k="centro">${opcCentros(c.lote,c.centro)}</select></div>
         </div>
-        ${pr}
-        <div class="csub">Subtotal: <b data-sub="${c.id}">0</b> racimos</div>
+        <div class="field"><label>Cortador</label><select data-id="${c.id}" data-k="cortadorId">${opcCort(c.cortadorId)}</select></div>
+        <div class="field"><label>Racimos cortados</label><input type="number" inputmode="numeric" min="0" step="1" placeholder="0" data-id="${c.id}" data-k="racimos" value="${c.racimos}"></div>
+        <button class="saveb" data-save="${c.id}">✓ Guardar centro</button>
       </div>`;
     cont.appendChild(card);
   });
-  // listeners
-  cont.querySelectorAll('select[data-k]').forEach(s=>{
-    s.addEventListener('change',function(){
-      const c=centros.find(x=>x.id==this.dataset.c); if(!c) return;
-      c[this.dataset.k]=this.value;
-      if(this.dataset.k==='lote'){ c.centro=''; renderCentros(); }
-    });
+  cont.querySelectorAll('[data-k]').forEach(el=>{
+    const ev = el.tagName==='SELECT'?'change':'input';
+    el.addEventListener(ev,function(){ const c=encurso.find(x=>x.id==this.dataset.id); if(!c)return; c[this.dataset.k]=this.value; if(this.dataset.k==='lote'){ c.centro=''; renderEncurso(); } });
   });
-  cont.querySelectorAll('input[data-p]').forEach(inp=>{
-    inp.addEventListener('input',function(){
-      const c=centros.find(x=>x.id==this.dataset.c); if(!c) return;
-      c.rac[this.dataset.p]=this.value;
-      const sub=document.querySelector('[data-sub="'+c.id+'"]'); if(sub) sub.textContent=fI(subCentro(c));
-      pintarTotal();
-    });
-  });
-  cont.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ centros=centros.filter(x=>x.id!=b.dataset.del); renderCentros(); pintarTotal(); }; });
-  // subtotales
-  centros.forEach(c=>{ const sub=document.querySelector('[data-sub="'+c.id+'"]'); if(sub) sub.textContent=fI(subCentro(c)); });
+  cont.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ encurso=encurso.filter(x=>x.id!=b.dataset.del); if(!encurso.length) encurso.push({id:++idSeq,lote:'',centro:'',cortadorId:'',racimos:''}); renderEncurso(); }; });
+  cont.querySelectorAll('[data-save]').forEach(b=>{ b.onclick=()=>guardarCentro(b.dataset.save, b); });
 }
-function subCentro(c){ let s=0; for(const k in c.rac){ const v=+c.rac[k]; if(v>0) s+=v; } return s; }
+
+async function guardarCentro(id, btn){
+  const c=encurso.find(x=>x.id==id); if(!c) return;
+  if(!c.lote||!c.centro){ alert('Elegí lote y centro.'); return; }
+  if(!c.cortadorId){ alert('Asigná el cortador.'); return; }
+  const rac=parseInt(c.racimos,10); if(isNaN(rac)||rac<0){ alert('Poné la cantidad de racimos.'); return; }
+  const nom=nombreCort(c.cortadorId);
+  if(!confirm('¿Guardar?\n\nLote '+c.lote+' · Centro '+c.centro+'\n'+nom+' · '+rac+' racimos')) return;
+  btn.disabled=true; btn.textContent='Guardando…';
+  try{
+    const ref=await colCorte.add({
+      fecha:FHOY.corta, fechaLarga:FHOY.larga,
+      responsableEmail:(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||'', responsableNombre:(USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'',
+      lote:c.lote, centro:c.centro, cortadorId:c.cortadorId, cortadorNombre:nom, racimos:rac,
+      creado: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    guardados.unshift({docId:ref.id, lote:c.lote, centro:c.centro, cortadorId:c.cortadorId, cortadorNombre:nom, racimos:rac});
+    encurso=encurso.filter(x=>x.id!=id); if(!encurso.length) encurso.push({id:++idSeq,lote:'',centro:'',cortadorId:'',racimos:''});
+    renderGuardados(); renderEncurso(); pintarTotal();
+  }catch(e){ alert('No se pudo guardar: '+e.message); btn.disabled=false; btn.textContent='✓ Guardar centro'; }
+}
+
+function renderGuardados(){
+  const cont=document.getElementById('guardados'); cont.innerHTML='';
+  if(!guardados.length) return;
+  const h=document.createElement('div'); h.className='sech'; h.textContent='✓ Guardados hoy ('+guardados.length+')'; cont.appendChild(h);
+  guardados.forEach(g=>{
+    const row=document.createElement('div'); row.className='done';
+    row.innerHTML=`<span class="ok">✓</span>
+      <div class="info"><b>Lote ${g.lote} · Centro ${g.centro}</b><div class="r">${g.cortadorNombre} · ${fI(g.racimos)} racimos</div></div>
+      <div class="acts"><button title="Editar">✏️</button><button title="Quitar">🗑️</button></div>`;
+    const b=row.querySelectorAll('button');
+    b[0].onclick=()=>editar(g);
+    b[1].onclick=()=>borrar(g);
+    cont.appendChild(row);
+  });
+}
+function editar(g){
+  colCorte.doc(g.docId).delete().catch(function(){});  // quita el viejo; al re-guardar se crea actualizado
+  encurso.push({id:++idSeq, lote:g.lote, centro:g.centro, cortadorId:g.cortadorId, racimos:String(g.racimos)});
+  guardados=guardados.filter(x=>x.docId!==g.docId);
+  renderGuardados(); renderEncurso(); pintarTotal();
+  window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+}
+function borrar(g){
+  if(!confirm('¿Quitar el corte de Lote '+g.lote+' Centro '+g.centro+'?')) return;
+  colCorte.doc(g.docId).delete().then(()=>{ guardados=guardados.filter(x=>x.docId!==g.docId); renderGuardados(); pintarTotal(); }).catch(e=>alert('No se pudo quitar: '+e.message));
+}
 function pintarTotal(){
-  let tot=0; centros.forEach(c=>tot+=subCentro(c));
+  let tot=0; guardados.forEach(g=>tot+=+g.racimos);
   document.getElementById('tRac').textContent=fI(tot);
-  document.getElementById('tCentros').textContent=centros.filter(c=>c.lote&&c.centro).length;
-  document.getElementById('tCuad').textContent=cuadrilla.length;
+  document.getElementById('tCentros').textContent=guardados.length;
 }
 
 /* ===== Firma ===== */
@@ -284,31 +328,11 @@ function setupSig(){
   document.getElementById('sigclear').onclick=()=>{sigCtx.save();sigCtx.setTransform(1,0,0,1,0,0);sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);sigCtx.restore();sigHas=false;document.getElementById('sighint').style.display='block';};
 }
 
-/* ===== Guardar + PDF ===== */
-document.getElementById('save').addEventListener('click', async function(){
-  if(!cuadrilla.length){ alert('Primero elegí la cuadrilla del día.'); return; }
-  const f=fechaHoy();
-  const items=centros.filter(c=>c.lote&&c.centro).map(c=>{
-    const detalle=cuadrilla.filter(p=>+ (c.rac[p.id]||0) >0).map(p=>({id:p.id,nombre:p.nombre,racimos:Math.round(+c.rac[p.id])}));
-    return {lote:c.lote, centro:c.centro, racimos:detalle, subtotal:subCentro(c)};
-  }).filter(c=>c.racimos.length);
-  if(!items.length){ alert('Cargá al menos un centro con racimos.'); return; }
-  const btn=this; btn.disabled=true; const txt=btn.textContent; btn.textContent='Guardando…';
-  const total=items.reduce((s,c)=>s+c.subtotal,0);
-  try{
-    await fbDB.collection('corte').add({
-      fecha:f.corta, fechaLarga:f.larga,
-      responsableEmail:(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||'', responsableNombre:(USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'',
-      cuadrilla:cuadrilla, centros:items, totalRacimos:total, nCentros:items.length,
-      creado: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    generarPDF(f, items, total);
-    btn.textContent='✅ Guardado';
-    setTimeout(()=>{ btn.disabled=false; btn.textContent=txt; }, 1500);
-  }catch(e){ alert('No se pudo guardar en la central: '+e.message); btn.disabled=false; btn.textContent=txt; }
-});
-
-function generarPDF(f, items, total){
+/* ===== PDF del día ===== */
+document.getElementById('pdf').addEventListener('click', function(){
+  if(!guardados.length){ alert('Todavía no hay centros guardados hoy.'); return; }
+  const items=guardados.slice().sort((a,b)=> a.lote.localeCompare(b.lote) || (+a.centro - +b.centro));
+  const total=items.reduce((s,g)=>s+ +g.racimos,0);
   try{
     const { jsPDF }=window.jspdf;
     const doc=new jsPDF({unit:'mm',format:'a4'});
@@ -321,28 +345,26 @@ function generarPDF(f, items, total){
     y+=26; doc.setDrawColor(30,86,49); doc.setLineWidth(.6); doc.line(M,y,W-M,y); y+=8;
     doc.setFontSize(11); doc.setTextColor(20,20,20);
     const linea=(et,va)=>{ doc.setFont('helvetica','bold'); doc.text(et,M,y); doc.setFont('helvetica','normal'); doc.text(String(va||'—'),M+34,y); y+=7; };
-    linea('Fecha:', f.larga);
+    linea('Fecha:', FHOY.larga);
     linea('Responsable:', (USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'');
-    linea('Cuadrilla:', cuadrilla.length+' personas');
     y+=3;
-    items.forEach(c=>{
-      if(y+18>280){ doc.addPage(); y=18; }
-      doc.setFillColor(30,86,49); doc.rect(M,y,180,8,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(255,255,255);
-      doc.text('Lote '+c.lote+'  ·  Centro '+c.centro, M+2, y+5.5);
-      doc.text(fI(c.subtotal)+' racimos', M+178, y+5.5, {align:'right'}); y+=8;
-      doc.setTextColor(20,20,20);
-      c.racimos.forEach((r,i)=>{
-        if(y+6>285){ doc.addPage(); y=18; }
-        if(i%2===0){ doc.setFillColor(237,245,233); doc.rect(M,y,180,6.5,'F'); }
-        doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
-        doc.text(doc.splitTextToSize(r.nombre,150)[0], M+3, y+4.6);
-        doc.text(fI(r.racimos), M+178, y+4.6, {align:'right'}); y+=6.5;
-      });
-      y+=3;
+    const cols=[{x:M,w:26,a:'left'},{x:M+26,w:88,a:'left'},{x:M+114,w:66,a:'right'}];
+    const tit=['Lote · C','Cortador','Racimos']; const tblW=180;
+    function head(){ doc.setFillColor(30,86,49); doc.rect(M,y,tblW,9,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(9.5); doc.setTextColor(255,255,255);
+      cols.forEach((c,i)=>{ const tx=c.a==='right'?c.x+c.w-2:c.x+2; doc.text(tit[i],tx,y+6,{align:c.a}); }); y+=9; doc.setTextColor(20,20,20); }
+    head();
+    items.forEach((g,i)=>{
+      if(y+8>280){ doc.addPage(); y=18; head(); }
+      if(i%2===0){ doc.setFillColor(237,245,233); doc.rect(M,y,tblW,8,'F'); }
+      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); const vy=y+5.5;
+      doc.text(g.lote+' · '+g.centro, cols[0].x+2, vy);
+      doc.text(doc.splitTextToSize(g.cortadorNombre,cols[1].w-3)[0], cols[1].x+2, vy);
+      doc.text(fI(g.racimos), cols[2].x+cols[2].w-2, vy, {align:'right'});
+      y+=8;
     });
-    if(y+12>280){ doc.addPage(); y=18; }
-    doc.setFillColor(200,230,201); doc.rect(M,y,180,9,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(20,40,20);
-    doc.text('TOTAL RACIMOS', M+2, y+6); doc.text(fI(total), M+178, y+6, {align:'right'}); y+=16;
+    doc.setFillColor(200,230,201); doc.rect(M,y,tblW,9,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(20,40,20);
+    doc.text('TOTAL ('+items.length+' centros)', cols[0].x+2, y+6);
+    doc.text(fI(total)+' racimos', cols[2].x+cols[2].w-2, y+6, {align:'right'}); y+=16;
     if(sigHas){
       if(y+40>285){ doc.addPage(); y=18; }
       doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(30,86,49); doc.text('Firma del responsable:', M, y); y+=4;
@@ -350,16 +372,16 @@ function generarPDF(f, items, total){
       doc.setDrawColor(140); doc.setLineWidth(.3); doc.line(M,y,M+72,y); y+=4;
       doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(110,110,110); doc.text((USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'', M, y);
     }
-    const folio='CRT-'+f.corta.replace(/-/g,'')+'-'+String(Date.now()).slice(-4);
+    const folio='CRT-'+FHOY.corta.replace(/-/g,'')+'-'+String(Date.now()).slice(-4);
     const hora=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
     doc.setFont('helvetica','italic'); doc.setFontSize(8.5); doc.setTextColor(120,120,120);
-    doc.text('Folio '+folio+' · Generado '+f.corta+' '+hora+' · FINCA BURICA', M, 293);
-    const blob=doc.output('blob'); const fname=('Corte_'+f.corta+'.pdf').replace(/[^\w.\-]+/g,'_');
+    doc.text('Folio '+folio+' · Generado '+FHOY.corta+' '+hora+' · FINCA BURICA', M, 293);
+    const blob=doc.output('blob'); const fname=('Corte_'+FHOY.corta+'.pdf').replace(/[^\w.\-]+/g,'_');
     const file=new File([blob],fname,{type:'application/pdf'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Reporte de corte',text:'Reporte de corte — '+f.larga}).catch(()=>doc.save(fname)); }
+    if(navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Reporte de corte',text:'Reporte de corte — '+FHOY.larga}).catch(()=>doc.save(fname)); }
     else doc.save(fname);
-  }catch(err){ alert('Se guardó en la central, pero el PDF falló: '+(err&&err.message?err.message:err)); }
-}
+  }catch(err){ alert('No se pudo generar el PDF: '+(err&&err.message?err.message:err)); }
+});
 </script>
 </body>
 </html>
