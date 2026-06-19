@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E5631">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Corte · FINCA BURICA</title>
+<style>
+  :root{--verde:#1E5631;--verde2:#2E7D32;--verde-claro:#EDF5E9;--verde-borde:#C8E6C9;--txt:#1b2a1f;--gris:#6b7c6f;--bg:#f4f7f3;--naranja:#c8631a}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt);padding-bottom:30px}
+  header{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 14px 12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .htop{display:flex;align-items:center;gap:10px}
+  .htop img{height:34px;background:#fff;border-radius:8px;padding:3px}
+  .htop .h1{font-size:16px;font-weight:700}
+  .htop .back{color:#fff;text-decoration:none;font-size:13px;background:rgba(255,255,255,.18);padding:6px 11px;border-radius:8px}
+  .htop .back.menu{margin-left:auto}
+  .sub{font-size:12px;opacity:.9;margin-top:4px}
+  .wrap{max-width:760px;margin:0 auto;padding:14px}
+  .card{background:#fff;border:1px solid var(--verde-borde);border-radius:14px;padding:12px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .repline{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--gris)}
+  .repline b{color:var(--txt)}
+  .cuad-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .cuad-top .t{font-size:14px;font-weight:700;color:var(--verde)}
+  .btn-sm{font-size:13px;font-weight:700;padding:8px 12px;border-radius:9px;border:1.5px solid var(--verde2);background:#fff;color:var(--verde2);cursor:pointer}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .chip{font-size:12px;background:var(--verde-claro);color:var(--verde);padding:4px 10px;border-radius:20px;font-weight:600}
+  .muted{font-size:12.5px;color:var(--gris);margin-top:8px}
+  .centro{background:#fff;border:1px solid var(--verde-borde);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .centro .ct{display:flex;align-items:center;justify-content:space-between;background:var(--verde-claro);padding:8px 12px;border-bottom:1px solid var(--verde-borde)}
+  .centro .ct b{color:var(--verde);font-size:13.5px}
+  .centro .del{border:none;background:transparent;color:#a33;font-size:19px;padding:2px 8px;border-radius:8px;cursor:pointer}
+  .centro .cb{padding:12px}
+  label{display:block;font-size:12px;color:var(--gris);font-weight:600;margin:0 0 4px 2px}
+  select,input{width:100%;padding:11px;font-size:16px;border:1.5px solid #cdddcf;border-radius:10px;background:#fff;color:var(--txt)}
+  select:focus,input:focus{outline:none;border-color:var(--verde2);box-shadow:0 0 0 3px #2e7d3222}
+  .row2{display:flex;gap:10px;margin-bottom:6px}
+  .row2 .f{flex:1}
+  .prow{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #eef3ee}
+  .prow .pn{flex:1;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .prow input{width:78px;text-align:center;padding:8px}
+  .prow .u{font-size:12px;color:var(--gris)}
+  .csub{text-align:right;font-size:12.5px;color:var(--gris);margin-top:8px}
+  .csub b{color:var(--verde)}
+  .addbtn{width:100%;padding:14px;font-size:15px;font-weight:700;color:var(--verde);background:#fff;border:2px dashed var(--verde2);border-radius:12px;cursor:pointer}
+  .addbtn:active{background:var(--verde-claro)}
+  .addbtn:disabled{opacity:.5;border-style:solid}
+  .sigwrap{position:relative}
+  #sig{width:100%;height:150px;background:#fbfdfb;border:2px dashed #b9d0bd;border-radius:12px;touch-action:none;display:block}
+  .sighint{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;color:#aebfb1;font-size:14px;pointer-events:none}
+  .clearb{width:100%;margin-top:8px;padding:11px;font-size:14px;font-weight:700;color:var(--verde);background:#fff;border:2px solid var(--verde2);border-radius:11px;cursor:pointer}
+  .totalcard{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}
+  .totalcard .l{font-size:13px;opacity:.92;font-weight:700}
+  .totalcard .big{font-size:30px;font-weight:800;margin:3px 0}
+  .totalcard .s{font-size:12.5px;opacity:.92}
+  .savebtn{width:100%;padding:15px;font-size:16px;font-weight:800;color:#fff;background:linear-gradient(135deg,#b35414,#d9691a);border:none;border-radius:12px;cursor:pointer;box-shadow:0 3px 10px rgba(179,84,20,.3)}
+  .savebtn:active{filter:brightness(.93)}
+  .savebtn:disabled{opacity:.6}
+  .gate{max-width:420px;margin:60px auto;text-align:center;padding:0 20px;color:var(--gris)}
+  /* modal cuadrilla */
+  .ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
+  .ov.show{display:flex}
+  .modal{background:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;max-height:90vh;display:flex;flex-direction:column}
+  .modal h2{margin:0;padding:16px 16px 10px;font-size:17px;color:var(--verde)}
+  .modal .msearch{padding:0 16px 10px}
+  .modal .mlist{overflow:auto;padding:0 16px;flex:1}
+  .mrow{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid #eef3ee}
+  .mrow input{width:auto}
+  .mrow .mn{flex:1;font-size:14.5px;font-weight:600}
+  .mbtns{display:flex;gap:10px;padding:14px 16px;border-top:1px solid #eee}
+  .mbtns button{flex:1;padding:13px;font-size:15px;font-weight:700;border-radius:11px;border:none;cursor:pointer}
+  .b-cancel{background:#fff;color:#777;border:1.5px solid #ccc}
+  .b-ok{background:var(--verde2);color:#fff}
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <img src="logo.png" alt="">
+    <div class="h1">✂️ Corte</div>
+    <a class="back menu" href="index.html">‹ Menú</a>
+    <a class="back" id="logout" style="cursor:pointer">Salir</a>
+  </div>
+  <div class="sub" id="sub">Cargando…</div>
+</header>
+
+<div class="wrap" id="wrap" style="display:none">
+  <div class="card">
+    <div class="repline"><span>📅 Fecha</span><b id="fechaTxt">—</b></div>
+    <div class="repline" style="margin-top:6px"><span>👤 Responsable</span><b id="who">—</b></div>
+  </div>
+
+  <div class="card">
+    <div class="cuad-top">
+      <div class="t">👷 Cuadrilla del día</div>
+      <button class="btn-sm" id="selCuad">Seleccionar</button>
+    </div>
+    <div class="chips" id="cuadChips"></div>
+    <div class="muted" id="cuadMuted">Todavía no elegiste a nadie. Tocá "Seleccionar" para armar la cuadrilla.</div>
+  </div>
+
+  <div id="centros"></div>
+  <button class="addbtn" id="add" disabled>＋ Agregar centro frutero</button>
+
+  <div class="totalcard">
+    <div class="l">TOTAL RACIMOS CORTADOS</div>
+    <div class="big" id="tRac">0</div>
+    <div class="s"><span id="tCentros">0</span> centros · <span id="tCuad">0</span> personas</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:12px;color:var(--gris);font-weight:600;margin:0 0 6px 2px">🖊️ Firma del responsable</div>
+    <div class="sigwrap"><canvas id="sig"></canvas><div class="sighint" id="sighint">✍️ Firmá aquí con el dedo</div></div>
+    <button class="clearb" id="sigclear">Borrar firma</button>
+  </div>
+
+  <button class="savebtn" id="save">💾 Guardar y generar PDF</button>
+</div>
+
+<div class="gate" id="gate" style="display:none"></div>
+
+<!-- Modal cuadrilla -->
+<div class="ov" id="ov">
+  <div class="modal">
+    <h2>Elegí la cuadrilla del día</h2>
+    <div class="msearch"><input type="text" id="mbuscar" placeholder="Buscar operario…" autocomplete="off"></div>
+    <div class="mlist" id="mlist"></div>
+    <div class="mbtns">
+      <button class="b-cancel" id="mcancel">Cancelar</button>
+      <button class="b-ok" id="mok">Listo (<span id="mcount">0</span>)</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<script>window.__sm=window.module;window.__se=window.exports;window.__sd=window.define;try{window.module=void 0;window.exports=void 0;window.define=void 0}catch(e){}</script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script>try{window.module=window.__sm;window.exports=window.__se;window.define=window.__sd}catch(e){}</script>
+<script>
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+function fechaHoy(){ const d=new Date(); return {larga:`${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`, corta:`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`}; }
+const fI = n => n.toLocaleString('es-ES');
+
+/* Inventario: centros por lote (los centros van del 1 al N). De la calculadora. */
+const LOTES_CENTROS={A:31,B:45,C:32,D:20,E:33,F:37,G:36,H:36,I:59,J:59,AL:15,BL:32,FB:128,CM:41,TD:74,IS:23,ES:35,TI:72,PT:72,GA:168,CB:50,AV:29,MJ:150,FFB:13,CCM:16};
+const LOTES=Object.keys(LOTES_CENTROS);
+
+let operarios=[];   // {id, Nombre}
+let cuadrilla=[];   // {id, nombre}
+let centros=[];     // {id, lote, centro, rac:{opId:val}}
+let idSeq=0;
+
+document.getElementById('logout').onclick=cerrarSesion;
+
+requireAuth(function(u){
+  if(u.rol!=='admin' && u.rol!=='capataz'){
+    document.getElementById('sub').textContent='Sin acceso a este módulo';
+    document.getElementById('gate').style.display='';
+    document.getElementById('gate').innerHTML='Este módulo es para el <b>Capataz</b>.<br>Tu rol ('+(u.rol||'—')+') no tiene acceso.<br><br><a href="index.html">‹ Volver al menú</a>';
+    return;
+  }
+  document.getElementById('fechaTxt').textContent=fechaHoy().larga;
+  document.getElementById('who').textContent=u.nombre||u.email;
+  document.getElementById('sub').textContent='Racimos cortados por operario y centro';
+  cargarOperarios();
+});
+
+function ini(n){ return (n.trim()[0]||'?').toUpperCase(); }
+
+function cargarOperarios(){
+  fbDB.collection('empleados').get().then(function(snap){
+    operarios = snap.docs.map(d=>{ const o=d.data(); o.id=d.id; return o; })
+      .filter(e => e.Estado!=='INACTIVO' && e.Clasif==='OPERARIO')
+      .sort((a,b)=> a.Nombre.localeCompare(b.Nombre));
+    document.getElementById('wrap').style.display='';
+    setupSig();
+  }).catch(function(e){
+    document.getElementById('sub').textContent='Error al leer la central';
+    document.getElementById('gate').style.display=''; document.getElementById('gate').textContent='No se pudo leer el catálogo: '+e.message;
+  });
+}
+
+/* ===== Modal cuadrilla ===== */
+const ov=document.getElementById('ov');
+let selTmp={};
+document.getElementById('selCuad').onclick=function(){
+  selTmp={}; cuadrilla.forEach(c=>selTmp[c.id]=true);
+  document.getElementById('mbuscar').value=''; renderModal(''); ov.classList.add('show');
+};
+document.getElementById('mcancel').onclick=()=>ov.classList.remove('show');
+document.getElementById('mbuscar').addEventListener('input',function(){ renderModal(this.value.toLowerCase().trim()); });
+function renderModal(b){
+  const l=document.getElementById('mlist'); l.innerHTML='';
+  operarios.filter(e=>!b||e.Nombre.toLowerCase().includes(b)).forEach(e=>{
+    const row=document.createElement('label'); row.className='mrow';
+    row.innerHTML=`<input type="checkbox" ${selTmp[e.id]?'checked':''}><span class="mn">${e.Nombre}</span>`;
+    row.querySelector('input').onchange=function(){ if(this.checked) selTmp[e.id]=true; else delete selTmp[e.id]; document.getElementById('mcount').textContent=Object.keys(selTmp).length; };
+    l.appendChild(row);
+  });
+  document.getElementById('mcount').textContent=Object.keys(selTmp).length;
+}
+document.getElementById('mok').onclick=function(){
+  cuadrilla = operarios.filter(e=>selTmp[e.id]).map(e=>({id:e.id,nombre:e.Nombre}));
+  ov.classList.remove('show');
+  renderCuadrilla(); renderCentros(); pintarTotal();
+  document.getElementById('add').disabled = cuadrilla.length===0;
+};
+function renderCuadrilla(){
+  const c=document.getElementById('cuadChips'); c.innerHTML='';
+  cuadrilla.forEach(p=>{ const s=document.createElement('span'); s.className='chip'; s.textContent=p.nombre; c.appendChild(s); });
+  document.getElementById('cuadMuted').style.display = cuadrilla.length? 'none':'';
+  if(cuadrilla.length) document.getElementById('selCuad').textContent='Cambiar ('+cuadrilla.length+')';
+}
+
+/* ===== Centros ===== */
+function opcLotes(sel){ let h='<option value="">— lote —</option>'; LOTES.forEach(L=>h+=`<option ${L===sel?'selected':''}>${L}</option>`); return h; }
+function opcCentros(lote,sel){ let h='<option value="">— centro —</option>'; if(lote){ for(let i=1;i<=LOTES_CENTROS[lote];i++) h+=`<option ${String(i)===String(sel)?'selected':''}>${i}</option>`; } return h; }
+document.getElementById('add').addEventListener('click',()=>{ centros.push({id:++idSeq,lote:'',centro:'',rac:{}}); renderCentros(); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); });
+
+function renderCentros(){
+  const cont=document.getElementById('centros'); cont.innerHTML='';
+  centros.forEach((c,i)=>{
+    const card=document.createElement('div'); card.className='centro';
+    let pr='';
+    cuadrilla.forEach(p=>{ pr+=`<div class="prow"><div class="pn">${p.nombre}</div><input type="number" inputmode="numeric" min="0" step="1" placeholder="0" data-c="${c.id}" data-p="${p.id}" value="${c.rac[p.id]!==undefined?c.rac[p.id]:''}"><span class="u">racimos</span></div>`; });
+    card.innerHTML=`<div class="ct"><b>Centro ${i+1}</b><button class="del" data-del="${c.id}">✕</button></div>
+      <div class="cb">
+        <div class="row2">
+          <div class="f"><label>Lote</label><select data-c="${c.id}" data-k="lote">${opcLotes(c.lote)}</select></div>
+          <div class="f"><label>Centro frutero</label><select data-c="${c.id}" data-k="centro">${opcCentros(c.lote,c.centro)}</select></div>
+        </div>
+        ${pr}
+        <div class="csub">Subtotal: <b data-sub="${c.id}">0</b> racimos</div>
+      </div>`;
+    cont.appendChild(card);
+  });
+  // listeners
+  cont.querySelectorAll('select[data-k]').forEach(s=>{
+    s.addEventListener('change',function(){
+      const c=centros.find(x=>x.id==this.dataset.c); if(!c) return;
+      c[this.dataset.k]=this.value;
+      if(this.dataset.k==='lote'){ c.centro=''; renderCentros(); }
+    });
+  });
+  cont.querySelectorAll('input[data-p]').forEach(inp=>{
+    inp.addEventListener('input',function(){
+      const c=centros.find(x=>x.id==this.dataset.c); if(!c) return;
+      c.rac[this.dataset.p]=this.value;
+      const sub=document.querySelector('[data-sub="'+c.id+'"]'); if(sub) sub.textContent=fI(subCentro(c));
+      pintarTotal();
+    });
+  });
+  cont.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ centros=centros.filter(x=>x.id!=b.dataset.del); renderCentros(); pintarTotal(); }; });
+  // subtotales
+  centros.forEach(c=>{ const sub=document.querySelector('[data-sub="'+c.id+'"]'); if(sub) sub.textContent=fI(subCentro(c)); });
+}
+function subCentro(c){ let s=0; for(const k in c.rac){ const v=+c.rac[k]; if(v>0) s+=v; } return s; }
+function pintarTotal(){
+  let tot=0; centros.forEach(c=>tot+=subCentro(c));
+  document.getElementById('tRac').textContent=fI(tot);
+  document.getElementById('tCentros').textContent=centros.filter(c=>c.lote&&c.centro).length;
+  document.getElementById('tCuad').textContent=cuadrilla.length;
+}
+
+/* ===== Firma ===== */
+let sigCanvas,sigCtx,sigHas=false,sigDraw=false,sigLast=null;
+function setupSig(){
+  sigCanvas=document.getElementById('sig'); sigCtx=sigCanvas.getContext('2d');
+  const ratio=window.devicePixelRatio||1, r=sigCanvas.getBoundingClientRect();
+  sigCanvas.width=r.width*ratio; sigCanvas.height=r.height*ratio; sigCtx.setTransform(1,0,0,1,0,0); sigCtx.scale(ratio,ratio);
+  sigCtx.lineWidth=2.6; sigCtx.lineCap='round'; sigCtx.lineJoin='round'; sigCtx.strokeStyle='#16321f';
+  const pos=e=>{const b=sigCanvas.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return{x:t.clientX-b.left,y:t.clientY-b.top};};
+  const start=e=>{e.preventDefault();sigDraw=true;sigLast=pos(e);document.getElementById('sighint').style.display='none';};
+  const move=e=>{if(!sigDraw)return;e.preventDefault();const p=pos(e);sigCtx.beginPath();sigCtx.moveTo(sigLast.x,sigLast.y);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();sigLast=p;sigHas=true;};
+  const stop=()=>{sigDraw=false;};
+  sigCanvas.addEventListener('mousedown',start);sigCanvas.addEventListener('mousemove',move);window.addEventListener('mouseup',stop);
+  sigCanvas.addEventListener('touchstart',start,{passive:false});sigCanvas.addEventListener('touchmove',move,{passive:false});sigCanvas.addEventListener('touchend',stop);
+  document.getElementById('sigclear').onclick=()=>{sigCtx.save();sigCtx.setTransform(1,0,0,1,0,0);sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);sigCtx.restore();sigHas=false;document.getElementById('sighint').style.display='block';};
+}
+
+/* ===== Guardar + PDF ===== */
+document.getElementById('save').addEventListener('click', async function(){
+  if(!cuadrilla.length){ alert('Primero elegí la cuadrilla del día.'); return; }
+  const f=fechaHoy();
+  const items=centros.filter(c=>c.lote&&c.centro).map(c=>{
+    const detalle=cuadrilla.filter(p=>+ (c.rac[p.id]||0) >0).map(p=>({id:p.id,nombre:p.nombre,racimos:Math.round(+c.rac[p.id])}));
+    return {lote:c.lote, centro:c.centro, racimos:detalle, subtotal:subCentro(c)};
+  }).filter(c=>c.racimos.length);
+  if(!items.length){ alert('Cargá al menos un centro con racimos.'); return; }
+  const btn=this; btn.disabled=true; const txt=btn.textContent; btn.textContent='Guardando…';
+  const total=items.reduce((s,c)=>s+c.subtotal,0);
+  try{
+    await fbDB.collection('corte').add({
+      fecha:f.corta, fechaLarga:f.larga,
+      responsableEmail:(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||'', responsableNombre:(USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'',
+      cuadrilla:cuadrilla, centros:items, totalRacimos:total, nCentros:items.length,
+      creado: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    generarPDF(f, items, total);
+    btn.textContent='✅ Guardado';
+    setTimeout(()=>{ btn.disabled=false; btn.textContent=txt; }, 1500);
+  }catch(e){ alert('No se pudo guardar en la central: '+e.message); btn.disabled=false; btn.textContent=txt; }
+});
+
+function generarPDF(f, items, total){
+  try{
+    const { jsPDF }=window.jspdf;
+    const doc=new jsPDF({unit:'mm',format:'a4'});
+    const M=15, W=210; let y=14;
+    try{ doc.addImage(document.querySelector('.htop img'),'PNG',M,y,20,20); }catch(e){}
+    doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(30,86,49);
+    doc.text('REPORTE DE CORTE', M+24, y+9);
+    doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60,60,60);
+    doc.text('FINCA BURICA', M+24, y+16);
+    y+=26; doc.setDrawColor(30,86,49); doc.setLineWidth(.6); doc.line(M,y,W-M,y); y+=8;
+    doc.setFontSize(11); doc.setTextColor(20,20,20);
+    const linea=(et,va)=>{ doc.setFont('helvetica','bold'); doc.text(et,M,y); doc.setFont('helvetica','normal'); doc.text(String(va||'—'),M+34,y); y+=7; };
+    linea('Fecha:', f.larga);
+    linea('Responsable:', (USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'');
+    linea('Cuadrilla:', cuadrilla.length+' personas');
+    y+=3;
+    items.forEach(c=>{
+      if(y+18>280){ doc.addPage(); y=18; }
+      doc.setFillColor(30,86,49); doc.rect(M,y,180,8,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(255,255,255);
+      doc.text('Lote '+c.lote+'  ·  Centro '+c.centro, M+2, y+5.5);
+      doc.text(fI(c.subtotal)+' racimos', M+178, y+5.5, {align:'right'}); y+=8;
+      doc.setTextColor(20,20,20);
+      c.racimos.forEach((r,i)=>{
+        if(y+6>285){ doc.addPage(); y=18; }
+        if(i%2===0){ doc.setFillColor(237,245,233); doc.rect(M,y,180,6.5,'F'); }
+        doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+        doc.text(doc.splitTextToSize(r.nombre,150)[0], M+3, y+4.6);
+        doc.text(fI(r.racimos), M+178, y+4.6, {align:'right'}); y+=6.5;
+      });
+      y+=3;
+    });
+    if(y+12>280){ doc.addPage(); y=18; }
+    doc.setFillColor(200,230,201); doc.rect(M,y,180,9,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(20,40,20);
+    doc.text('TOTAL RACIMOS', M+2, y+6); doc.text(fI(total), M+178, y+6, {align:'right'}); y+=16;
+    if(sigHas){
+      if(y+40>285){ doc.addPage(); y=18; }
+      doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(30,86,49); doc.text('Firma del responsable:', M, y); y+=4;
+      doc.addImage(sigCanvas.toDataURL('image/png'),'PNG',M,y,70,28); y+=31;
+      doc.setDrawColor(140); doc.setLineWidth(.3); doc.line(M,y,M+72,y); y+=4;
+      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(110,110,110); doc.text((USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'', M, y);
+    }
+    const folio='CRT-'+f.corta.replace(/-/g,'')+'-'+String(Date.now()).slice(-4);
+    const hora=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+    doc.setFont('helvetica','italic'); doc.setFontSize(8.5); doc.setTextColor(120,120,120);
+    doc.text('Folio '+folio+' · Generado '+f.corta+' '+hora+' · FINCA BURICA', M, 293);
+    const blob=doc.output('blob'); const fname=('Corte_'+f.corta+'.pdf').replace(/[^\w.\-]+/g,'_');
+    const file=new File([blob],fname,{type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Reporte de corte',text:'Reporte de corte — '+f.larga}).catch(()=>doc.save(fname)); }
+    else doc.save(fname);
+  }catch(err){ alert('Se guardó en la central, pero el PDF falló: '+(err&&err.message?err.message:err)); }
+}
+</script>
+</body>
+</html>
