@@ -141,7 +141,8 @@
           <option value="Repase manual de área">Repase manual de área</option>
           <option value="Despeje de caminos y centros">Despeje de caminos y centros</option>
           <option value="Limpieza de orilla de lotes">Limpieza de orilla de lotes</option>
-          <option value="Fertilización">Fertilización</option>
+          <option value="Fertilización al voleo">Fertilización al voleo</option>
+          <option value="Fertilización manual">Fertilización manual</option>
           <option value="Aplicación de ceniza">Aplicación de ceniza</option>
           <option value="Aplicación de cal">Aplicación de cal</option>
           <option value="Aplicación de abono orgánico">Aplicación de abono orgánico</option>
@@ -815,7 +816,8 @@ function filasReporte(){
   estado.forEach(tr=>{
     if(!tr.lote) return;
     const r=calcular(tr.lote,tr.centros); if(!r) return;
-    const centros=((tr.centros||'').trim()==='')?'Lote completo':tr.centros.trim();
+    const base=((tr.centros||'').trim()==='')?'Lote completo':tr.centros.trim();
+    const centros=base+' ('+r.nTrab+' '+(r.nTrab===1?'centro':'centros')+')';
     filas.push({lote:tr.lote, centros, dens:r.dens, vivas:r.vivas, has:r.has});
     tHas+=r.has; tPal+=r.vivas;
   });
