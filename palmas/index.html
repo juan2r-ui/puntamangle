@@ -124,6 +124,10 @@
         <input type="text" id="rResp" placeholder="Nombre o cuadrilla" autocomplete="off">
       </div>
       <div class="field">
+        <label>Cantidad de personas en la labor</label>
+        <input type="number" id="rPersonas" inputmode="numeric" min="0" step="1" placeholder="ej: 5" autocomplete="off">
+      </div>
+      <div class="field">
         <label>Tipo de labor</label>
         <select id="rLabor">
           <option value="">— elegir labor —</option>
@@ -157,6 +161,7 @@
     <div class="tc-lbl">TOTAL GENERAL · todos los trabajos</div>
     <div class="tc-big"><span id="tHas">0,00</span><span class="u"> ha</span></div>
     <div class="tc-sub"><span id="tPalmas">0</span> palmas vivas&nbsp;·&nbsp;<span id="tTrab">0</span> trabajos&nbsp;·&nbsp;<span id="tCen">0</span> centros</div>
+    <div class="tc-sub" id="tPromLine" style="display:none;margin-top:6px;border-top:1px solid rgba(255,255,255,.25);padding-top:6px">👤 <b id="tProm">0,00</b> ha por persona&nbsp;·&nbsp;<span id="tPers">0</span> personas</div>
   </div>
 
   <div class="repcard">
@@ -691,6 +696,7 @@ function render(){
   document.getElementById('tPalmas').textContent = fInt(tPal);
   document.getElementById('tCen').textContent = fInt(tCen);
   document.getElementById('tTrab').textContent = tTrab;
+  pintarPromedio();
   save();
 }
 
@@ -744,6 +750,7 @@ function updateLive(id){
   document.getElementById('tPalmas').textContent=fInt(tPal);
   document.getElementById('tCen').textContent=fInt(tCen);
   document.getElementById('tTrab').textContent=tTrab;
+  pintarPromedio();
   save();
 }
 
@@ -789,10 +796,18 @@ function fechaHoy(){
 document.getElementById('fechaTxt').textContent = fechaHoy().larga;
 
 /* recordar responsable / labor / observaciones en este celular */
-const repResp=document.getElementById('rResp'), repLabor=document.getElementById('rLabor'), repObs=document.getElementById('rObs');
-try{ const r=JSON.parse(localStorage.getItem('palmas_rep'))||{}; repResp.value=r.resp||''; repLabor.value=r.labor||''; repObs.value=r.obs||''; }catch(e){}
-function saveRep(){ try{ localStorage.setItem('palmas_rep',JSON.stringify({resp:repResp.value,labor:repLabor.value,obs:repObs.value})); }catch(e){} }
-[repResp,repLabor,repObs].forEach(el=>{el.addEventListener('input',saveRep); el.addEventListener('change',saveRep);});
+const repResp=document.getElementById('rResp'), repLabor=document.getElementById('rLabor'), repObs=document.getElementById('rObs'), repPersonas=document.getElementById('rPersonas');
+try{ const r=JSON.parse(localStorage.getItem('palmas_rep'))||{}; repResp.value=r.resp||''; repLabor.value=r.labor||''; repObs.value=r.obs||''; repPersonas.value=r.personas||''; }catch(e){}
+function saveRep(){ try{ localStorage.setItem('palmas_rep',JSON.stringify({resp:repResp.value,labor:repLabor.value,obs:repObs.value,personas:repPersonas.value})); }catch(e){} }
+function nPersonas(){ const el=document.getElementById('rPersonas'); const n=el?parseInt(el.value,10):NaN; return (isNaN(n)||n<0)?0:n; }
+function calcTotalHas(){ let t=0; estado.forEach(tr=>{ if(!tr.lote) return; const r=calcular(tr.lote,tr.centros); if(r) t+=r.has; }); return t; }
+function pintarPromedio(){
+  const line=document.getElementById('tPromLine'); if(!line) return;
+  const p=nPersonas();
+  if(p>0){ document.getElementById('tProm').textContent=fHa(calcTotalHas()/p); document.getElementById('tPers').textContent=p; line.style.display=''; }
+  else{ line.style.display='none'; }
+}
+[repResp,repLabor,repObs,repPersonas].forEach(el=>{el.addEventListener('input',function(){saveRep(); pintarPromedio();}); el.addEventListener('change',saveRep);});
 
 /* arma las filas del reporte desde los trabajos cargados */
 function filasReporte(){
@@ -828,6 +843,7 @@ async function generarPDF(){
     linea('Fecha:', f.larga);
     linea('Responsable:', repResp.value.trim());
     linea('Tipo de labor:', repLabor.value.trim());
+    if(nPersonas()>0) linea('Cantidad de personas:', String(nPersonas()));
     y+=3;
     const cols=[{x:M,w:18,a:'left'},{x:M+18,w:64,a:'left'},{x:M+82,w:24,a:'right'},{x:M+106,w:34,a:'right'},{x:M+140,w:40,a:'right'}];
     const titulos=['Lote','Centros trabajados','Densidad','Palmas vivas','Hectáreas'];
@@ -859,6 +875,13 @@ async function generarPDF(){
     doc.text(fInt(tPal), cols[3].x+cols[3].w-2, y+6, {align:'right'});
     doc.text(fHa(tHas)+' ha', cols[4].x+cols[4].w-2, y+6, {align:'right'});
     y+=14;
+    const _np=nPersonas();
+    if(_np>0){
+      doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(30,86,49);
+      doc.text('Avance promedio por persona:', M, y);
+      doc.setFont('helvetica','normal'); doc.setTextColor(20,20,20);
+      doc.text(fHa(tHas/_np)+' ha   ('+_np+' personas)', M+64, y); y+=10;
+    }
     const obs=repObs.value.trim();
     if(obs){
       if(y>270){ doc.addPage(); y=18; }
@@ -907,7 +930,7 @@ function nuevoReporte(){
   if(!confirm('¿Empezar un nuevo reporte?\n\nSe borran los trabajos, el tipo de labor y las observaciones.\nEl Responsable / Cuadrilla se mantiene.')) return;
   estado.length=0; idSeq=0;
   estado.push({id:++idSeq, lote:'', centros:''});
-  repLabor.value=''; repObs.value=''; saveRep();
+  repLabor.value=''; repObs.value=''; repPersonas.value=''; saveRep(); pintarPromedio();
   if(typeof sigClear==='function') sigClear();
   document.getElementById('fechaTxt').textContent = fechaHoy().larga; // refresca la fecha por si cambió el día
   render();
