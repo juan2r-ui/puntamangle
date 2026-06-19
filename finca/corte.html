@@ -230,7 +230,18 @@ function nombreCort(id){ const c=candidatos().find(x=>x.id===id)||cortadores.fin
 
 /* ===== Centros en curso ===== */
 function opcLotes(sel){ let h='<option value="">— lote —</option>'; LOTES.forEach(L=>h+=`<option ${L===sel?'selected':''}>${L}</option>`); return h; }
-function opcCentros(lote,sel){ let h='<option value="">— centro —</option>'; if(lote){ for(let i=1;i<=LOTES_CENTROS[lote];i++) h+=`<option ${String(i)===String(sel)?'selected':''}>${i}</option>`; } return h; }
+function centrosTomados(lote, exceptId){
+  const s=new Set();
+  guardados.forEach(g=>{ if(g.lote===lote) s.add(String(g.centro)); });
+  encurso.forEach(e=>{ if(e.id!==exceptId && e.lote===lote && e.centro) s.add(String(e.centro)); });
+  return s;
+}
+function opcCentros(lote,sel,exceptId){
+  let h='<option value="">— centro —</option>';
+  if(lote){ const tom=centrosTomados(lote,exceptId);
+    for(let i=1;i<=LOTES_CENTROS[lote];i++){ const si=String(i); if(tom.has(si)&&si!==String(sel)) continue; h+=`<option ${si===String(sel)?'selected':''}>${i}</option>`; } }
+  return h;
+}
 function opcCort(sel){ let h='<option value="">— cortador —</option>'; candidatos().forEach(c=>h+=`<option value="${c.id}" ${c.id===sel?'selected':''}>${c.nombre}</option>`); return h; }
 
 document.getElementById('add').addEventListener('click',()=>{ encurso.push({id:++idSeq,lote:'',centro:'',cortadorId:'',racimos:''}); renderEncurso(); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); });
@@ -243,7 +254,7 @@ function renderEncurso(){
       <div class="cb">
         <div class="row2" style="margin-bottom:10px">
           <div class="f"><label>Lote</label><select data-id="${c.id}" data-k="lote">${opcLotes(c.lote)}</select></div>
-          <div class="f"><label>Centro</label><select data-id="${c.id}" data-k="centro">${opcCentros(c.lote,c.centro)}</select></div>
+          <div class="f"><label>Centro</label><select data-id="${c.id}" data-k="centro">${opcCentros(c.lote,c.centro,c.id)}</select></div>
         </div>
         <div class="field"><label>Cortador</label><select data-id="${c.id}" data-k="cortadorId">${opcCort(c.cortadorId)}</select></div>
         <div class="field"><label>Racimos cortados</label><input type="number" inputmode="numeric" min="0" step="1" placeholder="0" data-id="${c.id}" data-k="racimos" value="${c.racimos}"></div>
@@ -253,7 +264,7 @@ function renderEncurso(){
   });
   cont.querySelectorAll('[data-k]').forEach(el=>{
     const ev = el.tagName==='SELECT'?'change':'input';
-    el.addEventListener(ev,function(){ const c=encurso.find(x=>x.id==this.dataset.id); if(!c)return; c[this.dataset.k]=this.value; if(this.dataset.k==='lote'){ c.centro=''; renderEncurso(); } });
+    el.addEventListener(ev,function(){ const c=encurso.find(x=>x.id==this.dataset.id); if(!c)return; c[this.dataset.k]=this.value; if(this.dataset.k==='lote'){ c.centro=''; renderEncurso(); } else if(this.dataset.k==='centro'){ renderEncurso(); } });
   });
   cont.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ encurso=encurso.filter(x=>x.id!=b.dataset.del); if(!encurso.length) encurso.push({id:++idSeq,lote:'',centro:'',cortadorId:'',racimos:''}); renderEncurso(); }; });
   cont.querySelectorAll('[data-save]').forEach(b=>{ b.onclick=()=>guardarCentro(b.dataset.save, b); });
@@ -264,6 +275,7 @@ async function guardarCentro(id, btn){
   if(!c.lote||!c.centro){ alert('Elegí lote y centro.'); return; }
   if(!c.cortadorId){ alert('Asigná el cortador.'); return; }
   const rac=parseInt(c.racimos,10); if(isNaN(rac)||rac<0){ alert('Poné la cantidad de racimos.'); return; }
+  if(guardados.some(g=>g.lote===c.lote && String(g.centro)===String(c.centro))){ alert('Ese centro ya fue cortado hoy:\nLote '+c.lote+' · Centro '+c.centro+'.\nNo se puede duplicar.'); return; }
   const nom=nombreCort(c.cortadorId);
   if(!confirm('¿Guardar?\n\nLote '+c.lote+' · Centro '+c.centro+'\n'+nom+' · '+rac+' racimos')) return;
   btn.disabled=true; btn.textContent='Guardando…';
