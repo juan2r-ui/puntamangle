@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E5631">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Reporte de Cosecha · FINCA BURICA</title>
+<style>
+  :root{--verde:#1E5631;--verde2:#2E7D32;--verde-claro:#EDF5E9;--verde-borde:#C8E6C9;--txt:#1b2a1f;--gris:#6b7c6f;--bg:#f4f7f3;--naranja:#c8631a;--rojo:#b3261e;--ambar:#c8910f}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt);padding-bottom:36px}
+  header{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 14px 12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .htop{display:flex;align-items:center;gap:10px}
+  .htop img{height:34px;background:#fff;border-radius:8px;padding:3px}
+  .htop .h1{font-size:16px;font-weight:700}
+  .htop .back{color:#fff;text-decoration:none;font-size:13px;background:rgba(255,255,255,.18);padding:6px 11px;border-radius:8px;margin-left:auto}
+  .sub{font-size:12px;opacity:.9;margin-top:4px}
+  .wrap{max-width:760px;margin:0 auto;padding:14px}
+  .card{background:#fff;border:1px solid var(--verde-borde);border-radius:14px;padding:13px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .card h2{margin:0 0 4px;font-size:15px;color:var(--verde);display:flex;align-items:center;gap:7px}
+  .card .hsub{font-size:11.5px;color:var(--gris);margin:0 0 11px}
+  .repline{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--gris)}
+  .repline b{color:var(--txt)}
+  .repline+.repline{margin-top:6px}
+  .who{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--gris);margin-bottom:10px}
+  .who a{color:#a33;font-weight:700;text-decoration:none;cursor:pointer}
+  .ciclochip{display:inline-block;background:var(--verde-claro);color:var(--verde);font-weight:700;font-size:12.5px;padding:5px 11px;border-radius:20px}
+  .simrow{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12.5px;color:var(--gris);flex-wrap:wrap}
+  .simrow input[type=date]{font-size:13px;padding:6px 8px;border:1.5px solid var(--verde-borde);border-radius:8px;color:var(--txt)}
+  .simrow button{font-size:12px;font-weight:700;padding:6px 10px;border-radius:8px;border:1.5px solid var(--verde2);background:#fff;color:var(--verde2);cursor:pointer}
+  /* Avance rows */
+  .arow{border:1.5px solid var(--verde-borde);border-radius:12px;padding:11px;margin-bottom:10px;background:#fcfdfb}
+  .arow .top{display:flex;gap:9px;align-items:flex-end}
+  .fld{flex:1;min-width:0}
+  .fld label{display:block;font-size:11px;color:var(--gris);font-weight:700;margin-bottom:3px}
+  .fld select,.fld input{width:100%;font-size:14px;padding:9px;border:1.5px solid var(--verde-borde);border-radius:9px;background:#fff;color:var(--txt)}
+  .arow .del{border:none;background:transparent;color:#a33;font-size:20px;padding:2px 6px;cursor:pointer;align-self:center}
+  .hint{font-size:11px;color:var(--gris);margin-top:6px}
+  .astats{display:flex;gap:8px;margin-top:9px}
+  .astat{flex:1;background:var(--verde-claro);border-radius:9px;padding:7px 9px;text-align:center}
+  .astat .v{font-size:15px;font-weight:800;color:var(--verde)}
+  .astat .k{font-size:10px;color:var(--gris)}
+  .addbtn{width:100%;font-size:13.5px;font-weight:700;padding:11px;border:1.5px dashed var(--verde2);border-radius:11px;background:#fff;color:var(--verde2);cursor:pointer;margin-bottom:10px}
+  .savebtn{width:100%;font-size:15px;font-weight:800;padding:13px;border:none;border-radius:12px;background:var(--verde2);color:#fff;cursor:pointer}
+  .savedchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .savedchip{font-size:11.5px;background:#e9f6ea;border:1px solid #b6e0b9;color:#143;padding:4px 9px;border-radius:20px;display:flex;align-items:center;gap:6px}
+  .savedchip .x{color:#a33;cursor:pointer;font-weight:800}
+  /* Plan */
+  .plan .big{font-size:13px;line-height:1.55}
+  .planbox{border-radius:11px;padding:11px 12px;margin-bottom:9px}
+  .plan-opt{background:#e9f6ea;border:1.5px solid #b6e0b9}
+  .plan-late{background:#fdeceb;border:1.5px solid #f3c3bf}
+  .plan-soon{background:#fff6e6;border:1.5px solid #f3deac}
+  .plan-ok{background:#eef4f9;border:1.5px solid #cfe0ee}
+  .planbox .tl{font-weight:800;font-size:13px;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+  .planbox .lotes{font-weight:800;color:#143}
+  .planbox .meta{font-size:12px;color:var(--gris);margin-top:5px}
+  .planbox .cfs{font-size:12.5px;margin-top:4px}
+  .planbox .cfs b{color:var(--verde)}
+  /* Tabla ciclo */
+  table.ciclo{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.ciclo th{background:var(--verde);color:#fff;font-weight:700;font-size:11px;text-align:left;padding:7px 8px}
+  table.ciclo th.r,table.ciclo td.r{text-align:right}
+  table.ciclo th.c,table.ciclo td.c{text-align:center}
+  table.ciclo td{padding:7px 8px;border-bottom:1px solid #eef1ec}
+  table.ciclo tr:nth-child(even) td{background:#f7faf6}
+  .est{font-weight:700;white-space:nowrap;font-size:11.5px}
+  .est.e0{color:var(--rojo)} .est.e1{color:var(--naranja)} .est.e2{color:var(--ambar)} .est.e3{color:var(--verde2)} .est.e4{color:var(--gris)}
+  .lotecell{font-weight:800;color:var(--verde)}
+  .cond{font-size:10.5px;color:var(--gris)}
+  /* Resumen */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .kpi{background:var(--verde-claro);border-radius:11px;padding:10px 12px}
+  .kpi .v{font-size:19px;font-weight:800;color:var(--verde)}
+  .kpi .l{font-size:11.5px;color:var(--gris);margin-top:1px}
+  /* Ciclo meses editor */
+  .cfgtoggle{font-size:12.5px;color:var(--verde2);font-weight:700;cursor:pointer;background:none;border:none;padding:0}
+  .mesesgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:11px}
+  .mesfld label{display:block;font-size:11px;color:var(--gris);font-weight:700;margin-bottom:2px}
+  .mesfld input{width:100%;font-size:14px;padding:7px;border:1.5px solid var(--verde-borde);border-radius:8px;text-align:center}
+  .mesfld.now input{border-color:var(--verde2);background:#f0f8f0;font-weight:800}
+  /* Firma */
+  .sigwrap{position:relative;border:1.5px dashed var(--verde-borde);border-radius:11px;background:#fcfdfb;height:130px;overflow:hidden}
+  #sig{width:100%;height:100%;display:block;touch-action:none}
+  #sighint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#b9c6bb;font-size:13px;pointer-events:none}
+  .sigbtns{display:flex;justify-content:flex-end;margin-top:7px}
+  #sigclear{font-size:12px;color:#a33;background:none;border:none;cursor:pointer;font-weight:700}
+  .pdfbtn{width:100%;font-size:16px;font-weight:800;padding:15px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;cursor:pointer;box-shadow:0 3px 10px rgba(30,86,49,.3)}
+  .note{font-size:11.5px;color:var(--gris);margin-top:9px;line-height:1.5}
+  .btnsm{font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:9px;border:1.5px solid var(--verde2);background:#fff;color:var(--verde2);cursor:pointer}
+  #gate{display:none;background:#fff;border:1px solid var(--verde-borde);border-radius:14px;padding:22px;text-align:center;font-size:14px;color:var(--txt);margin:20px 14px}
+  #gate a{color:var(--verde2);font-weight:700}
+  .loading{text-align:center;color:var(--gris);font-size:13px;padding:30px}
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <img src="logo.png" alt="Finca Burica">
+    <div><div class="h1">Reporte de Cosecha</div><div class="sub" id="sub">Avance del día · ciclo por lote · plan de corte</div></div>
+    <a class="back" href="index.html">‹ Menú</a>
+  </div>
+</header>
+
+<div id="gate"></div>
+
+<div class="wrap" id="wrap" style="display:none">
+  <div class="who"><span>👤 <span id="who">…</span></span><a id="logout">Salir</a></div>
+
+  <!-- Fecha / ciclo del mes -->
+  <div class="card">
+    <div class="repline"><span>📅 Fecha del reporte</span><b id="fechaTxt">—</b></div>
+    <div class="repline"><span>🌴 Ciclo del mes</span><b><span class="ciclochip" id="cicloChip">—</span></b></div>
+    <div class="repline"><span>✂️ La corta se ejecuta</span><b id="proxTxt">—</b></div>
+    <div class="simrow">
+      <span>Simular otra fecha:</span>
+      <input type="date" id="simDate">
+      <button id="simBtn">Ver</button>
+      <button id="simReset" style="border-color:#ccc;color:#888">Hoy</button>
+    </div>
+  </div>
+
+  <!-- Registrar avance del día -->
+  <div class="card">
+    <h2>🌴 Registrar cosecha de hoy</h2>
+    <p class="hsub">Indicá los centros cosechados por lote (ej: <b>1-5, 8, 12</b>). Vacío = lote completo. Esto marca esos centros como cortados hoy.</p>
+    <div id="avRows"></div>
+    <button class="addbtn" id="avAdd">＋ Agregar lote</button>
+    <div class="astats">
+      <div class="astat"><div class="v" id="avHas">0,00</div><div class="k">hectáreas hoy</div></div>
+      <div class="astat"><div class="v" id="avCen">0</div><div class="k">centros</div></div>
+      <div class="astat"><div class="v" id="avViv">0</div><div class="k">palmas vivas</div></div>
+    </div>
+    <div style="height:10px"></div>
+    <button class="savebtn" id="avSave">💾 Guardar avance de hoy</button>
+    <div id="savedHoy"></div>
+  </div>
+
+  <!-- Plan de corte -->
+  <div class="card plan">
+    <h2>📋 Plan de corte</h2>
+    <div id="planCont" class="big"></div>
+  </div>
+
+  <!-- Reporte de ciclo por lote -->
+  <div class="card">
+    <h2>🌴 Ciclo por lote</h2>
+    <div style="overflow-x:auto">
+      <table class="ciclo" id="tblCiclo">
+        <thead><tr><th>Lote</th><th class="c">Últ. corte</th><th class="r">Días</th><th>Estado</th><th>Condición</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="note">Ordenado por días de ciclo (más urgente arriba). El <b>último corte</b> sale del avance guardado; donde aún no hay registro, usa la base inicial de la finca.</div>
+  </div>
+
+  <!-- Resumen del ciclo -->
+  <div class="card">
+    <h2>📊 Resumen de la finca</h2>
+    <div class="grid" id="kpis"></div>
+  </div>
+
+  <!-- Días de ciclo por mes (editable) -->
+  <div class="card">
+    <h2>⚙️ Días de ciclo por mes</h2>
+    <p class="hsub">A más lluvia, menos días de ciclo (madura más rápido) y viceversa. Ajustá según el clima.</p>
+    <button class="cfgtoggle" id="cfgToggle">✏️ Editar días de ciclo ▾</button>
+    <div id="cfgBox" style="display:none">
+      <div class="mesesgrid" id="mesesGrid"></div>
+      <div style="display:flex;gap:9px;margin-top:12px">
+        <button class="savebtn" id="cfgSave" style="flex:1">Guardar días de ciclo</button>
+        <button class="btnsm" id="cfgCancel" style="border-color:#ccc;color:#888">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firma -->
+  <div class="card">
+    <h2>✍️ Firma del responsable</h2>
+    <div class="sigwrap"><canvas id="sig"></canvas><div id="sighint">Firmá con el dedo</div></div>
+    <div class="sigbtns"><button id="sigclear">Borrar firma</button></div>
+  </div>
+
+  <button class="pdfbtn" id="pdf">📄 Generar PDF — reporte de ciclo por lote</button>
+  <div class="note">El PDF incluye el plan de corte, la tabla de ciclo por lote y el resumen — listo para compartir por WhatsApp.</div>
+</div>
+
+<div class="loading" id="loading">Cargando datos de cosecha…</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<script>window.__sm=window.module;window.__se=window.exports;window.__sd=window.define;try{window.module=void 0;window.exports=void 0;window.define=void 0}catch(e){}</script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script>try{window.module=window.__sm;window.exports=window.__se;window.define=window.__sd}catch(e){}</script>
+<script>
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const fI = n => Number(n).toLocaleString('es-ES');
+const f1 = n => Number(n).toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1});
+const f2 = n => Number(n).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+/* ===== Inventario (mismo de la calculadora): por lote {d:densidad, c:[[centro,vivas]]} ===== */
+const DATA = {"A":{"d":143,"c":[[1,14],[2,25],[3,38],[4,42],[5,57],[6,48],[7,57],[8,25],[9,45],[10,42],[11,48],[12,52],[13,63],[14,67],[15,65],[16,83],[17,15],[18,21],[19,13],[20,5],[21,18],[22,25],[23,27],[24,26],[25,28],[26,17],[27,21],[28,20],[29,21],[30,28],[31,22]]},"B":{"d":143,"c":[[1,11],[2,27],[3,36],[4,63],[5,73],[6,37],[7,55],[8,40],[9,44],[10,36],[11,37],[12,49],[13,43],[14,47],[15,46],[16,46],[17,48],[18,55],[19,55],[20,58],[21,54],[22,52],[23,58],[24,40],[25,39],[26,40],[27,39],[28,39],[29,40],[30,38],[31,36],[32,22],[33,60],[34,35],[35,34],[36,50],[37,54],[38,23],[39,19],[40,16],[41,24],[42,28],[43,34],[44,31],[45,37]]},"C":{"d":143,"c":[[1,31],[2,32],[3,66],[4,45],[5,97],[6,95],[7,83],[8,31],[9,32],[10,32],[11,31],[12,32],[13,32],[14,48],[15,87],[16,88],[17,111],[18,112],[19,149],[20,153],[21,147],[22,132],[23,137],[24,130],[25,124],[26,38],[27,75],[28,77],[29,78],[30,75],[31,69],[32,91]]},"D":{"d":143,"c":[[1,24],[2,26],[3,16],[4,20],[5,15],[6,18],[7,32],[8,24],[9,24],[10,18],[11,23],[12,43],[13,82],[14,77],[15,68],[16,82],[17,36],[18,26],[19,23],[20,10]]},"E":{"d":143,"c":[[1,23],[2,24],[3,29],[4,32],[5,32],[6,32],[7,30],[8,23],[9,10],[10,32],[11,32],[12,33],[13,33],[14,44],[15,17],[16,31],[17,56],[18,28],[19,36],[20,58],[21,44],[22,46],[23,34],[24,39],[25,31],[26,21],[27,43],[28,51],[29,36],[30,117],[31,77],[32,27],[33,13]]},"F":{"d":143,"c":[[1,18],[2,29],[3,22],[4,53],[5,44],[6,36],[7,65],[8,27],[9,40],[10,61],[11,67],[12,53],[13,48],[14,30],[15,11],[16,30],[17,13],[18,17],[19,18],[20,13],[21,18],[22,11],[23,30],[24,11],[25,48],[26,38],[27,37],[28,38],[29,25],[30,10],[31,16],[32,15],[33,28],[34,28],[35,49],[36,49],[37,47]]},"G":{"d":143,"c":[[1,60],[2,80],[3,73],[4,59],[5,59],[6,31],[7,48],[8,92],[9,58],[10,52],[11,41],[12,39],[13,34],[14,41],[15,58],[16,45],[17,54],[18,19],[19,21],[20,12],[21,22],[22,29],[23,36],[24,42],[25,41],[26,38],[27,39],[28,33],[29,19],[30,12],[31,23],[32,17],[33,19],[34,55],[35,50],[36,40]]},"H":{"d":143,"c":[[1,41],[2,35],[3,47],[4,40],[5,13],[6,57],[7,19],[8,53],[9,31],[10,35],[11,34],[12,34],[13,28],[14,41],[15,27],[16,34],[17,17],[18,24],[19,17],[20,32],[21,33],[22,20],[23,61],[24,21],[25,44],[26,67],[27,24],[28,23],[29,18],[30,17],[31,20],[32,12],[33,37],[34,30],[35,17],[36,23]]},"I":{"d":143,"c":[[1,71],[2,63],[3,47],[4,32],[5,23],[6,24],[7,19],[8,13],[9,21],[10,18],[11,18],[12,10],[13,21],[14,120],[15,74],[16,80],[17,74],[18,58],[19,53],[20,39],[21,29],[22,13],[23,29],[24,82],[25,72],[26,74],[27,40],[28,33],[29,28],[30,30],[31,43],[32,49],[33,32],[34,26],[35,23],[36,17],[37,22],[38,32],[39,29],[40,24],[41,12],[42,24],[43,22],[44,23],[45,14],[46,13],[47,41],[48,33],[49,21],[50,22],[51,15],[52,29],[53,18],[54,49],[55,44],[56,29],[57,30],[58,26],[59,16]]},"J":{"d":143,"c":[[1,30],[2,25],[3,16],[4,62],[5,66],[6,29],[7,62],[8,56],[9,50],[10,48],[11,45],[12,60],[13,23],[14,13],[15,19],[16,12],[17,31],[18,38],[19,48],[20,40],[21,32],[22,30],[23,19],[24,32],[25,23],[26,17],[27,19],[28,17],[29,22],[30,15],[31,16],[32,47],[33,37],[34,16],[35,17],[36,19],[37,10],[38,36],[39,20],[40,36],[41,22],[42,23],[43,22],[44,26],[45,26],[46,25],[47,87],[48,63],[49,25],[50,34],[51,45],[52,49],[53,89],[54,75],[55,62],[56,37],[57,25],[58,17],[59,14]]},"AL":{"d":143,"c":[[1,13],[2,30],[3,21],[4,21],[5,23],[6,23],[7,20],[8,21],[9,30],[10,35],[11,40],[12,45],[13,53],[14,84],[15,95]]},"BL":{"d":143,"c":[[1,54],[2,34],[3,33],[4,64],[5,73],[6,79],[7,78],[8,72],[9,63],[10,40],[11,91],[12,31],[13,51],[14,76],[15,174],[16,198],[17,197],[18,188],[19,229],[20,120],[21,143],[22,107],[23,93],[24,39],[25,27],[26,27],[27,25],[28,28],[29,29],[30,24],[31,30],[32,27]]},"FB":{"d":143,"c":[[1,100],[2,98],[3,117],[4,15],[5,20],[6,19],[7,120],[8,20],[9,72],[10,21],[11,62],[12,23],[13,16],[14,15],[15,19],[16,23],[17,30],[18,27],[19,23],[20,23],[21,94],[22,49],[23,48],[24,41],[25,39],[26,26],[27,33],[28,30],[29,11],[30,26],[31,31],[32,25],[33,15],[34,22],[35,32],[36,25],[37,22],[38,25],[39,38],[40,37],[41,35],[42,53],[43,56],[44,36],[45,49],[46,42],[47,26],[48,40],[49,47],[50,54],[51,51],[52,48],[53,81],[54,61],[55,62],[56,33],[57,21],[58,26],[59,62],[60,56],[61,77],[62,31],[63,54],[64,67],[65,71],[66,45],[67,33],[68,42],[69,24],[70,41],[71,124],[72,89],[73,78],[74,61],[75,31],[76,31],[77,23],[78,22],[79,27],[80,23],[81,23],[82,20],[83,37],[84,35],[85,25],[86,54],[87,39],[88,25],[89,31],[90,51],[91,40],[92,35],[93,14],[94,125],[95,54],[96,26],[97,37],[98,40],[99,46],[100,23],[101,22],[102,18],[103,12],[104,19],[105,21],[106,23],[107,48],[108,29],[109,24],[110,19],[111,50],[112,91],[113,87],[114,93],[115,105],[116,113],[117,121],[118,91],[119,53],[120,17],[121,36],[122,19],[123,30],[124,47],[125,59],[126,63],[127,66],[128,31]]},"CM":{"d":160,"c":[[1,29],[2,63],[3,10],[4,44],[5,44],[6,39],[7,19],[8,32],[9,36],[10,37],[11,36],[12,30],[13,44],[14,65],[15,51],[16,60],[17,62],[18,52],[19,49],[20,34],[21,30],[22,39],[23,33],[24,18],[25,32],[26,21],[27,12],[28,12],[29,24],[30,27],[31,28],[32,40],[33,42],[34,44],[35,50],[36,56],[37,67],[38,58],[39,40],[40,26],[41,16]]},"TD":{"d":160,"c":[[1,25],[2,50],[3,77],[4,50],[5,56],[6,55],[7,53],[8,39],[9,56],[10,29],[11,63],[12,17],[13,76],[14,64],[15,68],[16,13],[17,13],[18,33],[19,18],[20,12],[21,58],[22,80],[23,80],[24,103],[25,117],[26,118],[27,19],[28,26],[29,39],[30,31],[31,18],[32,64],[33,44],[34,16],[35,22],[36,15],[37,27],[38,29],[39,21],[40,30],[41,29],[42,28],[43,52],[44,17],[45,43],[46,16],[47,45],[48,64],[49,13],[50,72],[51,49],[52,68],[53,39],[54,47],[55,55],[56,37],[57,75],[58,52],[59,70],[60,30],[61,51],[62,15],[63,40],[64,25],[65,46],[66,51],[67,27],[68,35],[69,21],[70,21],[71,17],[72,18],[73,15],[74,10]]},"IS":{"d":160,"c":[[1,25],[2,15],[3,43],[4,40],[5,53],[6,33],[7,44],[8,50],[9,67],[10,78],[11,68],[12,46],[13,37],[14,31],[15,32],[16,35],[17,25],[18,31],[19,29],[20,34],[21,35],[22,26],[23,41]]},"ES":{"d":160,"c":[[1,13],[2,19],[3,20],[4,13],[5,18],[6,8],[7,19],[8,13],[9,15],[10,40],[11,32],[12,38],[13,38],[14,14],[15,16],[16,15],[17,12],[18,18],[19,16],[20,45],[21,50],[22,36],[23,16],[24,16],[25,23],[26,20],[27,26],[28,38],[29,52],[30,62],[31,66],[32,66],[33,62],[34,57],[35,30]]},"TI":{"d":160,"c":[[1,13],[2,21],[3,29],[4,30],[5,30],[6,27],[7,20],[8,27],[9,57],[10,67],[11,75],[12,59],[13,77],[14,76],[15,38],[16,18],[17,24],[18,22],[19,47],[20,39],[21,41],[22,32],[23,48],[24,29],[25,38],[26,41],[27,41],[28,52],[29,27],[30,28],[31,22],[32,17],[33,24],[34,47],[35,51],[36,50],[37,62],[38,49],[39,33],[40,40],[41,41],[42,34],[43,23],[44,10],[45,57],[46,35],[47,56],[48,86],[49,99],[50,102],[51,122],[52,42],[53,80],[54,99],[55,114],[56,137],[57,70],[58,72],[59,54],[60,46],[61,17],[62,29],[63,27],[64,30],[65,58],[66,58],[67,126],[68,139],[69,146],[70,172],[71,123],[72,103]]},"PT":{"d":160,"c":[[1,45],[2,69],[3,73],[4,74],[5,99],[6,38],[7,27],[8,17],[9,24],[10,14],[11,14],[12,24],[13,35],[14,39],[15,24],[16,25],[17,20],[18,21],[19,13],[20,22],[21,28],[22,33],[23,32],[24,33],[25,28],[26,24],[27,27],[28,25],[29,38],[30,23],[31,19],[32,35],[33,84],[34,63],[35,45],[36,53],[37,37],[38,27],[39,42],[40,110],[41,20],[42,44],[43,24],[44,42],[45,31],[46,39],[47,26],[48,21],[49,32],[50,50],[51,18],[52,50],[53,24],[54,34],[55,40],[56,29],[57,23],[58,36],[59,34],[60,28],[61,39],[62,31],[63,36],[64,28],[65,48],[66,55],[67,25],[68,34],[69,29],[70,37],[71,62],[72,68]]},"GA":{"d":160,"c":[[1,35],[2,33],[3,27],[4,26],[5,33],[6,34],[7,38],[8,23],[9,31],[10,21],[11,43],[12,66],[13,50],[14,31],[15,37],[16,33],[17,35],[18,21],[19,28],[20,16],[21,31],[22,24],[23,19],[24,26],[25,27],[26,27],[27,24],[28,20],[29,37],[30,24],[31,44],[32,66],[33,37],[34,33],[35,64],[36,42],[37,41],[38,37],[39,22],[40,11],[41,47],[42,13],[43,47],[44,62],[45,35],[46,11],[47,19],[48,33],[49,51],[50,65],[51,56],[52,48],[53,44],[54,31],[55,39],[56,21],[57,31],[58,36],[59,28],[60,46],[61,38],[62,25],[63,24],[64,15],[65,13],[66,26],[67,30],[68,35],[69,27],[70,41],[71,47],[72,12],[73,11],[74,19],[75,44],[76,12],[77,14],[78,39],[79,24],[80,28],[81,15],[82,26],[83,46],[84,66],[85,39],[86,36],[87,38],[88,20],[89,27],[90,13],[91,31],[92,15],[93,9],[94,14],[95,13],[96,9],[97,14],[98,38],[99,50],[100,57],[101,43],[102,49],[103,45],[104,24],[105,33],[106,37],[107,49],[108,43],[109,36],[110,50],[111,24],[112,41],[113,66],[114,59],[115,79],[116,52],[117,25],[118,13],[119,14],[120,28],[121,26],[122,26],[123,37],[124,32],[125,29],[126,16],[127,24],[128,25],[129,34],[130,50],[131,9],[132,23],[133,30],[134,29],[135,25],[136,47],[137,27],[138,48],[139,41],[140,54],[141,16],[142,15],[143,27],[144,28],[145,20],[146,13],[147,13],[148,17],[149,22],[150,59],[151,27],[152,59],[153,35],[154,27],[155,50],[156,24],[157,15],[158,34],[159,31],[160,27],[161,39],[162,47],[163,8],[164,19],[165,32],[166,44],[167,19],[168,14]]},"CB":{"d":160,"c":[[1,15],[2,10],[3,16],[4,21],[5,12],[6,7],[7,18],[8,22],[9,27],[10,9],[11,23],[12,17],[13,12],[14,25],[15,35],[16,13],[17,14],[18,22],[19,13],[20,15],[21,12],[22,48],[23,40],[24,15],[25,64],[26,58],[27,51],[28,41],[29,30],[30,24],[31,21],[32,36],[33,22],[34,24],[35,35],[36,37],[37,39],[38,53],[39,48],[40,36],[41,25],[42,17],[43,13],[44,47],[45,36],[46,39],[47,30],[48,51],[49,52],[50,50]]},"AV":{"d":160,"c":[[1,47],[2,44],[3,90],[4,16],[5,16],[6,75],[7,59],[8,59],[9,83],[10,81],[11,79],[12,81],[13,74],[14,45],[15,19],[16,35],[17,42],[18,49],[19,16],[20,23],[21,20],[22,17],[23,15],[24,17],[25,16],[26,16],[27,14],[28,20],[29,39]]},"MJ":{"d":160,"c":[[1,9],[2,12],[3,30],[4,33],[5,25],[6,32],[7,10],[8,10],[9,18],[10,38],[11,40],[12,44],[13,33],[14,27],[15,21],[16,26],[17,21],[18,9],[19,18],[20,55],[21,53],[22,84],[23,96],[24,90],[25,37],[26,8],[27,13],[28,20],[29,32],[30,27],[31,20],[32,15],[33,26],[34,16],[35,26],[36,31],[37,43],[38,25],[39,25],[40,12],[41,21],[42,33],[43,22],[44,11],[45,19],[46,23],[47,33],[48,43],[49,46],[50,43],[51,43],[52,44],[53,41],[54,50],[55,25],[56,41],[57,15],[58,6],[59,11],[60,13],[61,30],[62,12],[63,16],[64,15],[65,15],[66,34],[67,55],[68,49],[69,16],[70,35],[71,69],[72,32],[73,47],[74,41],[75,73],[76,93],[77,60],[78,22],[79,24],[80,32],[81,19],[82,37],[83,39],[84,44],[85,23],[86,32],[87,55],[88,35],[89,37],[90,25],[91,10],[92,102],[93,88],[94,102],[95,101],[96,94],[97,75],[98,57],[99,34],[100,27],[101,18],[102,10],[103,14],[104,27],[105,30],[106,38],[107,37],[108,39],[109,39],[110,39],[111,37],[112,32],[113,43],[114,45],[115,21],[116,35],[117,50],[118,35],[119,25],[120,20],[121,38],[122,59],[123,46],[124,21],[125,24],[126,29],[127,42],[128,23],[129,28],[130,21],[131,45],[132,43],[133,39],[134,33],[135,32],[136,32],[137,25],[138,41],[139,34],[140,44],[141,54],[142,22],[143,21],[144,21],[145,22],[146,40],[147,33],[148,29],[149,18],[150,16]]},"FFB":{"d":160,"c":[[1,24],[2,25],[3,20],[4,21],[5,24],[6,20],[7,8],[8,14],[9,16],[10,50],[11,48],[12,68],[13,72]]},"CCM":{"d":160,"c":[[1,30],[2,34],[3,38],[4,57],[5,34],[6,33],[7,73],[8,83],[9,81],[10,36],[11,27],[12,12],[13,49],[14,23],[15,21],[16,17]]}};
+
+const LOTES=Object.keys(DATA);
+const NCEN={}, VIVAS_CF={}, TOTHC={};
+LOTES.forEach(L=>{ NCEN[L]=DATA[L].c.length; VIVAS_CF[L]={}; let v=0; DATA[L].c.forEach(([n,vi])=>{ VIVAS_CF[L][n]=vi; v+=vi; }); TOTHC[L]=v/DATA[L].d; });
+
+/* ===== Ciclo de maduración (réplica del Excel de ciclos) ===== */
+const CICLO_DEF={1:11,2:13,3:13,4:9,5:9,6:8,7:8,8:8,9:8,10:7,11:7,12:9};
+let CICLO_MES=Object.assign({},CICLO_DEF);   // se sobreescribe con config de Firestore
+
+// SEED: último corte por lote al 19-jun-2026 (del Excel). Base inicial; el avance lo actualiza.
+const SEED_CORTE={
+  C:'2026-06-12', B:'2026-06-12', D:'2026-06-12', AV:'2026-06-12',
+  A:'2026-06-13', TI:'2026-06-13', PT:'2026-06-13',
+  CCM:'2026-06-15', CM:'2026-06-15', FB:'2026-06-15',
+  FFB:'2026-06-16', MJ:'2026-06-16', AL:'2026-06-16', BL:'2026-06-16',
+  TD:'2026-06-17', IS:'2026-06-17', ES:'2026-06-17', I:'2026-06-17', J:'2026-06-17',
+  GA:'2026-06-18',
+  CB:'2026-06-19', H:'2026-06-19', G:'2026-06-19', F:'2026-06-19', E:'2026-06-19'
+};
+
+/* ---- Fechas ---- */
+function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function parseISO(s){ const p=s.split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+function diffDias(a,b){ return Math.round((a-b)/86400000); }
+function fechaLargaD(d){ return DIAS[d.getDay()]+' '+d.getDate()+' de '+MESES[d.getMonth()]+' de '+d.getFullYear(); }
+function fechaCortaD(d){ return String(d.getDate()).padStart(2,'0')+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+d.getFullYear(); }
+function diasHastaLaboral(d){ return d.getDay()===6 ? 2 : 1; }
+function textoProx(d){ const wd=d.getDay(); if(wd===6) return 'el lunes'; if(wd===0) return 'mañana (lunes)'; return 'mañana'; }
+
+/* ---- Estado y condición ---- */
+function estadoLote(dias, cfs, p, dpl){
+  if(cfs===0) return {txt:'',cls:'e4'};
+  const de=dias+dpl;
+  if(de>=p+3) return {txt:'🚨 EMERGENCIA', cls:'e0'};
+  if(de===p+2) return {txt:'⚠ ALERTA', cls:'e1'};
+  if(de===p+1) return {txt:'CASI ÓPTIMO', cls:'e2'};
+  if(de===p)   return {txt:'🎯 PUNTO ÓPTIMO', cls:'e3'};
+  return {txt:'✓ EN CICLO', cls:'e4'};
+}
+function condicion(dias, p){
+  if(dias<p-1) return 'VERDE';
+  if(dias<=p) return 'MADURO';
+  if(dias<=p+2) return 'MADURO C/DESGRANE';
+  return 'SOBREMADURO';
+}
+
+/* ---- Parseo de centros (igual que la calculadora) ---- */
+function parseCentros(texto, n){
+  const set=new Set(); const t=(texto||'').trim();
+  if(t===''){ for(let i=1;i<=n;i++) set.add(i); return {set, completo:true, malos:[]}; }
+  const malos=[];
+  t.split(',').forEach(part=>{
+    part=part.trim(); if(!part) return;
+    const m=part.match(/^(\d+)\s*-\s*(\d+)$/);
+    if(m){ let a=+m[1],b=+m[2]; if(a>b){const z=a;a=b;b=z;} for(let i=a;i<=b;i++){ if(i>=1&&i<=n) set.add(i); else malos.push(i); } }
+    else { const v=+part; if(Number.isInteger(v)&&v>=1&&v<=n) set.add(v); else malos.push(part); }
+  });
+  return {set, completo:false, malos};
+}
+function hcDeCentros(L, set){ let v=0; set.forEach(c=>{ v+=(VIVAS_CF[L][c]||0); }); return {vivas:v, has:v/DATA[L].d, n:set.size}; }
+
+/* ===== Firebase ===== */
+const colCos=fbDB.collection('cosecha');
+let CORTE_LAST={};           // {"LOTE#centro": Date}
+let AVANCE_DOCS=[];          // [{id, fecha, lote, centros[], has}]
+let ACTIVE=new Date(); ACTIVE.setHours(0,0,0,0);
+let HOY=new Date(); HOY.setHours(0,0,0,0);
+
+document.getElementById('logout').onclick=cerrarSesion;
+
+requireAuth(function(u){
+  if(u.rol!=='admin' && u.rol!=='capataz'){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('sub').textContent='Sin acceso a este módulo';
+    const g=document.getElementById('gate'); g.style.display='';
+    g.innerHTML='Este módulo es para el <b>Capataz</b>.<br>Tu rol ('+(u.rol||'—')+') no tiene acceso.<br><br><a href="index.html">‹ Volver al menú</a>';
+    return;
+  }
+  document.getElementById('who').textContent=u.nombre||u.email;
+  cargar();
+});
+
+function cargar(){
+  colCos.get().then(function(snap){
+    CORTE_LAST={}; AVANCE_DOCS=[];
+    snap.forEach(function(d){
+      const o=d.data();
+      if(d.id==='__config__'){ if(o.cicloMes) for(const k in o.cicloMes){ const v=+o.cicloMes[k]; if(v>0) CICLO_MES[+k]=v; } return; }
+      if(!o.lote || !Array.isArray(o.centros) || !o.fecha) return;
+      let dt; try{ const p=o.fecha.split('-'); dt=new Date(+p[2],+p[1]-1,+p[0]); }catch(e){ return; }
+      if(isNaN(dt)) return;
+      AVANCE_DOCS.push({id:d.id, fecha:o.fecha, dt:dt, lote:o.lote, centros:o.centros, has:o.has||0});
+      o.centros.forEach(c=>{ const k=o.lote+'#'+c; if(!CORTE_LAST[k]||dt>CORTE_LAST[k]) CORTE_LAST[k]=dt; });
+    });
+    document.getElementById('loading').style.display='none';
+    document.getElementById('wrap').style.display='';
+    initAvance(); buildMesesEditor(); setupSig();
+    render();
+  }).catch(function(e){
+    document.getElementById('loading').style.display='none';
+    const g=document.getElementById('gate'); g.style.display='';
+    g.textContent='No se pudo leer la central: '+e.message;
+  });
+}
+
+/* ===== Registrar avance del día ===== */
+let avState=[]; let avSeq=0;
+function initAvance(){ avState=[{id:++avSeq, lote:'', centros:''}]; renderAvance(); }
+function opcLotes(sel){ let h='<option value="">— lote —</option>'; LOTES.forEach(L=>h+=`<option ${L===sel?'selected':''}>${L}</option>`); return h; }
+function renderAvance(){
+  const cont=document.getElementById('avRows'); cont.innerHTML='';
+  avState.forEach(tr=>{
+    const n=tr.lote?NCEN[tr.lote]:0;
+    const pc=tr.lote?parseCentros(tr.centros,n):null;
+    const r=pc?hcDeCentros(tr.lote,pc.set):null;
+    const div=document.createElement('div'); div.className='arow';
+    div.innerHTML=`<div class="top">
+        <div class="fld"><label>Lote</label><select data-id="${tr.id}" data-k="lote">${opcLotes(tr.lote)}</select></div>
+        <div class="fld" style="flex:1.4"><label>Centros cosechados</label><input data-id="${tr.id}" data-k="centros" placeholder="ej: 1-5, 8  (vacío = todo)" value="${(tr.centros||'').replace(/"/g,'&quot;')}"></div>
+        ${avState.length>1?`<button class="del" data-del="${tr.id}">✕</button>`:''}
+      </div>
+      ${tr.lote?`<div class="hint">Lote ${tr.lote}: ${n} centros (1 al ${n}). ${pc.malos.length?'<span style="color:#a33">No existen: '+pc.malos.join(', ')+'</span>':''}</div>`:''}
+      ${r?`<div class="astats"><div class="astat"><div class="v">${f2(r.has)}</div><div class="k">ha</div></div><div class="astat"><div class="v">${r.n}</div><div class="k">centros</div></div><div class="astat"><div class="v">${fI(r.vivas)}</div><div class="k">palmas</div></div></div>`:''}`;
+    cont.appendChild(div);
+  });
+  cont.querySelectorAll('select,input').forEach(el=>{
+    const ev=el.tagName==='SELECT'?'change':'input';
+    el.addEventListener(ev,function(){ const tr=avState.find(x=>x.id==this.dataset.id); if(!tr)return; tr[this.dataset.k]=this.value; if(this.dataset.k==='lote'){ tr.centros=''; renderAvance(); } else pintarAvTot(); });
+  });
+  cont.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ avState=avState.filter(x=>x.id!=b.dataset.del); if(!avState.length) avState.push({id:++avSeq,lote:'',centros:''}); renderAvance(); }; });
+  pintarAvTot();
+}
+function pintarAvTot(){
+  let h=0,c=0,v=0;
+  avState.forEach(tr=>{ if(!tr.lote)return; const r=hcDeCentros(tr.lote,parseCentros(tr.centros,NCEN[tr.lote]).set); h+=r.has;c+=r.n;v+=r.vivas; });
+  document.getElementById('avHas').textContent=f2(h);
+  document.getElementById('avCen').textContent=fI(c);
+  document.getElementById('avViv').textContent=fI(v);
+}
+document.getElementById('avAdd').onclick=function(){ avState.push({id:++avSeq,lote:'',centros:''}); renderAvance(); };
+
+document.getElementById('avSave').onclick=async function(){
+  const btn=this;
+  const filas=avState.filter(t=>t.lote);
+  if(!filas.length){ alert('Elegí al menos un lote.'); return; }
+  // agrupar centros por lote
+  const porLote={};
+  filas.forEach(t=>{ const s=parseCentros(t.centros,NCEN[t.lote]).set; porLote[t.lote]=porLote[t.lote]||new Set(); s.forEach(c=>porLote[t.lote].add(c)); });
+  const resumen=Object.keys(porLote).map(L=>L+' ('+porLote[L].size+')').join(', ');
+  if(!confirm('¿Guardar avance de hoy?\n\n'+resumen+'\n\nFecha: '+fechaLargaD(HOY))) return;
+  btn.disabled=true; btn.textContent='Guardando…';
+  try{
+    const ymdH=ymd(HOY);
+    for(const L of Object.keys(porLote)){
+      const union=new Set(porLote[L]);
+      const prev=AVANCE_DOCS.find(a=>a.id===ymdH+'_'+L);   // une con lo ya guardado hoy (no sobreescribe)
+      if(prev) prev.centros.forEach(c=>union.add(c));
+      const cen=Array.from(union).sort((a,b)=>a-b);
+      const r=hcDeCentros(L,union);
+      await colCos.doc(ymdH+'_'+L).set({
+        tipo:'avance', fecha:fechaCortaD(HOY), fechaLarga:fechaLargaD(HOY), ymd:ymdH,
+        lote:L, centros:cen, has:r.has, vivas:r.vivas,
+        responsableEmail:(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||'', responsableNombre:(USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||''
+      });
+    }
+    btn.disabled=false; btn.textContent='💾 Guardar avance de hoy';
+    avState=[{id:++avSeq,lote:'',centros:''}];
+    renderAvance();
+    await cargar();   // recarga todo y re-renderiza ciclo
+    alert('✅ Avance guardado. El ciclo se actualizó.');
+  }catch(e){ btn.disabled=false; btn.textContent='💾 Guardar avance de hoy'; alert('No se pudo guardar: '+e.message); }
+};
+
+function renderSavedHoy(){
+  const ymdH=ymd(HOY);
+  const hoy=AVANCE_DOCS.filter(a=>a.id.indexOf(ymdH+'_')===0);
+  const cont=document.getElementById('savedHoy');
+  if(!hoy.length){ cont.innerHTML=''; return; }
+  cont.innerHTML='<div class="hint" style="margin-top:12px;font-weight:700;color:var(--verde)">Guardado hoy:</div><div class="savedchips">'+
+    hoy.map(a=>`<span class="savedchip">${a.lote}: ${a.centros.length} centros · ${f2(a.has)} ha <span class="x" data-x="${a.id}">✕</span></span>`).join('')+'</div>';
+  cont.querySelectorAll('[data-x]').forEach(b=>{ b.onclick=async()=>{
+    if(!confirm('¿Quitar el avance de '+b.dataset.x.split('_')[1]+' de hoy?')) return;
+    await colCos.doc(b.dataset.x).delete(); await cargar();
+  };});
+}
+
+/* ===== Cálculo del ciclo ===== */
+function calcular(){
+  const p=CICLO_MES[ACTIVE.getMonth()+1]||CICLO_DEF[ACTIVE.getMonth()+1];
+  const dpl=diasHastaLaboral(ACTIVE);
+  const filas=[];
+  LOTES.forEach(function(L){
+    const n=NCEN[L]; const seed=parseISO(SEED_CORTE[L]||ymd(HOY));
+    const cuenta={}; let cortHoy=0;
+    for(let c=1;c<=n;c++){
+      const dt=CORTE_LAST[L+'#'+c]||seed;
+      const key=ymd(dt); cuenta[key]=(cuenta[key]||0)+1;
+      if(CORTE_LAST[L+'#'+c] && diffDias(ACTIVE,CORTE_LAST[L+'#'+c])===0) cortHoy++;
+    }
+    let modaKey=ymd(seed), modaN=-1;
+    for(const k in cuenta){ if(cuenta[k]>modaN){ modaN=cuenta[k]; modaKey=k; } }
+    const ult=parseISO(modaKey);
+    const dias=Math.max(0,diffDias(ACTIVE,ult));
+    filas.push({lote:L, centros:n, hc:TOTHC[L], ult:ult, dias:dias, est:estadoLote(dias,n,p,dpl), cond:condicion(dias,p), cortHoy:cortHoy});
+  });
+  filas.sort((a,b)=> b.dias-a.dias || a.lote.localeCompare(b.lote));
+  return {p, dpl, filas};
+}
+
+/* ===== Render ===== */
+let DATA_R=null;
+function render(){
+  DATA_R=calcular();
+  const {p,filas}=DATA_R;
+  document.getElementById('fechaTxt').textContent=fechaLargaD(ACTIVE);
+  document.getElementById('cicloChip').textContent=MESES[ACTIVE.getMonth()].charAt(0).toUpperCase()+MESES[ACTIVE.getMonth()].slice(1)+' · cada '+p+' días';
+  document.getElementById('proxTxt').textContent=textoProx(ACTIVE);
+  renderSavedHoy();
+
+  const opt=filas.filter(f=>f.est.txt==='🎯 PUNTO ÓPTIMO');
+  const late=filas.filter(f=>f.est.txt==='🚨 EMERGENCIA'||f.est.txt==='⚠ ALERTA');
+  const soon=filas.filter(f=>f.est.txt==='CASI ÓPTIMO');
+  const ordCorte=a=>a.slice().sort((x,y)=> y.dias-x.dias || x.lote.localeCompare(y.lote));
+  const prox=textoProx(ACTIVE);
+  let html='';
+  if(opt.length){
+    const o=ordCorte(opt), first=o[0], last=o[o.length-1];
+    const totHc=o.reduce((s,f)=>s+f.hc,0), totC=o.reduce((s,f)=>s+f.centros,0);
+    html+='<div class="planbox plan-opt"><div class="tl">🎯 Cortar '+prox+'</div>'+
+      '<div class="lotes">Lotes: '+o.map(f=>f.lote).join(', ')+'</div>'+
+      '<div class="cfs">Empezar en <b>'+first.lote.toLowerCase()+'1</b> · terminar en <b>'+last.lote.toLowerCase()+last.centros+'</b></div>'+
+      '<div class="meta">'+totC+' centros · '+f1(totHc)+' Hc</div></div>';
+  } else {
+    html+='<div class="planbox plan-ok"><div class="tl">✓ Sin lotes en punto óptimo para '+prox+'</div><div class="meta">Ningún lote llega al punto de corte. Continuar el plan normal.</div></div>';
+  }
+  if(late.length){ const o=ordCorte(late);
+    html+='<div class="planbox plan-late"><div class="tl">🚨 Atrasados — cortar con prioridad</div><div class="lotes">'+o.map(f=>f.lote+' ('+f.est.txt.replace(/[🚨⚠]\s?/g,'')+')').join(', ')+'</div><div class="meta">Pasaron su punto óptimo: hay desgrane / sobremaduración.</div></div>';
+  }
+  if(soon.length){ const o=ordCorte(soon);
+    html+='<div class="planbox plan-soon"><div class="tl">🔜 Casi óptimo — preparar para el día siguiente</div><div class="lotes">'+o.map(f=>f.lote).join(', ')+'</div></div>';
+  }
+  document.getElementById('planCont').innerHTML=html;
+
+  const tb=document.querySelector('#tblCiclo tbody'); tb.innerHTML='';
+  filas.forEach(function(f){
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td class="lotecell">'+f.lote+(f.cortHoy?' <span class="cond">('+f.cortHoy+' hoy)</span>':'')+'</td>'+
+      '<td class="c">'+fechaCortaD(f.ult).slice(0,5)+'</td>'+
+      '<td class="r">'+f.dias+'</td>'+
+      '<td><span class="est '+f.est.cls+'">'+f.est.txt+'</span></td>'+
+      '<td class="cond">'+f.cond+'</td>';
+    tb.appendChild(tr);
+  });
+
+  const totHc=filas.reduce((s,f)=>s+f.hc,0);
+  const hcMad=filas.filter(f=>f.cond!=='VERDE').reduce((s,f)=>s+f.hc,0);
+  const optHc=opt.reduce((s,f)=>s+f.hc,0);
+  const kp=[[filas.length,'lotes en seguimiento'],[f1(totHc)+' Hc','área viva total'],[opt.length,'lotes a cortar '+prox],[f1(optHc)+' Hc','para cortar '+prox],[late.length,'lotes atrasados'],[f1(hcMad)+' Hc','en condición madura+']];
+  document.getElementById('kpis').innerHTML=kp.map(k=>'<div class="kpi"><div class="v">'+k[0]+'</div><div class="l">'+k[1]+'</div></div>').join('');
+}
+
+/* ===== Simular fecha ===== */
+document.getElementById('simBtn').onclick=function(){ const v=document.getElementById('simDate').value; if(!v) return; ACTIVE=parseISO(v); ACTIVE.setHours(0,0,0,0); render(); };
+document.getElementById('simReset').onclick=function(){ ACTIVE=new Date(); ACTIVE.setHours(0,0,0,0); document.getElementById('simDate').value=''; render(); };
+
+/* ===== Editor días de ciclo ===== */
+function buildMesesEditor(){
+  const g=document.getElementById('mesesGrid'); const mesNow=HOY.getMonth()+1;
+  g.innerHTML=MESES.map((m,i)=>`<div class="mesfld ${i+1===mesNow?'now':''}"><label>${m.slice(0,3)}</label><input type="number" min="1" max="60" data-mes="${i+1}" value="${CICLO_MES[i+1]||CICLO_DEF[i+1]}"></div>`).join('');
+}
+document.getElementById('cfgToggle').onclick=function(){ const b=document.getElementById('cfgBox'); const open=b.style.display==='none'; b.style.display=open?'':'none'; this.textContent=(open?'✏️ Editar días de ciclo ▴':'✏️ Editar días de ciclo ▾'); };
+document.getElementById('cfgCancel').onclick=function(){ buildMesesEditor(); document.getElementById('cfgBox').style.display='none'; document.getElementById('cfgToggle').textContent='✏️ Editar días de ciclo ▾'; };
+document.getElementById('cfgSave').onclick=async function(){
+  const btn=this; const nuevo={};
+  document.querySelectorAll('#mesesGrid input').forEach(inp=>{ const v=+inp.value; if(v>0) nuevo[inp.dataset.mes]=v; });
+  btn.disabled=true; btn.textContent='Guardando…';
+  try{
+    await colCos.doc('__config__').set({tipo:'config', cicloMes:nuevo, actualizado:fechaCortaD(HOY), por:(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||''},{merge:true});
+    CICLO_MES=Object.assign({},CICLO_DEF,Object.fromEntries(Object.entries(nuevo).map(([k,v])=>[+k,v])));
+    btn.disabled=false; btn.textContent='Guardar días de ciclo';
+    document.getElementById('cfgBox').style.display='none'; document.getElementById('cfgToggle').textContent='✏️ Editar días de ciclo ▾';
+    render(); alert('✅ Días de ciclo actualizados.');
+  }catch(e){ btn.disabled=false; btn.textContent='Guardar días de ciclo'; alert('No se pudo guardar: '+e.message); }
+};
+
+/* ===== Firma ===== */
+let sigCanvas,sigCtx,sigHas=false,sigDraw=false,sigLast=null;
+function setupSig(){
+  sigCanvas=document.getElementById('sig'); sigCtx=sigCanvas.getContext('2d');
+  const ratio=window.devicePixelRatio||1, r=sigCanvas.getBoundingClientRect();
+  sigCanvas.width=r.width*ratio; sigCanvas.height=r.height*ratio; sigCtx.setTransform(1,0,0,1,0,0); sigCtx.scale(ratio,ratio);
+  sigCtx.lineWidth=2.6; sigCtx.lineCap='round'; sigCtx.lineJoin='round'; sigCtx.strokeStyle='#16321f';
+  const pos=e=>{const b=sigCanvas.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return{x:t.clientX-b.left,y:t.clientY-b.top};};
+  const start=e=>{e.preventDefault();sigDraw=true;sigLast=pos(e);document.getElementById('sighint').style.display='none';};
+  const move=e=>{if(!sigDraw)return;e.preventDefault();const q=pos(e);sigCtx.beginPath();sigCtx.moveTo(sigLast.x,sigLast.y);sigCtx.lineTo(q.x,q.y);sigCtx.stroke();sigLast=q;sigHas=true;};
+  const stop=()=>{sigDraw=false;};
+  sigCanvas.addEventListener('mousedown',start);sigCanvas.addEventListener('mousemove',move);window.addEventListener('mouseup',stop);
+  sigCanvas.addEventListener('touchstart',start,{passive:false});sigCanvas.addEventListener('touchmove',move,{passive:false});sigCanvas.addEventListener('touchend',stop);
+  document.getElementById('sigclear').onclick=()=>{sigCtx.save();sigCtx.setTransform(1,0,0,1,0,0);sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);sigCtx.restore();sigHas=false;document.getElementById('sighint').style.display='block';};
+}
+
+/* ===== PDF ===== */
+document.getElementById('pdf').addEventListener('click', function(){
+  if(!DATA_R){ return; }
+  const {p,filas}=DATA_R;
+  const opt=filas.filter(f=>f.est.txt==='🎯 PUNTO ÓPTIMO').sort((x,y)=>y.dias-x.dias||x.lote.localeCompare(y.lote));
+  const late=filas.filter(f=>f.est.txt==='🚨 EMERGENCIA'||f.est.txt==='⚠ ALERTA').sort((x,y)=>y.dias-x.dias);
+  const prox=textoProx(ACTIVE);
+  try{
+    const { jsPDF }=window.jspdf;
+    const doc=new jsPDF({unit:'mm',format:'a4'});
+    const M=15, W=210; let y=14;
+    try{ doc.addImage(document.querySelector('.htop img'),'PNG',M,y,20,20); }catch(e){}
+    doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(30,86,49);
+    doc.text('REPORTE DE COSECHA — CICLO POR LOTE', M+24, y+8);
+    doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60,60,60);
+    doc.text('FINCA BURICA', M+24, y+15);
+    y+=26; doc.setDrawColor(30,86,49); doc.setLineWidth(.6); doc.line(M,y,W-M,y); y+=8;
+    doc.setFontSize(11); doc.setTextColor(20,20,20);
+    const linea=(et,va)=>{ doc.setFont('helvetica','bold'); doc.text(et,M,y); doc.setFont('helvetica','normal'); doc.text(String(va||'—'),M+42,y); y+=7; };
+    linea('Fecha:', fechaLargaD(ACTIVE));
+    linea('Ciclo del mes:', 'cada '+p+' días ('+MESES[ACTIVE.getMonth()]+')');
+    linea('Corta se ejecuta:', prox);
+    linea('Responsable:', (USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'');
+    y+=2;
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30,86,49); doc.text('PLAN DE CORTE', M, y); y+=6;
+    doc.setFontSize(10.5); doc.setTextColor(20,20,20);
+    if(opt.length){
+      const first=opt[0], last=opt[opt.length-1];
+      const totHc=opt.reduce((s,f)=>s+f.hc,0), totC=opt.reduce((s,f)=>s+f.centros,0);
+      doc.setFont('helvetica','bold'); doc.text('Cortar '+prox+': ', M, y);
+      doc.setFont('helvetica','normal'); doc.text(doc.splitTextToSize(opt.map(f=>f.lote).join(', '), W-M-M-34), M+34, y); y+=6;
+      doc.text('Empezar en '+first.lote.toLowerCase()+'1  ·  terminar en '+last.lote.toLowerCase()+last.centros+'   ('+totC+' centros · '+f1(totHc)+' Hc)', M, y); y+=7;
+    } else { doc.text('Sin lotes en punto óptimo para '+prox+'. Continuar plan normal.', M, y); y+=7; }
+    if(late.length){ doc.setTextColor(150,30,20); doc.setFont('helvetica','bold'); doc.text('Atrasados (prioridad): ', M, y);
+      doc.setFont('helvetica','normal'); doc.text(doc.splitTextToSize(late.map(f=>f.lote).join(', '), W-M-M-42), M+42, y); y+=7; doc.setTextColor(20,20,20); }
+    y+=2;
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30,86,49); doc.text('CICLO POR LOTE', M, y); y+=5;
+    const cols=[{x:M,w:22},{x:M+22,w:30},{x:M+52,w:20,a:'right'},{x:M+72,w:54},{x:M+126,w:54}];
+    const tit=['Lote','Últ. corte','Días','Estado','Condición']; const tblW=180;
+    function head(){ doc.setFillColor(30,86,49); doc.rect(M,y,tblW,8,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255,255,255);
+      cols.forEach((c,i)=>{ const tx=c.a==='right'?c.x+c.w-2:c.x+2; doc.text(tit[i],tx,y+5.5,{align:c.a||'left'}); }); y+=8; doc.setTextColor(20,20,20); }
+    head();
+    filas.forEach((f,i)=>{
+      if(y+7>282){ doc.addPage(); y=18; head(); }
+      if(i%2===0){ doc.setFillColor(237,245,233); doc.rect(M,y,tblW,7,'F'); }
+      const vy=y+5; const est=f.est.txt.replace(/[🎯🚨⚠✓]\s?/g,'');
+      doc.setFont('helvetica','bold'); doc.setFontSize(8.8);
+      doc.setTextColor.apply(doc, f.est.cls==='e0'?[179,38,30]:f.est.cls==='e1'?[200,99,26]:f.est.cls==='e3'?[46,125,50]:[40,40,40]);
+      doc.text(f.lote, cols[0].x+2, vy);
+      doc.setFont('helvetica','normal'); doc.setTextColor(40,40,40);
+      doc.text(fechaCortaD(f.ult).slice(0,5), cols[1].x+2, vy);
+      doc.text(String(f.dias), cols[2].x+cols[2].w-2, vy, {align:'right'});
+      doc.text(est, cols[3].x+2, vy);
+      doc.text(f.cond, cols[4].x+2, vy);
+      y+=7;
+    });
+    y+=8;
+    if(sigHas){
+      if(y+44>290){ doc.addPage(); y=18; }
+      doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(30,86,49); doc.text('Firma del responsable:', M, y); y+=4;
+      doc.addImage(sigCanvas.toDataURL('image/png'),'PNG',M,y,70,28); y+=31;
+      doc.setDrawColor(140); doc.setLineWidth(.3); doc.line(M,y,M+72,y); y+=4;
+      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(110,110,110); doc.text((USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'', M, y);
+    }
+    const folio='CIC-'+fechaCortaD(ACTIVE).replace(/-/g,'')+'-'+String(Date.now()).slice(-4);
+    const hora=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+    doc.setFont('helvetica','italic'); doc.setFontSize(8.5); doc.setTextColor(120,120,120);
+    doc.text('Folio '+folio+' · Generado '+fechaCortaD(new Date())+' '+hora+' · FINCA BURICA', M, 293);
+    const blob=doc.output('blob'); const fname=('Cosecha_'+fechaCortaD(ACTIVE)+'.pdf').replace(/[^\w.\-]+/g,'_');
+    const file=new File([blob],fname,{type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Reporte de cosecha',text:'Reporte de ciclo por lote — '+fechaLargaD(ACTIVE)}).catch(()=>doc.save(fname)); }
+    else doc.save(fname);
+  }catch(err){ alert('No se pudo generar el PDF: '+(err&&err.message?err.message:err)); }
+});
+</script>
+</body>
+</html>
