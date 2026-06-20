@@ -30,12 +30,15 @@
   .simrow{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12.5px;color:var(--gris);flex-wrap:wrap}
   .simrow input[type=date]{font-size:13px;padding:6px 8px;border:1.5px solid var(--verde-borde);border-radius:8px;color:var(--txt)}
   .simrow button{font-size:12px;font-weight:700;padding:6px 10px;border-radius:8px;border:1.5px solid var(--verde2);background:#fff;color:var(--verde2);cursor:pointer}
+  .datehelp{font-size:11.5px;color:var(--gris);margin-top:8px;line-height:1.5;background:#fff7e6;border:1px solid #ffe0a3;border-radius:9px;padding:8px 11px}
   /* Avance rows */
   .arow{border:1.5px solid var(--verde-borde);border-radius:12px;padding:11px;margin-bottom:10px;background:#fcfdfb}
   .arow .top{display:flex;gap:9px;align-items:flex-end}
   .fld{flex:1;min-width:0}
   .fld label{display:block;font-size:11px;color:var(--gris);font-weight:700;margin-bottom:3px}
-  .fld select,.fld input{width:100%;font-size:14px;padding:9px;border:1.5px solid var(--verde-borde);border-radius:9px;background:#fff;color:var(--txt)}
+  .fld select,.fld input,.fld textarea{width:100%;font-size:14px;padding:9px;border:1.5px solid var(--verde-borde);border-radius:9px;background:#fff;color:var(--txt);font-family:inherit}
+  .promline{font-size:13px;color:var(--verde);font-weight:700;margin-top:9px;background:var(--verde-claro);padding:8px 11px;border-radius:9px}
+  .warnbox{font-size:12px;color:#8a4b00;background:#fff4e0;border:1px solid #ffd591;border-radius:10px;padding:9px 11px;margin:13px 0 10px;line-height:1.45}
   .arow .del{border:none;background:transparent;color:#a33;font-size:20px;padding:2px 6px;cursor:pointer;align-self:center}
   .hint{font-size:11px;color:var(--gris);margin-top:6px}
   .astats{display:flex;gap:8px;margin-top:9px}
@@ -47,6 +50,11 @@
   .savedchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
   .savedchip{font-size:11.5px;background:#e9f6ea;border:1px solid #b6e0b9;color:#143;padding:4px 9px;border-radius:20px;display:flex;align-items:center;gap:6px}
   .savedchip .x{color:#a33;cursor:pointer;font-weight:800}
+  .histitem{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--verde-borde);border-radius:10px;margin-bottom:7px;background:#fcfdfb}
+  .histitem .hi{flex:1;min-width:0;font-size:12.5px}
+  .histitem .hi b{color:var(--verde)}
+  .histitem .hmeta{font-size:11px;color:var(--gris);margin-top:2px;word-break:break-word}
+  .histitem .hdel{border:none;background:#fdeceb;color:#a33;font-weight:800;border-radius:8px;padding:8px 11px;cursor:pointer;flex:0 0 auto;font-size:12px}
   /* Plan */
   .plan .big{font-size:13px;line-height:1.55}
   .planbox{border-radius:11px;padding:11px 12px;margin-bottom:9px}
@@ -70,6 +78,14 @@
   .est.e0{color:var(--rojo)} .est.e1{color:var(--naranja)} .est.e2{color:var(--ambar)} .est.e3{color:var(--verde2)} .est.e4{color:var(--gris)}
   .lotecell{font-weight:800;color:var(--verde)}
   .cond{font-size:10.5px;color:var(--gris)}
+  .lrow.has-exp{cursor:pointer}
+  .lrow.has-exp:active td{background:#eef6ec}
+  .caret{display:inline-block;color:var(--verde2);font-size:11px;width:11px}
+  .pct{font-size:10px;font-weight:800;color:#fff;background:var(--verde2);padding:1px 6px;border-radius:20px;margin-left:5px;vertical-align:middle}
+  table.ciclo tr.srow td{background:#f0f6ee;border-bottom:1px solid #e4ece0;font-size:11.5px}
+  .subc{color:var(--txt);padding-left:14px!important}
+  .pct2{font-size:10px;font-weight:800;color:var(--verde2)}
+  .subcen{font-size:10px;color:var(--gris);margin-top:2px}
   /* Resumen */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
   .kpi{background:var(--verde-claro);border-radius:11px;padding:10px 12px}
@@ -88,6 +104,7 @@
   .sigbtns{display:flex;justify-content:flex-end;margin-top:7px}
   #sigclear{font-size:12px;color:#a33;background:none;border:none;cursor:pointer;font-weight:700}
   .pdfbtn{width:100%;font-size:16px;font-weight:800;padding:15px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;cursor:pointer;box-shadow:0 3px 10px rgba(30,86,49,.3)}
+  .newbtn{width:100%;font-size:14px;font-weight:700;padding:13px;border:1.5px solid var(--verde-borde);border-radius:12px;background:#fff;color:var(--gris);cursor:pointer;margin-top:11px}
   .note{font-size:11.5px;color:var(--gris);margin-top:9px;line-height:1.5}
   .btnsm{font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:9px;border:1.5px solid var(--verde2);background:#fff;color:var(--verde2);cursor:pointer}
   #gate{display:none;background:#fff;border:1px solid var(--verde-borde);border-radius:14px;padding:22px;text-align:center;font-size:14px;color:var(--txt);margin:20px 14px}
@@ -115,17 +132,18 @@
     <div class="repline"><span>🌴 Ciclo del mes</span><b><span class="ciclochip" id="cicloChip">—</span></b></div>
     <div class="repline"><span>✂️ La corta se ejecuta</span><b id="proxTxt">—</b></div>
     <div class="simrow">
-      <span>Simular otra fecha:</span>
+      <span>📅 Cambiar fecha del reporte:</span>
       <input type="date" id="simDate">
-      <button id="simBtn">Ver</button>
+      <button id="simBtn">Aplicar</button>
       <button id="simReset" style="border-color:#ccc;color:#888">Hoy</button>
     </div>
+    <div class="datehelp">Normalmente es <b>hoy</b>. Si subís la info otro día (te atrasaste), poné acá la fecha real a la que corresponde el reporte — así el ciclo y el plan no se corren.</div>
   </div>
 
   <!-- Registrar avance del día -->
   <div class="card">
-    <h2>🌴 Registrar cosecha de hoy</h2>
-    <p class="hsub">Indicá los centros cosechados por lote (ej: <b>1-5, 8, 12</b>). Vacío = lote completo. Esto marca esos centros como cortados hoy.</p>
+    <h2>🌴 Registrar cosecha del día</h2>
+    <p class="hsub">Indicá los centros cosechados por lote (ej: <b>1-5, 8, 12</b>). Vacío = lote completo. Esto los marca como cortados en la <b>fecha del reporte</b> (arriba).</p>
     <div id="avRows"></div>
     <button class="addbtn" id="avAdd">＋ Agregar lote</button>
     <div class="astats">
@@ -133,8 +151,11 @@
       <div class="astat"><div class="v" id="avCen">0</div><div class="k">centros</div></div>
       <div class="astat"><div class="v" id="avViv">0</div><div class="k">palmas vivas</div></div>
     </div>
-    <div style="height:10px"></div>
-    <button class="savebtn" id="avSave">💾 Guardar avance de hoy</button>
+    <div class="fld" style="margin-top:11px"><label>Cantidad de cortadores</label><input type="number" id="avCort" min="0" inputmode="numeric" placeholder="ej: 8"></div>
+    <div id="avPromLine" class="promline" style="display:none">🧮 Avance promedio por cortador: <b id="avProm">—</b></div>
+    <div class="fld" style="margin-top:11px"><label>Observaciones (opcional)</label><textarea id="avObs" rows="2" placeholder="Notas del día…"></textarea></div>
+    <div class="warnbox">⚠️ <b>Revisá antes de guardar.</b> Esto actualiza la base de datos de los ciclos. Un lote, centro o fecha equivocados descuadran el ciclo y el plan de corte.</div>
+    <button class="savebtn" id="avSave">💾 Guardar avance del reporte</button>
     <div id="savedHoy"></div>
   </div>
 
@@ -153,7 +174,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <div class="note">Ordenado por días de ciclo (más urgente arriba). El <b>último corte</b> sale del avance guardado; donde aún no hay registro, usa la base inicial de la finca.</div>
+    <div class="note">Ordenado por días de ciclo (más urgente arriba). El <b>último corte</b> sale del avance guardado; donde aún no hay registro, usa la base inicial de la finca.<br>Si un lote tiene centros en <b>distintas fechas</b>, se muestra el <b>% dominante</b> — tocá la fila <span class="pct" style="background:var(--verde2)">%</span> para ver el detalle por grupo de centros.</div>
   </div>
 
   <!-- Resumen del ciclo -->
@@ -162,10 +183,18 @@
     <div class="grid" id="kpis"></div>
   </div>
 
+  <!-- Historial / Auditoría (solo admin) -->
+  <div class="card" id="histCard" style="display:none">
+    <h2>🗂️ Historial / Auditoría</h2>
+    <p class="hsub">Todos los avances de cosecha guardados (lo que alimenta los ciclos). Solo el administrador puede borrar un registro para corregir un error.</p>
+    <input type="text" id="histBuscar" placeholder="Filtrar por lote o fecha…" style="width:100%;font-size:13px;padding:9px;border:1.5px solid var(--verde-borde);border-radius:9px;margin-bottom:10px">
+    <div id="histList"></div>
+  </div>
+
   <!-- Días de ciclo por mes (editable) -->
   <div class="card">
     <h2>⚙️ Días de ciclo por mes</h2>
-    <p class="hsub">A más lluvia, menos días de ciclo (madura más rápido) y viceversa. Ajustá según el clima.</p>
+    <p class="hsub" id="cfgSub">A más lluvia, menos días de ciclo (madura más rápido) y viceversa. Ajustá según el clima.</p>
     <button class="cfgtoggle" id="cfgToggle">✏️ Editar días de ciclo ▾</button>
     <div id="cfgBox" style="display:none">
       <div class="mesesgrid" id="mesesGrid"></div>
@@ -183,8 +212,9 @@
     <div class="sigbtns"><button id="sigclear">Borrar firma</button></div>
   </div>
 
-  <button class="pdfbtn" id="pdf">📄 Generar PDF — reporte de ciclo por lote</button>
-  <div class="note">El PDF incluye el plan de corte, la tabla de ciclo por lote y el resumen — listo para compartir por WhatsApp.</div>
+  <button class="pdfbtn" id="pdf">📄 Generar PDF (reporte del día + plan)</button>
+  <button class="newbtn" id="nuevo">🔄 Limpiar formulario (empezar de cero)</button>
+  <div class="note">El PDF tiene <b>2 páginas</b>: (1) el reporte de cosecha del día con lotes, centros y hectáreas (como la calculadora), y (2) el plan/sugerencia para el próximo día de trabajo. Listo para compartir por WhatsApp.<br>El botón <b>Limpiar</b> vacía el formulario en pantalla (lotes, cortadores, observaciones y firma). El avance ya guardado y el ciclo no se tocan.</div>
 </div>
 
 <div class="loading" id="loading">Cargando datos de cosecha…</div>
@@ -265,11 +295,29 @@ function parseCentros(texto, n){
   return {set, completo:false, malos};
 }
 function hcDeCentros(L, set){ let v=0; set.forEach(c=>{ v+=(VIVAS_CF[L][c]||0); }); return {vivas:v, has:v/DATA[L].d, n:set.size}; }
+function rangeStr(a){ if(!a.length) return ''; const out=[]; let s=a[0],p=a[0]; for(let i=1;i<=a.length;i++){ if(a[i]===p+1){ p=a[i]; continue; } out.push(s===p?''+s:s+'-'+p); s=a[i]; p=a[i]; } return out.join(', '); }
+/* Reporte del día = avance guardado hoy + lo que se está registrando ahora (unión por lote) */
+function getReporteHoy(){
+  const map={}; const ymdH=ymd(ACTIVE);
+  AVANCE_DOCS.filter(a=>a.id.indexOf(ymdH+'_')===0).forEach(a=>{ map[a.lote]=map[a.lote]||new Set(); a.centros.forEach(c=>map[a.lote].add(c)); });
+  (typeof avState!=='undefined'?avState:[]).forEach(t=>{ if(!t.lote) return; map[t.lote]=map[t.lote]||new Set(); parseCentros(t.centros,NCEN[t.lote]).set.forEach(c=>map[t.lote].add(c)); });
+  const filas=[]; let tHas=0,tPal=0,tCen=0;
+  Object.keys(map).sort().forEach(L=>{
+    const set=map[L]; if(!set.size) return; const r=hcDeCentros(L,set);
+    const completo=set.size===NCEN[L];
+    const txt=(completo?'Lote completo':rangeStr(Array.from(set).sort((a,b)=>a-b)))+' ('+set.size+' '+(set.size===1?'centro':'centros')+')';
+    filas.push({lote:L, centros:txt, dens:DATA[L].d, vivas:r.vivas, has:r.has});
+    tHas+=r.has; tPal+=r.vivas; tCen+=set.size;
+  });
+  return {filas, tHas, tPal, tCen};
+}
 
 /* ===== Firebase ===== */
 const colCos=fbDB.collection('cosecha');
 let CORTE_LAST={};           // {"LOTE#centro": Date}
 let AVANCE_DOCS=[];          // [{id, fecha, lote, centros[], has}]
+let DIA_META={};             // {cortadores, obs} del día activo (fecha del reporte)
+let META_BY_DAY={};          // {ymd: {cortadores, obs}} de todos los días
 let ACTIVE=new Date(); ACTIVE.setHours(0,0,0,0);
 let HOY=new Date(); HOY.setHours(0,0,0,0);
 
@@ -289,19 +337,24 @@ requireAuth(function(u){
 
 function cargar(){
   colCos.get().then(function(snap){
-    CORTE_LAST={}; AVANCE_DOCS=[];
+    CORTE_LAST={}; AVANCE_DOCS=[]; META_BY_DAY={};
     snap.forEach(function(d){
       const o=d.data();
       if(d.id==='__config__'){ if(o.cicloMes) for(const k in o.cicloMes){ const v=+o.cicloMes[k]; if(v>0) CICLO_MES[+k]=v; } return; }
+      if(d.id.slice(-6)==='__meta'){ META_BY_DAY[d.id.slice(0,-6)]=o; return; }
       if(!o.lote || !Array.isArray(o.centros) || !o.fecha) return;
       let dt; try{ const p=o.fecha.split('-'); dt=new Date(+p[2],+p[1]-1,+p[0]); }catch(e){ return; }
       if(isNaN(dt)) return;
-      AVANCE_DOCS.push({id:d.id, fecha:o.fecha, dt:dt, lote:o.lote, centros:o.centros, has:o.has||0});
+      AVANCE_DOCS.push({id:d.id, fecha:o.fecha, dt:dt, lote:o.lote, centros:o.centros, has:o.has||0, resp:o.responsableNombre||''});
       o.centros.forEach(c=>{ const k=o.lote+'#'+c; if(!CORTE_LAST[k]||dt>CORTE_LAST[k]) CORTE_LAST[k]=dt; });
     });
+    DIA_META=META_BY_DAY[ymd(ACTIVE)]||{};
     document.getElementById('loading').style.display='none';
     document.getElementById('wrap').style.display='';
-    initAvance(); buildMesesEditor(); setupSig();
+    initAvance(); buildMesesEditor(); gateCfg(); setupSig();
+    document.getElementById('avCort').value = DIA_META.cortadores!=null ? DIA_META.cortadores : '';
+    document.getElementById('avObs').value = DIA_META.obs || '';
+    pintarAvTot();
     render();
   }).catch(function(e){
     document.getElementById('loading').style.display='none';
@@ -337,14 +390,18 @@ function renderAvance(){
   cont.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ avState=avState.filter(x=>x.id!=b.dataset.del); if(!avState.length) avState.push({id:++avSeq,lote:'',centros:''}); renderAvance(); }; });
   pintarAvTot();
 }
+function nCortadores(){ const el=document.getElementById('avCort'); const n=el?parseInt(el.value,10):NaN; return (isNaN(n)||n<0)?0:n; }
 function pintarAvTot(){
-  let h=0,c=0,v=0;
-  avState.forEach(tr=>{ if(!tr.lote)return; const r=hcDeCentros(tr.lote,parseCentros(tr.centros,NCEN[tr.lote]).set); h+=r.has;c+=r.n;v+=r.vivas; });
-  document.getElementById('avHas').textContent=f2(h);
-  document.getElementById('avCen').textContent=fI(c);
-  document.getElementById('avViv').textContent=fI(v);
+  const {tHas,tPal,tCen}=getReporteHoy();
+  document.getElementById('avHas').textContent=f2(tHas);
+  document.getElementById('avCen').textContent=fI(tCen);
+  document.getElementById('avViv').textContent=fI(tPal);
+  const cort=nCortadores(); const line=document.getElementById('avPromLine');
+  if(cort>0 && tHas>0){ document.getElementById('avProm').textContent=f2(tHas/cort)+' ha  ('+cort+' cortadores)'; line.style.display=''; }
+  else line.style.display='none';
 }
 document.getElementById('avAdd').onclick=function(){ avState.push({id:++avSeq,lote:'',centros:''}); renderAvance(); };
+document.getElementById('avCort').addEventListener('input',pintarAvTot);
 
 document.getElementById('avSave').onclick=async function(){
   const btn=this;
@@ -354,40 +411,64 @@ document.getElementById('avSave').onclick=async function(){
   const porLote={};
   filas.forEach(t=>{ const s=parseCentros(t.centros,NCEN[t.lote]).set; porLote[t.lote]=porLote[t.lote]||new Set(); s.forEach(c=>porLote[t.lote].add(c)); });
   const resumen=Object.keys(porLote).map(L=>L+' ('+porLote[L].size+')').join(', ');
-  if(!confirm('¿Guardar avance de hoy?\n\n'+resumen+'\n\nFecha: '+fechaLargaD(HOY))) return;
+  if(!confirm('⚠️ VERIFICÁ ANTES DE GUARDAR\n\nEsto actualiza la base de datos de los CICLOS de la finca. Un dato equivocado (lote, centros o fecha) descuadra el ciclo y afecta el plan de corte.\n\nRevisá que esté correcto:\n• '+resumen+'\n• Fecha del reporte: '+fechaLargaD(ACTIVE)+'\n\n¿Estás seguro de guardar?')) return;
   btn.disabled=true; btn.textContent='Guardando…';
   try{
-    const ymdH=ymd(HOY);
+    const ymdH=ymd(ACTIVE);
     for(const L of Object.keys(porLote)){
       const union=new Set(porLote[L]);
-      const prev=AVANCE_DOCS.find(a=>a.id===ymdH+'_'+L);   // une con lo ya guardado hoy (no sobreescribe)
+      const prev=AVANCE_DOCS.find(a=>a.id===ymdH+'_'+L);   // une con lo ya guardado ese día (no sobreescribe)
       if(prev) prev.centros.forEach(c=>union.add(c));
       const cen=Array.from(union).sort((a,b)=>a-b);
       const r=hcDeCentros(L,union);
       await colCos.doc(ymdH+'_'+L).set({
-        tipo:'avance', fecha:fechaCortaD(HOY), fechaLarga:fechaLargaD(HOY), ymd:ymdH,
+        tipo:'avance', fecha:fechaCortaD(ACTIVE), fechaLarga:fechaLargaD(ACTIVE), ymd:ymdH,
         lote:L, centros:cen, has:r.has, vivas:r.vivas,
         responsableEmail:(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||'', responsableNombre:(USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||''
       });
     }
-    btn.disabled=false; btn.textContent='💾 Guardar avance de hoy';
+    await colCos.doc(ymdH+'__meta').set({
+      tipo:'meta', ymd:ymdH, fecha:fechaCortaD(ACTIVE),
+      cortadores:nCortadores(), obs:(document.getElementById('avObs').value||'').trim(),
+      responsableEmail:(USUARIO_ACTUAL&&USUARIO_ACTUAL.email)||'', responsableNombre:(USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||''
+    },{merge:true});
+    btn.disabled=false; btn.textContent='💾 Guardar avance del reporte';
     avState=[{id:++avSeq,lote:'',centros:''}];
     renderAvance();
     await cargar();   // recarga todo y re-renderiza ciclo
     alert('✅ Avance guardado. El ciclo se actualizó.');
-  }catch(e){ btn.disabled=false; btn.textContent='💾 Guardar avance de hoy'; alert('No se pudo guardar: '+e.message); }
+  }catch(e){ btn.disabled=false; btn.textContent='💾 Guardar avance del reporte'; alert('No se pudo guardar: '+e.message); }
 };
 
 function renderSavedHoy(){
-  const ymdH=ymd(HOY);
+  const ymdH=ymd(ACTIVE);
   const hoy=AVANCE_DOCS.filter(a=>a.id.indexOf(ymdH+'_')===0);
   const cont=document.getElementById('savedHoy');
   if(!hoy.length){ cont.innerHTML=''; return; }
-  cont.innerHTML='<div class="hint" style="margin-top:12px;font-weight:700;color:var(--verde)">Guardado hoy:</div><div class="savedchips">'+
-    hoy.map(a=>`<span class="savedchip">${a.lote}: ${a.centros.length} centros · ${f2(a.has)} ha <span class="x" data-x="${a.id}">✕</span></span>`).join('')+'</div>';
-  cont.querySelectorAll('[data-x]').forEach(b=>{ b.onclick=async()=>{
-    if(!confirm('¿Quitar el avance de '+b.dataset.x.split('_')[1]+' de hoy?')) return;
+  const admin=esAdmin();
+  cont.innerHTML='<div class="hint" style="margin-top:12px;font-weight:700;color:var(--verde)">Guardado para esta fecha:</div><div class="savedchips">'+
+    hoy.map(a=>`<span class="savedchip">${a.lote}: ${a.centros.length} centros · ${f2(a.has)} ha${admin?` <span class="x" data-x="${a.id}">✕</span>`:''}</span>`).join('')+'</div>';
+  if(admin) cont.querySelectorAll('[data-x]').forEach(b=>{ b.onclick=async()=>{
+    if(!confirm('¿Quitar el avance de '+b.dataset.x.split('_')[1]+'?')) return;
     await colCos.doc(b.dataset.x).delete(); await cargar();
+  };});
+}
+
+/* ===== Historial / Auditoría (solo admin) ===== */
+function renderHist(){
+  const card=document.getElementById('histCard');
+  if(!esAdmin()){ card.style.display='none'; return; }
+  card.style.display='';
+  const q=(document.getElementById('histBuscar').value||'').trim().toLowerCase();
+  const items=AVANCE_DOCS.slice().sort((a,b)=> b.dt-a.dt || a.lote.localeCompare(b.lote))
+    .filter(a=> !q || a.lote.toLowerCase().indexOf(q)>=0 || (a.fecha||'').indexOf(q)>=0);
+  const cont=document.getElementById('histList');
+  if(!items.length){ cont.innerHTML='<div class="hint">Sin avances guardados'+(q?' para ese filtro':'')+'.</div>'; return; }
+  cont.innerHTML=items.map(a=>`<div class="histitem"><div class="hi"><b>${a.fecha} · Lote ${a.lote}</b><div class="hmeta">CF: ${rangeStr(a.centros.slice().sort((x,y)=>x-y))} · ${a.centros.length} centros · ${f2(a.has)} ha${a.resp?' · '+a.resp:''}</div></div><button class="hdel" data-del="${a.id}">🗑️</button></div>`).join('');
+  cont.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=async()=>{
+    const id=b.dataset.del; const parts=id.split('_');
+    if(!confirm('¿Borrar este avance?\n\nFecha '+parts[0]+' · Lote '+parts[1]+'\n\nEsto revierte el ciclo de esos centros al corte anterior (o la base inicial). Es una corrección.')) return;
+    try{ await colCos.doc(id).delete(); await cargar(); }catch(e){ alert('No se pudo borrar: '+e.message); }
   };});
 }
 
@@ -397,18 +478,25 @@ function calcular(){
   const dpl=diasHastaLaboral(ACTIVE);
   const filas=[];
   LOTES.forEach(function(L){
-    const n=NCEN[L]; const seed=parseISO(SEED_CORTE[L]||ymd(HOY));
+    const n=NCEN[L]; const seed=parseISO(SEED_CORTE[L]||ymd(ACTIVE));
     const cuenta={}; let cortHoy=0;
     for(let c=1;c<=n;c++){
       const dt=CORTE_LAST[L+'#'+c]||seed;
-      const key=ymd(dt); cuenta[key]=(cuenta[key]||0)+1;
+      const key=ymd(dt);
+      if(!cuenta[key]) cuenta[key]={n:0, centros:[]};
+      cuenta[key].n++; cuenta[key].centros.push(c);
       if(CORTE_LAST[L+'#'+c] && diffDias(ACTIVE,CORTE_LAST[L+'#'+c])===0) cortHoy++;
     }
-    let modaKey=ymd(seed), modaN=-1;
-    for(const k in cuenta){ if(cuenta[k]>modaN){ modaN=cuenta[k]; modaKey=k; } }
-    const ult=parseISO(modaKey);
-    const dias=Math.max(0,diffDias(ACTIVE,ult));
-    filas.push({lote:L, centros:n, hc:TOTHC[L], ult:ult, dias:dias, est:estadoLote(dias,n,p,dpl), cond:condicion(dias,p), cortHoy:cortHoy});
+    // grupos de centros por fecha de último corte (ordenados del más maduro al menos)
+    const grupos=Object.keys(cuenta).map(function(k){
+      const ult=parseISO(k); const dias=Math.max(0,diffDias(ACTIVE,ult));
+      return {ult:ult, dias:dias, n:cuenta[k].n, pct:cuenta[k].n/n, centros:cuenta[k].centros,
+              est:estadoLote(dias,n,p,dpl), cond:condicion(dias,p)};
+    }).sort((a,b)=> b.dias-a.dias);
+    // dominante = el grupo con más centros
+    let dom=grupos[0]; grupos.forEach(g=>{ if(g.n>dom.n) dom=g; });
+    filas.push({lote:L, centros:n, hc:TOTHC[L], ult:dom.ult, dias:dom.dias, est:dom.est, cond:dom.cond,
+                domPct:dom.pct, grupos:grupos, mixto:grupos.length>1, cortHoy:cortHoy});
   });
   filas.sort((a,b)=> b.dias-a.dias || a.lote.localeCompare(b.lote));
   return {p, dpl, filas};
@@ -450,30 +538,73 @@ function render(){
 
   const tb=document.querySelector('#tblCiclo tbody'); tb.innerHTML='';
   filas.forEach(function(f){
-    const tr=document.createElement('tr');
-    tr.innerHTML='<td class="lotecell">'+f.lote+(f.cortHoy?' <span class="cond">('+f.cortHoy+' hoy)</span>':'')+'</td>'+
+    const exp=f.mixto;
+    const tr=document.createElement('tr'); tr.className='lrow'+(exp?' has-exp':'');
+    if(exp) tr.dataset.lote=f.lote;
+    const caret=exp?'<span class="caret">▸</span> ':'';
+    const pctTxt=exp?' <span class="pct">'+Math.round(f.domPct*100)+'%</span>':'';
+    tr.innerHTML='<td class="lotecell">'+caret+f.lote+(f.cortHoy?' <span class="cond">('+f.cortHoy+' hoy)</span>':'')+'</td>'+
       '<td class="c">'+fechaCortaD(f.ult).slice(0,5)+'</td>'+
       '<td class="r">'+f.dias+'</td>'+
-      '<td><span class="est '+f.est.cls+'">'+f.est.txt+'</span></td>'+
+      '<td><span class="est '+f.est.cls+'">'+f.est.txt+'</span>'+pctTxt+'</td>'+
       '<td class="cond">'+f.cond+'</td>';
     tb.appendChild(tr);
+    if(exp){
+      f.grupos.forEach(function(g){
+        const sr=document.createElement('tr'); sr.className='srow srow-'+f.lote; sr.style.display='none';
+        sr.innerHTML='<td class="subc">└ '+g.n+' centros <span class="pct2">'+Math.round(g.pct*100)+'%</span><div class="subcen">CF: '+rangeStr(g.centros)+'</div></td>'+
+          '<td class="c">'+fechaCortaD(g.ult).slice(0,5)+'</td>'+
+          '<td class="r">'+g.dias+'</td>'+
+          '<td><span class="est '+g.est.cls+'">'+g.est.txt+'</span></td>'+
+          '<td class="cond">'+g.cond+'</td>';
+        tb.appendChild(sr);
+      });
+    }
   });
+  tb.querySelectorAll('.lrow.has-exp').forEach(function(r){ r.onclick=function(){
+    const L=this.dataset.lote; const open=this.classList.toggle('open');
+    const cr=this.querySelector('.caret'); if(cr) cr.textContent=open?'▾':'▸';
+    tb.querySelectorAll('.srow-'+L).forEach(s=>s.style.display=open?'':'none');
+  };});
 
   const totHc=filas.reduce((s,f)=>s+f.hc,0);
   const hcMad=filas.filter(f=>f.cond!=='VERDE').reduce((s,f)=>s+f.hc,0);
   const optHc=opt.reduce((s,f)=>s+f.hc,0);
   const kp=[[filas.length,'lotes en seguimiento'],[f1(totHc)+' Hc','área viva total'],[opt.length,'lotes a cortar '+prox],[f1(optHc)+' Hc','para cortar '+prox],[late.length,'lotes atrasados'],[f1(hcMad)+' Hc','en condición madura+']];
   document.getElementById('kpis').innerHTML=kp.map(k=>'<div class="kpi"><div class="v">'+k[0]+'</div><div class="l">'+k[1]+'</div></div>').join('');
+  renderHist();
 }
+document.getElementById('histBuscar').addEventListener('input', renderHist);
 
-/* ===== Simular fecha ===== */
-document.getElementById('simBtn').onclick=function(){ const v=document.getElementById('simDate').value; if(!v) return; ACTIVE=parseISO(v); ACTIVE.setHours(0,0,0,0); render(); };
-document.getElementById('simReset').onclick=function(){ ACTIVE=new Date(); ACTIVE.setHours(0,0,0,0); document.getElementById('simDate').value=''; render(); };
+/* ===== Fecha del reporte (manda en proyección + bajo qué día se guarda) ===== */
+function setFechaReporte(d){
+  ACTIVE=d; ACTIVE.setHours(0,0,0,0);
+  DIA_META=META_BY_DAY[ymd(ACTIVE)]||{};
+  avState=[{id:++avSeq, lote:'', centros:''}];
+  document.getElementById('avCort').value = DIA_META.cortadores!=null ? DIA_META.cortadores : '';
+  document.getElementById('avObs').value = DIA_META.obs || '';
+  buildMesesEditor(); gateCfg();
+  renderAvance();
+  render();
+}
+document.getElementById('simBtn').onclick=function(){ const v=document.getElementById('simDate').value; if(!v) return; setFechaReporte(parseISO(v)); };
+document.getElementById('simReset').onclick=function(){ document.getElementById('simDate').value=''; setFechaReporte(new Date()); };
 
-/* ===== Editor días de ciclo ===== */
+/* ===== Editor días de ciclo (editar = solo administrador) ===== */
+function esAdmin(){ return !!(USUARIO_ACTUAL && (USUARIO_ACTUAL.rol==='admin' || (USUARIO_ACTUAL.email||'')==='juan2r@gmail.com')); }
 function buildMesesEditor(){
-  const g=document.getElementById('mesesGrid'); const mesNow=HOY.getMonth()+1;
+  const g=document.getElementById('mesesGrid'); const mesNow=ACTIVE.getMonth()+1;
   g.innerHTML=MESES.map((m,i)=>`<div class="mesfld ${i+1===mesNow?'now':''}"><label>${m.slice(0,3)}</label><input type="number" min="1" max="60" data-mes="${i+1}" value="${CICLO_MES[i+1]||CICLO_DEF[i+1]}"></div>`).join('');
+}
+function gateCfg(){
+  if(esAdmin()) return;   // admin: comportamiento normal (editar/guardar)
+  // capataz u otro: solo lectura
+  document.getElementById('cfgToggle').style.display='none';
+  const box=document.getElementById('cfgBox'); box.style.display='';
+  box.querySelectorAll('input').forEach(i=>{ i.disabled=true; });
+  document.getElementById('cfgSave').style.display='none';
+  document.getElementById('cfgCancel').style.display='none';
+  document.getElementById('cfgSub').textContent='Días de ciclo del mes (definidos por el administrador). Solo el administrador puede modificarlos.';
 }
 document.getElementById('cfgToggle').onclick=function(){ const b=document.getElementById('cfgBox'); const open=b.style.display==='none'; b.style.display=open?'':'none'; this.textContent=(open?'✏️ Editar días de ciclo ▴':'✏️ Editar días de ciclo ▾'); };
 document.getElementById('cfgCancel').onclick=function(){ buildMesesEditor(); document.getElementById('cfgBox').style.display='none'; document.getElementById('cfgToggle').textContent='✏️ Editar días de ciclo ▾'; };
@@ -506,77 +637,168 @@ function setupSig(){
   document.getElementById('sigclear').onclick=()=>{sigCtx.save();sigCtx.setTransform(1,0,0,1,0,0);sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);sigCtx.restore();sigHas=false;document.getElementById('sighint').style.display='block';};
 }
 
-/* ===== PDF ===== */
+/* ===== Limpiar formulario (no toca el avance guardado ni el ciclo) ===== */
+document.getElementById('nuevo').addEventListener('click', function(){
+  if(!confirm('¿Limpiar el formulario?\n\nSe vacían los lotes/centros en pantalla, cortadores, observaciones y firma.\nEl avance YA guardado y el ciclo NO se tocan.')) return;
+  avState=[{id:++avSeq, lote:'', centros:''}];
+  document.getElementById('avCort').value='';
+  document.getElementById('avObs').value='';
+  if(sigHas && sigCtx){ sigCtx.save(); sigCtx.setTransform(1,0,0,1,0,0); sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height); sigCtx.restore(); sigHas=false; document.getElementById('sighint').style.display='block'; }
+  renderAvance();
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ===== PDF (2 páginas: reporte del día + plan del día siguiente) ===== */
 document.getElementById('pdf').addEventListener('click', function(){
   if(!DATA_R){ return; }
   const {p,filas}=DATA_R;
   const opt=filas.filter(f=>f.est.txt==='🎯 PUNTO ÓPTIMO').sort((x,y)=>y.dias-x.dias||x.lote.localeCompare(y.lote));
   const late=filas.filter(f=>f.est.txt==='🚨 EMERGENCIA'||f.est.txt==='⚠ ALERTA').sort((x,y)=>y.dias-x.dias);
+  const soon=filas.filter(f=>f.est.txt==='CASI ÓPTIMO').sort((x,y)=>y.dias-x.dias);
   const prox=textoProx(ACTIVE);
+  const rep=getReporteHoy();
+  const cort=nCortadores();
+  const obs=(document.getElementById('avObs').value||'').trim();
+  const resp=(USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'';
   try{
     const { jsPDF }=window.jspdf;
     const doc=new jsPDF({unit:'mm',format:'a4'});
     const M=15, W=210; let y=14;
+    const hora=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+
+    /* ---------- PÁGINA 1: REPORTE DEL DÍA (estilo calculadora) ---------- */
     try{ doc.addImage(document.querySelector('.htop img'),'PNG',M,y,20,20); }catch(e){}
-    doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(30,86,49);
-    doc.text('REPORTE DE COSECHA — CICLO POR LOTE', M+24, y+8);
+    doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(30,86,49);
+    doc.text('REPORTE DE LABOR DIARIA', M+24, y+9);
     doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60,60,60);
-    doc.text('FINCA BURICA', M+24, y+15);
-    y+=26; doc.setDrawColor(30,86,49); doc.setLineWidth(.6); doc.line(M,y,W-M,y); y+=8;
+    doc.text('FINCA BURICA', M+24, y+16);
+    y+=27; doc.setDrawColor(30,86,49); doc.setLineWidth(.6); doc.line(M,y,W-M,y); y+=8;
     doc.setFontSize(11); doc.setTextColor(20,20,20);
-    const linea=(et,va)=>{ doc.setFont('helvetica','bold'); doc.text(et,M,y); doc.setFont('helvetica','normal'); doc.text(String(va||'—'),M+42,y); y+=7; };
+    const linea=(et,va)=>{ doc.setFont('helvetica','bold'); doc.text(et,M,y); doc.setFont('helvetica','normal'); doc.text(String(va||'—'),M+50,y); y+=7; };
     linea('Fecha:', fechaLargaD(ACTIVE));
-    linea('Ciclo del mes:', 'cada '+p+' días ('+MESES[ACTIVE.getMonth()]+')');
-    linea('Corta se ejecuta:', prox);
-    linea('Responsable:', (USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'');
-    y+=2;
-    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30,86,49); doc.text('PLAN DE CORTE', M, y); y+=6;
-    doc.setFontSize(10.5); doc.setTextColor(20,20,20);
+    linea('Responsable:', resp);
+    linea('Tipo de labor:', 'Cosecha');
+    if(cort>0) linea('Cantidad de cortadores:', String(cort));
+    y+=3;
+    const c1=[{x:M,w:18,a:'left'},{x:M+18,w:64,a:'left'},{x:M+82,w:24,a:'right'},{x:M+106,w:34,a:'right'},{x:M+140,w:40,a:'right'}];
+    const t1=['Lote','Centros cosechados','Densidad','Palmas vivas','Hectáreas']; const tblW=180;
+    function head1(){ doc.setFillColor(30,86,49); doc.rect(M,y,tblW,9,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(9.5); doc.setTextColor(255,255,255);
+      c1.forEach((c,i)=>{ const tx=c.a==='right'?c.x+c.w-2:c.x+2; doc.text(t1[i],tx,y+6,{align:c.a}); }); y+=9; doc.setTextColor(20,20,20); }
+    head1();
+    if(!rep.filas.length){ doc.setFont('helvetica','italic'); doc.setFontSize(9.5); doc.setTextColor(120,120,120); doc.text('Sin avance de cosecha registrado hoy.', M+2, y+5); y+=10; doc.setTextColor(20,20,20); }
+    rep.filas.forEach((row,i)=>{
+      const cTxt=doc.splitTextToSize(row.centros, c1[1].w-3);
+      const rh=Math.max(8, 3.5+cTxt.length*4.2);
+      if(y+rh>278){ doc.addPage(); y=18; head1(); }
+      if(i%2===0){ doc.setFillColor(237,245,233); doc.rect(M,y,tblW,rh,'F'); }
+      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); const vy=y+5.5;
+      doc.text(row.lote, c1[0].x+2, vy);
+      doc.text(cTxt, c1[1].x+2, y+5);
+      doc.text(String(row.dens), c1[2].x+c1[2].w-2, vy, {align:'right'});
+      doc.text(fI(row.vivas), c1[3].x+c1[3].w-2, vy, {align:'right'});
+      doc.text(f2(row.has)+' ha', c1[4].x+c1[4].w-2, vy, {align:'right'});
+      y+=rh;
+    });
+    if(rep.filas.length){
+      doc.setFillColor(200,230,201); doc.rect(M,y,tblW,9,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(20,40,20);
+      doc.text('TOTAL', c1[1].x+2, y+6);
+      doc.text(fI(rep.tPal), c1[3].x+c1[3].w-2, y+6, {align:'right'});
+      doc.text(f2(rep.tHas)+' ha', c1[4].x+c1[4].w-2, y+6, {align:'right'}); y+=14;
+    }
+    if(cort>0 && rep.tHas>0){
+      doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(30,86,49);
+      doc.text('Avance promedio por cortador:', M, y);
+      doc.setFont('helvetica','normal'); doc.setTextColor(20,20,20);
+      doc.text(f2(rep.tHas/cort)+' ha   ('+cort+' cortadores)', M+72, y); y+=10;
+    }
+    if(obs){
+      if(y>262){ doc.addPage(); y=18; }
+      doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(30,86,49); doc.text('Observaciones:', M, y); y+=6;
+      doc.setFont('helvetica','normal'); doc.setFontSize(10.5); doc.setTextColor(30,30,30);
+      const ol=doc.splitTextToSize(obs, tblW); if(y+ol.length*5>285){ doc.addPage(); y=18; } doc.text(ol, M, y); y+=ol.length*5;
+    }
+    y+=4;
+    if(y+44>285){ doc.addPage(); y=20; }
+    doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(30,86,49); doc.text('Firma del responsable:', M, y); y+=4;
+    if(sigHas){ doc.addImage(sigCanvas.toDataURL('image/png'),'PNG',M,y,72,29); } y+=31;
+    doc.setDrawColor(140); doc.setLineWidth(.3); doc.line(M,y,M+72,y); y+=4;
+    doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(110,110,110); doc.text((resp||'—')+(sigHas?'':'  (sin firma)'), M, y);
+    const folio1='RP-'+fechaCortaD(ACTIVE).replace(/-/g,'')+'-'+String(Date.now()).slice(-4);
+    doc.setFont('helvetica','italic'); doc.setFontSize(8.5); doc.setTextColor(120,120,120);
+    doc.text('Folio '+folio1+' · Generado '+fechaCortaD(new Date())+' '+hora+' · FINCA BURICA · Cosecha', M, 293);
+
+    /* ---------- PÁGINA 2: PLAN PARA EL PRÓXIMO DÍA ---------- */
+    doc.addPage(); y=16;
+    doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(30,86,49);
+    doc.text('PLAN PARA EL PRÓXIMO DÍA DE TRABAJO', M, y); y+=7;
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80,80,80);
+    doc.text('FINCA BURICA · proyección del ciclo de maduración', M, y); y+=6;
+    doc.setDrawColor(30,86,49); doc.setLineWidth(.6); doc.line(M,y,W-M,y); y+=8;
+    const nota='El reporte corresponde al '+fechaLargaD(ACTIVE)+', pero la corta se ejecuta '+prox+'. Por eso los lotes en PUNTO ÓPTIMO son los que, al cortarlos '+prox+', llegan a '+p+' días de ciclo (objetivo del mes de '+MESES[ACTIVE.getMonth()]+'). Seguir la sugerencia de abajo — ya está calculada.';
+    const nl=doc.splitTextToSize(nota, W-2*M-6);
+    doc.setFillColor(237,245,233); doc.rect(M,y,W-2*M, nl.length*5+8,'F');
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(30,60,40); doc.text(nl, M+3, y+6); y+=nl.length*5+13;
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30,86,49); doc.text('SUGERENCIA DE CORTE', M, y); y+=6;
+    doc.setFontSize(11); doc.setTextColor(20,20,20);
     if(opt.length){
       const first=opt[0], last=opt[opt.length-1];
       const totHc=opt.reduce((s,f)=>s+f.hc,0), totC=opt.reduce((s,f)=>s+f.centros,0);
-      doc.setFont('helvetica','bold'); doc.text('Cortar '+prox+': ', M, y);
-      doc.setFont('helvetica','normal'); doc.text(doc.splitTextToSize(opt.map(f=>f.lote).join(', '), W-M-M-34), M+34, y); y+=6;
-      doc.text('Empezar en '+first.lote.toLowerCase()+'1  ·  terminar en '+last.lote.toLowerCase()+last.centros+'   ('+totC+' centros · '+f1(totHc)+' Hc)', M, y); y+=7;
-    } else { doc.text('Sin lotes en punto óptimo para '+prox+'. Continuar plan normal.', M, y); y+=7; }
-    if(late.length){ doc.setTextColor(150,30,20); doc.setFont('helvetica','bold'); doc.text('Atrasados (prioridad): ', M, y);
-      doc.setFont('helvetica','normal'); doc.text(doc.splitTextToSize(late.map(f=>f.lote).join(', '), W-M-M-42), M+42, y); y+=7; doc.setTextColor(20,20,20); }
+      doc.setFont('helvetica','bold'); doc.setTextColor(30,120,50); doc.text('Cortar '+prox+' (PUNTO ÓPTIMO):', M, y); y+=6;
+      doc.setFont('helvetica','normal'); doc.setTextColor(20,20,20);
+      doc.text(doc.splitTextToSize('Lotes: '+opt.map(f=>f.lote).join(', '), W-2*M), M, y); y+=6;
+      doc.text('Empezar en '+first.lote.toLowerCase()+'1   ·   terminar en '+last.lote.toLowerCase()+last.centros, M, y); y+=6;
+      doc.text('Total: '+totC+' centros · '+f1(totHc)+' Hc', M, y); y+=9;
+    } else { doc.text('Sin lotes en punto óptimo para '+prox+'. Continuar el plan normal.', M, y); y+=9; }
+    if(late.length){
+      doc.setFont('helvetica','bold'); doc.setTextColor(160,30,20); doc.text('Atrasados — cortar con prioridad:', M, y); y+=6;
+      doc.setFont('helvetica','normal'); doc.setTextColor(20,20,20);
+      doc.text(doc.splitTextToSize(late.map(f=>f.lote+' ('+f.est.txt.replace(/[🚨⚠]\s?/g,'')+')').join(', '), W-2*M), M, y); y+=9;
+    }
+    if(soon.length){
+      doc.setFont('helvetica','bold'); doc.setTextColor(150,110,10); doc.text('Casi óptimo (para el día siguiente):', M, y); y+=6;
+      doc.setFont('helvetica','normal'); doc.setTextColor(20,20,20);
+      doc.text(doc.splitTextToSize(soon.map(f=>f.lote).join(', '), W-2*M), M, y); y+=9;
+    }
     y+=2;
-    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30,86,49); doc.text('CICLO POR LOTE', M, y); y+=5;
-    const cols=[{x:M,w:22},{x:M+22,w:30},{x:M+52,w:20,a:'right'},{x:M+72,w:54},{x:M+126,w:54}];
-    const tit=['Lote','Últ. corte','Días','Estado','Condición']; const tblW=180;
-    function head(){ doc.setFillColor(30,86,49); doc.rect(M,y,tblW,8,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255,255,255);
-      cols.forEach((c,i)=>{ const tx=c.a==='right'?c.x+c.w-2:c.x+2; doc.text(tit[i],tx,y+5.5,{align:c.a||'left'}); }); y+=8; doc.setTextColor(20,20,20); }
-    head();
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30,86,49); doc.text('CICLO POR LOTE (proyección)', M, y); y+=5;
+    const c2=[{x:M,w:22},{x:M+22,w:30},{x:M+52,w:20,a:'right'},{x:M+72,w:54},{x:M+126,w:54}];
+    const t2=['Lote','Últ. corte','Días','Estado','Condición']; const tblW2=180;
+    function head2(){ doc.setFillColor(30,86,49); doc.rect(M,y,tblW2,8,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255,255,255);
+      c2.forEach((c,i)=>{ const tx=c.a==='right'?c.x+c.w-2:c.x+2; doc.text(t2[i],tx,y+5.5,{align:c.a||'left'}); }); y+=8; doc.setTextColor(20,20,20); }
+    head2();
     filas.forEach((f,i)=>{
-      if(y+7>282){ doc.addPage(); y=18; head(); }
-      if(i%2===0){ doc.setFillColor(237,245,233); doc.rect(M,y,tblW,7,'F'); }
+      if(y+7>282){ doc.addPage(); y=18; head2(); }
+      if(i%2===0){ doc.setFillColor(237,245,233); doc.rect(M,y,tblW2,7,'F'); }
       const vy=y+5; const est=f.est.txt.replace(/[🎯🚨⚠✓]\s?/g,'');
       doc.setFont('helvetica','bold'); doc.setFontSize(8.8);
       doc.setTextColor.apply(doc, f.est.cls==='e0'?[179,38,30]:f.est.cls==='e1'?[200,99,26]:f.est.cls==='e3'?[46,125,50]:[40,40,40]);
-      doc.text(f.lote, cols[0].x+2, vy);
+      doc.text(f.lote, c2[0].x+2, vy);
       doc.setFont('helvetica','normal'); doc.setTextColor(40,40,40);
-      doc.text(fechaCortaD(f.ult).slice(0,5), cols[1].x+2, vy);
-      doc.text(String(f.dias), cols[2].x+cols[2].w-2, vy, {align:'right'});
-      doc.text(est, cols[3].x+2, vy);
-      doc.text(f.cond, cols[4].x+2, vy);
+      doc.text(fechaCortaD(f.ult).slice(0,5), c2[1].x+2, vy);
+      doc.text(String(f.dias), c2[2].x+c2[2].w-2, vy, {align:'right'});
+      doc.text(est+(f.mixto?'  '+Math.round(f.domPct*100)+'%':''), c2[3].x+2, vy);
+      doc.text(f.cond, c2[4].x+2, vy);
       y+=7;
+      if(f.mixto){
+        f.grupos.forEach(g=>{
+          if(y+6>284){ doc.addPage(); y=18; head2(); }
+          doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(110,110,110);
+          doc.text('  '+String.fromCharCode(8627)+' '+g.n+' CF ('+Math.round(g.pct*100)+'%)', c2[0].x+2, y+4);
+          doc.text(fechaCortaD(g.ult).slice(0,5), c2[1].x+2, y+4);
+          doc.text(String(g.dias), c2[2].x+c2[2].w-2, y+4, {align:'right'});
+          doc.text(g.est.txt.replace(/[🎯🚨⚠✓]\s?/g,''), c2[3].x+2, y+4);
+          doc.text(g.cond, c2[4].x+2, y+4);
+          y+=5.5;
+        });
+      }
     });
-    y+=8;
-    if(sigHas){
-      if(y+44>290){ doc.addPage(); y=18; }
-      doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(30,86,49); doc.text('Firma del responsable:', M, y); y+=4;
-      doc.addImage(sigCanvas.toDataURL('image/png'),'PNG',M,y,70,28); y+=31;
-      doc.setDrawColor(140); doc.setLineWidth(.3); doc.line(M,y,M+72,y); y+=4;
-      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(110,110,110); doc.text((USUARIO_ACTUAL&&USUARIO_ACTUAL.nombre)||'', M, y);
-    }
-    const folio='CIC-'+fechaCortaD(ACTIVE).replace(/-/g,'')+'-'+String(Date.now()).slice(-4);
-    const hora=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+    const folio2='CIC-'+fechaCortaD(ACTIVE).replace(/-/g,'')+'-'+String(Date.now()).slice(-4);
     doc.setFont('helvetica','italic'); doc.setFontSize(8.5); doc.setTextColor(120,120,120);
-    doc.text('Folio '+folio+' · Generado '+fechaCortaD(new Date())+' '+hora+' · FINCA BURICA', M, 293);
+    doc.text('Folio '+folio2+' · Plan generado '+fechaCortaD(new Date())+' '+hora+' · FINCA BURICA', M, 293);
+
     const blob=doc.output('blob'); const fname=('Cosecha_'+fechaCortaD(ACTIVE)+'.pdf').replace(/[^\w.\-]+/g,'_');
     const file=new File([blob],fname,{type:'application/pdf'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Reporte de cosecha',text:'Reporte de ciclo por lote — '+fechaLargaD(ACTIVE)}).catch(()=>doc.save(fname)); }
+    if(navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Reporte de cosecha',text:'Reporte de cosecha + plan — '+fechaLargaD(ACTIVE)}).catch(()=>doc.save(fname)); }
     else doc.save(fname);
   }catch(err){ alert('No se pudo generar el PDF: '+(err&&err.message?err.message:err)); }
 });
