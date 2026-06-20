@@ -1,6 +1,13 @@
 /* ===== FINCA BURICA — conexión a Firebase (central) =====
    Config web del proyecto finca-burica (no secreta, va en el cliente).
    Seguridad real = reglas de Firestore + colección "usuarios". */
+
+/* Dominio canónico: Firebase Auth solo funciona en puntamangle.com (sin www).
+   Si entran por www…, los reenvía al dominio bueno conservando la ruta. */
+if (location.hostname === 'www.puntamangle.com') {
+  location.replace('https://puntamangle.com' + location.pathname + location.search + location.hash);
+}
+
 const firebaseConfig = {
   apiKey: "AIzaSyAZpHBukyAit5O1HTDq9oOI1ovl0ihj9Tc",
   authDomain: "finca-burica.firebaseapp.com",
@@ -33,16 +40,16 @@ function resolverAcceso(user, onOk, onDeny){
 /* Guard para páginas protegidas. */
 function requireAuth(onOk){
   fbAuth.onAuthStateChanged(function(user){
-    if(!user){ location.href='login.html'; return; }
+    if(!user){ location.href='/finca/login.html'; return; }
     resolverAcceso(user, function(u){
       USUARIO_ACTUAL = u;
       if(typeof onOk === 'function') onOk(u);
     }, function(email){
       alert('La cuenta ' + email + ' todavía no tiene acceso.\nPedile al administrador que te autorice.');
-      fbAuth.signOut().then(function(){ location.href='login.html'; });
+      fbAuth.signOut().then(function(){ location.href='/finca/login.html'; });
     });
   });
 }
 
 function esAdminActual(){ return !!(USUARIO_ACTUAL && USUARIO_ACTUAL.rol === 'admin'); }
-function cerrarSesion(){ fbAuth.signOut().then(function(){ location.href='login.html'; }); }
+function cerrarSesion(){ fbAuth.signOut().then(function(){ location.href='/finca/login.html'; }); }
